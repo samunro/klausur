@@ -1,0 +1,34 @@
+<div class="container-fluid">
+	<ng-container *ngFor="let area of criteria.areas">
+		<div class="row">
+			<div class="col-12">
+				<h4>{{area.name}}</h4>
+			</div>
+		</div>
+		<ng-container *ngFor="let skill of area.skills">
+			<div class="row">
+				<div class="col-2">
+					<h5>{{skill.name}} - {{getGrade(skill.id)}}</h5>
+				</div>
+				<div class="col">
+					<input
+        type="range"
+        style="width: 100%;"
+        [ngModel]="getGrade(skill.id)"
+        (ngModelChange)="setGrade($event, skill.id)"
+        min="0"
+        max="15"
+        step="1"
+      />
+    </div>
+				</div>
+				<div class="row">
+					<div class="col-2"></div>
+					<div class="col" *ngFor="let criteria of skill.criteria">
+						<input type="checkbox" />
+      {{criteria.text}}
+    </div>
+					</div>
+		</ng-container>
+	</ng-container>
+</div>

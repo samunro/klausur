@@ -1,0 +1,292 @@
+{
+  "pointRanges": [
+    {
+      "id": 6,
+      "name": "sehr gut",
+      "minimum": 13,
+      "maximum": 15
+    },
+    {
+      "id": 5,
+      "name": "gut",
+      "minimum": 10,
+      "maximum": 12
+    },
+    {
+      "id": 4,
+      "name": "befriedigend",
+      "minimum": 7,
+      "maximum": 9
+    },
+    {
+      "id": 3,
+      "name": "ausreichend",
+      "minimum": 4,
+      "maximum": 6
+    },
+    {
+      "id": 2,
+      "name": "mangelhaft",
+      "minimum": 1,
+      "maximum": 3
+    },
+    {
+      "id": 1,
+      "name": "ungenügend",
+      "minimum": 0,
+      "maximum": 0
+    }
+  ],
+  "areas": [
+    {
+      "name": "Sprachliche Richtigkeit",
+      "skills": [
+        {
+          "id": 1,
+          "name": "Lexik",
+          "criteria": [
+            {
+              "pointRangeId": "1",
+              "text": "Häufung elementarer lexikalischer Fehler, die die Verständlichkeit stark beeinträchtigen"
+            },
+            {
+              "pointRangeId": "2",
+              "text": "Häufung lexikalischer Fehler, die zu Missverständnissen führen"
+            },
+            {
+              "pointRangeId": "3",
+              "text": "wiederholt lexikalische Fehler, die vereinzelt zu Missverständnissen führen"
+            },
+            {
+              "pointRangeId": "4",
+              "text": "im Wesentlichen lexikalisch korrekt; die Verständlichkeit wird durch Fehler nicht beeinträchtigt"
+            },
+            {
+              "pointRangeId": "5",
+              "text": "weitestgehend lexikalische Korrektheit in allen Bereichen des Wortschatzes; die Verständlichkeit wird durch einzelne Fehler nicht beeinträchtigt"
+            },
+            {
+              "pointRangeId": "6",
+              "text": "sehr hohes Maß an lexikalischer Korrektheit in allen Bereichen desWortschatzes; vereinzelte Fehler resultieren daraus, dass sprachliche Risiken eingegangen werden; die Verständlichkeit wird nicht beeinträchtigt"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Grammatik/Syntax",
+          "criteria": [
+            {
+              "pointRangeId": "1",
+              "text": "Häufung elementarer grammatischer/ syntaktischer Fehler, die die Verständlichkeit stark beeinträchtigen"
+            },
+            {
+              "pointRangeId": "2",
+              "text": "Häufung grammatischer/syntaktischer Fehler, die zu Missverständnissen führen"
+            },
+            {
+              "pointRangeId": "3",
+              "text": "wiederholt grammatische/syntaktische Fehler, die vereinzelt zu Missverständnissen führen"
+            },
+            {
+              "pointRangeId": "4",
+              "text": "im Wesentlichen grammatisch/syntaktisch korrekt; die Verständlichkeit wird durch Fehler nicht beeinträchtigt"
+            },
+            {
+              "pointRangeId": "5",
+              "text": "weitestgehend grammatisch/syntaktisch korrekt; einzelne Fehler betreffen komplexe Satzstrukturen; die Verständlichkeit wird nicht beeinträchtigt"
+            },
+            {
+              "pointRangeId": "6",
+              "text": "sehr hohes Maß an grammatischer/ syntaktischer Korrektheit; vereinzelte Fehler betreffen nur komplexe Satzstrukturen oder weniger geläufige grammatische Strukturen und resultieren daraus, dass sprachliche Risiken eingegangen werden; die Verständlichkeit wird nicht beeinträchtigt"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Orthographie",
+          "criteria": [
+            {
+              "pointRangeId": "1",
+              "text": "Häufung elementarer orthographischer Fehler, die die Lesbarkeit stark beeinträchtigen"
+            },
+            {
+              "pointRangeId": "2",
+              "text": "Häufung orthographischer Fehler, die die Lesbarkeit beeinträchtigen"
+            },
+            {
+              "pointRangeId": "3",
+              "text": "wiederholt orthographische Fehler, die die Lesbarkeit vereinzelt beeinträchtigen"
+            },
+            {
+              "pointRangeId": "4",
+              "text": "im Wesentlichen orthographisch korrekt; die Lesbarkeit wird nicht beeinträchtigt"
+            },
+            {
+              "pointRangeId": "5",
+              "text": "weitestgehend orthographisch korrekt; einzelne Fehler haben den Charakter von Flüchtigkeitsfehlern oder betreffen weniger geläufige Lexik; die Lesbarkeit wird nicht beeinträchtigt"
+            },
+            {
+              "pointRangeId": "6",
+              "text": "hohes Maß an orthographischer Korrektheit; vereinzelte Orthographiefehler haben den Charakter von Flüchtigkeitsfehlern; die Lesbarkeit wird nicht beeinträchtigt"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ausdruck und Textgestaltung",
+      "skills":[
+        {
+          "id": 4,
+          "name": "Textaufbau, ggf. Textsortenspezifik",
+          "criteria": [
+            {
+              "pointRangeId": "1",
+              "text": "unstrukturierter, inkohärenter Text; keine Umsetzung der in der Aufgabe geforderten spezifischen formalen Textsortenmerkmale"
+            },
+            {
+              "pointRangeId": "2",
+              "text": "weitgehend unstrukturierter und inkohärenter Text; weitgehend fehlende Umsetzung der in der Aufgabe geforderten spezifischen formalen Textsortenmerkmale"
+            },
+            {
+              "pointRangeId": "3",
+              "text": "ansatzweise strukturierter und kohärenter Text; in Ansätzen vorhandene Umsetzung der in der Aufgabe geforderten spezifischen formalen Textsortenmerkmale"
+            },
+            {
+              "pointRangeId": "4",
+              "text": "im Allgemeinen zielgerichteter, nicht durchgängig strukturierter und kohärenter Text; grundsätzlich gelungene Umsetzung der in der Aufgabe geforderten spezifischen formalen Textsortenmerkmale"
+            },
+            {
+              "pointRangeId": "5",
+              "text": "weitestgehend zielgerichteter, strukturierter und kohärenter Text; weitestgehend überzeugende Umsetzung der in der Aufgabe geforderten spezifischen formalen Textsortenmerkmale"
+            },
+            {
+              "pointRangeId": "6",
+              "text": "durchgängig zielgerichteter, strukturierter und kohärenter Text; besonders überzeugende Umsetzung der in der Aufgabe geforderten spezifischen formalen Textsortenmerkmale"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "name": "eigenständige Textgestaltung",
+          "criteria": [
+            {
+              "pointRangeId": "1",
+              "text": "keine eigenständige Darstellung; etwaige Übernahmen aus den Materialien oder anderen Quellen sind nicht kenntlich gemacht und/oder der Aufgabe nicht angemessen"
+            },
+            {
+              "pointRangeId": "2",
+              "text": "kaum eigenständige Darstellung; etwaige direkte oder indirekte Zitate sind kaum kenntlich gemacht"
+            },
+            {
+              "pointRangeId": "3",
+              "text": "noch eigenständige Anteile in der Darstellung; etwaige direkte oder indirekte Zitate sind ansatzweise kenntlich gemacht"
+            },
+            {
+              "pointRangeId": "4",
+              "text": "grundsätzlich eigenständige Darstellung; etwaige direkte oder indirekte Zitate sind im Wesentlichen kenntlich gemacht und grundsätzlich angemessen in den Textfluss eingebettet"
+            },
+            {
+              "pointRangeId": "5",
+              "text": "weitestgehend eigenständige Darstellung; etwaige direkte oder indirekte Zitate sind kenntlich gemacht und angemessen in den Textfluss eingebettet"
+            },
+            {
+              "pointRangeId": "6",
+              "text": "durchgängig eigenständige Darstellung; etwaige direkte oder indirekte Zitate sind kenntlich gemacht und gut in den Textfluss eingebettet"
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "name": "Sprachregister",
+          "criteria": [
+            {
+              "pointRangeId": "1",
+              "text": "Sprachregister der Aufgabe nicht angemessen"
+            },
+            {
+              "pointRangeId": "2",
+              "text": "Sprachregister der Aufgabe u.a. weitgehend situativ nicht angemessen"
+            },
+            {
+              "pointRangeId": "3",
+              "text": "Sprachregister der Aufgabe u.a. ansatzweise situativ angemessen mit Adressatenbezug"
+            },
+            {
+              "pointRangeId": "4",
+              "text": "Sprachregister der Aufgabe u.a. situativ grundsätzlich angemessen mit Adressatenbezug"
+            },
+            {
+              "pointRangeId": "5",
+              "text": "Sprachregister der Aufgabe u.a. situativ weitestgehend angemessen mit angemessenem Adressatenbezug"
+            },
+            {
+              "pointRangeId": "6",
+              "text": "Sprachregister der Aufgabe u.a. situativ durchgängig angemessen mit überzeugendem Adressatenbezug"
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "name": "allgemeiner, thematischer, Funktions- und Interpretationswortschatz",
+          "criteria": [
+            {
+              "pointRangeId": "1",
+              "text": "keine angemessene Wortwahl"
+            },
+            {
+              "pointRangeId": "2",
+              "text": "deutlich eingeschränkte Wortwahl"
+            },
+            {
+              "pointRangeId": "3",
+              "text": "eingeschränkte, noch angemessene Wortwahl"
+            },
+            {
+              "pointRangeId": "4",
+              "text": "grundsätzlich angemessene, verständliche Wortwahl"
+            },
+            {
+              "pointRangeId": "5",
+              "text": "präzise, weitestgehend differenzierte und idiomatische Wortwahl"
+            },
+            {
+              "pointRangeId": "6",
+              "text": "präzise und durchgängig differenzierte und idiomatische Wortwahl"
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "name": "Satzbau",
+          "criteria": [
+            {
+              "pointRangeId": "1",
+              "text": "sprachuntypischer Satzbau bei durchgängig unangemessenem oder vollständig fehlendem Einsatz von textstrukturierenden Mitteln"
+            },
+            {
+              "pointRangeId": "2",
+              "text": "sehr einfacher, teilweise sprachuntypischer Satzbau bei weitgehend unangemessenem oder fehlendem Einsatz von textstrukturierenden Mitteln"
+            },
+            {
+              "pointRangeId": "3",
+              "text": "wenig variabler, aber noch angemessener Satzbau unter Verwendung gängiger sprachlicher Strukturen bei ansatzweise gelungenem Einsatz von textstrukturierenden Mitteln"
+            },
+            {
+              "pointRangeId": "4",
+              "text": "grundsätzlich variabler und funktionaler Satzbau unter Verwendung gängiger sprachlicher Strukturen bei grundsätzlich gelungenem Einsatz von textstrukturierenden Mitteln"
+            },
+            {
+              "pointRangeId": "5",
+              "text": "variabler und funktionaler Satzbau, unter weitestgehend angemessener Verwendung komplexer, sprachtypischer Strukturen bei weitestgehend überzeugendem Einsatz von textstrukturierenden Mitteln"
+            },
+            {
+              "pointRangeId": "6",
+              "text": "durchgängig variabler und funktionaler Satzbau unter angemessener Verwendung komplexer, sprachtypischer Strukturen bei durchgängig überzeugendem Einsatz von textstrukturierenden Mitteln"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
