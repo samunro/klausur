@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import criteria from "./criteria.json";
 import content from "./content.json";
+import pointRanges from "./pointRanges.json";
 
 @Component({
   selector: "student-points",
@@ -17,6 +18,8 @@ export class StudentPointsComponent {
 
   criteria = criteria;
   content = content;
+  pointRanges = pointRanges.items;
+
   skillGrades: SkillGrade[] = [];
 
   getGrade(skillId: number){
@@ -59,7 +62,7 @@ export class StudentPointsComponent {
 
     if(!skill.pointRangeIds.length) return 0;
 
-    const averagePointGrades = this.criteria.pointRanges.filter(x => skill.pointRangeIds.includes(x.id)).map(x => (x.minimum + x.maximum)/2)
+    const averagePointGrades = this.pointRanges.filter(x => skill.pointRangeIds.includes(x.id)).map(x => (x.minimum + x.maximum)/2)
 
     return Math.round(this.average(averagePointGrades));
   }
@@ -82,6 +85,10 @@ export class StudentPointsComponent {
 
   getTotalGrade(){
     return Math.round(this.average(this.criteria.areas.map(x => this.getGradeForArea(x.id))));
+  }
+
+  getContentCriteria(areaId: number, pointRangeId: number){
+    return this.content.areas.find(x => x.id === areaId).criteria.filter(x => x.pointRangeId === pointRangeId);
   }
 }
 

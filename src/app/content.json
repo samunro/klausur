@@ -1,6 +1,7 @@
 {
   "areas": [
     {
+      "id": 1,
       "name": "Leseverstehen / Reproduktion",
       "criteria": [
         {
@@ -101,6 +102,7 @@
       ]
     },
     {
+      "id": 2,
       "name": "Textanalyse",
       "criteria": [
         {
@@ -201,6 +203,7 @@
       ]
     },
     {
+      "id": 3,
       "name": "Analyse diskontinuierlicher Texte",
       "criteria": [
         {
@@ -331,6 +334,7 @@
       ]
     },
     {
+      "id": 4,
       "name": "Diskutieren / Kommentieren",
       "criteria": [
         {
@@ -521,6 +525,7 @@
       ]
     },
     {
+      "id": 5,
       "name": "gestaltendes Schreiben",
       "criteria": [
         {
