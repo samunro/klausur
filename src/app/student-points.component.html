@@ -1,8 +1,13 @@
+<h1 style="display: inline">Klausur Ergebnis - {{getTotalGrade()}}</h1>&nbsp;
+
+<span [hidden]="getTotalAreaWeights() === 100" class="alert alert-danger">The weights add up to {{getTotalAreaWeights()}}% but should add up to 100%</span>
+
 <div class="container-fluid">
 	<ng-container *ngFor="let area of criteria.areas">
 		<div class="row">
-			<div class="col-12">
-				<h4>{{area.name}}</h4>
+			<div class="col-12 alert alert-primary">
+				<h4>{{area.name}} - {{getGradeForArea(area.id)}}</h4>
+        Gewicht <input type="number" style="width: 50px" [ngModel]="getAreaWeight(area.id)" (ngModelChange)="setAreaWeight($event, area.id)" max="100" min="0" />%
 			</div>
 		</div>
 		<ng-container *ngFor="let skill of area.skills">
@@ -20,12 +25,21 @@
         max="15"
         step="1"
       />
+					<input
+        type="range"
+        style="width: 100%;"
+        disabled="true"
+        [ngModel]="calculatedGrade(skill.id)"
+        min="0"
+        max="15"
+        step="1"
+      />
     </div>
 				</div>
 				<div class="row">
 					<div class="col-2"></div>
 					<div class="col" *ngFor="let criteria of skill.criteria">
-						<input type="checkbox" />
+						<input type="checkbox" [ngModel]="isCriteriaChecked(criteria.pointRangeId, skill.id)" (ngModelChange)="checkCriteria($event, criteria.pointRangeId, skill.id)" />
       {{criteria.text}}
     </div>
 					</div>
