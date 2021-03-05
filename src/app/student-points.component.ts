@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import criteria from "./criteria.json";
+import content from "./content.json";
 
 @Component({
   selector: "student-points",
@@ -15,6 +16,7 @@ export class StudentPointsComponent {
   }
 
   criteria = criteria;
+  content = content;
   skillGrades: SkillGrade[] = [];
 
   getGrade(skillId: number){
