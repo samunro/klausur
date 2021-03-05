@@ -9,7 +9,7 @@
 			<h4>{{area.name}}</h4>
 		</div>
 		<div class="row">
-			<div class="col" *ngFor="let pointRange of pointRanges">
+			<div class="col" *ngFor="let pointRange of pointRanges.reverse()">
 				{{pointRange.name}}
 				<div *ngFor="let criteria of getContentCriteria(area.id, pointRange.id)">
 					<input type="checkbox" /> {{criteria.letter}} - {{criteria.text}}
