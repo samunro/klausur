@@ -1,10 +1,28 @@
-<h1 style="display: inline">Klausur Ergebnis - {{getTotalGrade()}}</h1>&nbsp;
+<h1 style="display: inline">Klausur</h1>&nbsp;
 
 <div class="container-fluid">
+  <div class="col-12 alert alert-danger">
+    <h3>Inhalt</h3>
+  </div>
+  <div class="col-12 alert alert-primary">
+    <h4>Leseverstehen/Reproduktion</h4>
+  </div>
+    <div><input type="checkbox" /> durchgehend dokumentiertes, differenziertes Textverständnis im Sinne der Aufgabenstellung</div>
+    <div><input type="checkbox" /> sehr gelungene Fokussierung auf geforderte Aspekte, ggf. hohes Abstraktionsniveau, keine Redundanzen</div>
+    <div><input type="checkbox" /> sehr eigenständige, straffe und strukturierte Darstellung</div>
+  <div class="col-12 alert alert-primary">
+    <h4>Textanalyse</h4>
+  </div>
+  <div class="col-12 alert alert-primary">
+    <h4>Analyse diskontinuierlicher Texte</h4>
+  </div>
+  <div class="col-12 alert alert-danger">
+    <h3>Sprachverwendung Ergebnis - {{getTotalGrade()}}</h3>
+  </div>
 	<ng-container *ngFor="let area of criteria.areas">
 		<div class="row">
 			<div class="col-12 alert alert-primary">
-				<h4>{{area.name}} - {{getGradeForArea(area.id) | number: '1.2-2'}}</h4>
+				<h4>{{area.name}} - {{getGradeForArea(area.id) | number: '1.2-2'}} Punkte</h4>
 			</div>
 		</div>
 		<ng-container *ngFor="let skill of area.skills">

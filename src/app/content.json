@@ -1,0 +1,553 @@
+{
+  "areas": [
+    {
+      "name": "Leseverstehen / Reproduktion",
+      "criteria": [
+        {
+          "letter": "A",
+          "text": "durchgehend dokumentiertes, differenziertes Textverständnis im Sinne der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "sehr gelungene Fokussierung auf geforderte Aspekte, ggf. hohes Abstraktionsniveau, keine Redundanzen"
+        },
+        {
+          "letter": "C",
+          "text": "sehr eigenständige, straffe und strukturierte Darstellung"
+        },
+        {
+          "letter": "A",
+          "text": "weitgehend korrektes und umfassendes Textverständnis im Sinne der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "gelungene Fokussierung auf geforderte Aspekte, Darstellung frei von Redundanzen"
+        },
+        {
+          "letter": "C",
+          "text": "weitgehend eigenständige, straffe und strukturierte Darstellung"
+        },
+        {
+          "letter": "A",
+          "text": "im Wesentlichen korrektes Textverständnis, einzelne Ungenauigkeiten / Auslassungen"
+        },
+        {
+          "letter": "B",
+          "text": "im Wesentlichen gelungenes Erfassen der geforderten Aspekte, Darstellung weitgehend frei von Redundanzen"
+        },
+        {
+          "letter": "C",
+          "text": "im Wesentlichen eigenständige und strukturierte Darstellung"
+        },
+        {
+          "letter": "A",
+          "text": "im Ganzen noch angemessenes Textverständnis, aber mehrere Ungenauigkeiten oder Auslassungen"
+        },
+        {
+          "letter": "B",
+          "text": "partielles Erfassen der geforderten Aspekte, Darstellung teilweise redundant"
+        },
+        {
+          "letter": "C",
+          "text": "im Ganzen noch eigenständige, in Ansätzen strukturierte Darstellung"
+        },
+        {
+          "letter": "A",
+          "text": "falsche / im Text nicht enthaltene Details; Textverständnis kaum nachgewiesen"
+        },
+        {
+          "letter": "B",
+          "text": "Erfassen weniger Aussagen des Textes"
+        },
+        {
+          "letter": "C",
+          "text": "mit gravierenden strukturellen Mängeln behaftete, kaum nachvollziehbare Darstellung"
+        },
+        {
+          "letter": "A",
+          "text": "Textverständnis nicht nachgewiesen"
+        },
+        {
+          "letter": "B",
+          "text": "keine Wiedergabe der Aussagen des Textes, irrelevante Darstellung"
+        },
+        {
+          "letter": "C",
+          "text": "unangemessene, nicht nachvollziehbare Darstellung"
+        },
+        {
+          "letter": "D",
+          "text": "Die Aufgabe wurde nicht bearbeitet. Die sprachliche Bewertung für diese Aufgabe beträgt ebenfalls 0 Punkte."
+        }
+      ]
+    },
+    {
+      "name": "Textanalyse",
+      "criteria": [
+        {
+          "letter": "A",
+          "text": "souveränes Vorgehen gemäß der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "treffender und durchgängiger Textbezug"
+        },
+        {
+          "letter": "C",
+          "text": "überzeugender, sachgemäßer Aufbau mit folgerichtiger Deutung der spezifischen Gestaltungsmittel"
+        },
+        {
+          "letter": "A",
+          "text": "sachlich angemessenes Vorgehen gemäß der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "fast durchweg korrekter und durchgängiger Textbezug"
+        },
+        {
+          "letter": "C",
+          "text": "sachgemäßer Aufbau mit folgerichtiger Deutung der spezifischen Gestaltungsmittel"
+        },
+        {
+          "letter": "A",
+          "text": "im Allgemeinen sachlich angemessenes Vorgehen gemäß der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "Textbezug meist vorhanden, teilweise ungenau / oberflächlich"
+        },
+        {
+          "letter": "C",
+          "text": "meist klar gegliedert mit im Wesentlichen nachvollziehbarer Deutung der spezifischen Gestaltungsmittel"
+        },
+        {
+          "letter": "A",
+          "text": "in Ansätzen noch sachlich angemessenes Vorgehen gemäß der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "oberflächlicher / sehr lückenhafter Textbezug"
+        },
+        {
+          "letter": "C",
+          "text": "Ansätze für eine sachgemäße Gliederung; noch nachvollziehbare Deutung der spezifischen Gestaltungsmittel"
+        },
+        {
+          "letter": "A",
+          "text": "kaum sachlich angemessenes Vorgehen gemäß der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "wenig / unzutreffender Textbezug"
+        },
+        {
+          "letter": "C",
+          "text": "ungeordnete Darstellung; Deutung von Gestaltungsmitteln kaum vorhanden / kaum nachvollziehbar"
+        },
+        {
+          "letter": "A",
+          "text": "kein sachlich angemessenes Vorgehen gemäß der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "kein zutreffender Textbezug"
+        },
+        {
+          "letter": "C",
+          "text": "ungeordnete Darstellung; keine / nicht nachvollziehbare Deutung von Gestaltungsmitteln"
+        },
+        {
+          "letter": "D",
+          "text": "Die Aufgabe wurde nicht bearbeitet. Die sprachliche Bewertung für diese Aufgabe beträgt ebenfalls 0 Punkte."
+        }
+      ]
+    },
+    {
+      "name": "Analyse diskontinuierlicher Texte",
+      "criteria": [
+        {
+          "letter": "A",
+          "text": "souveränes Vorgehen gemäß der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "die Spezifik des Materials treffende Beschreibung und Auswertung der Informationen"
+        },
+        {
+          "letter": "C",
+          "text": "Bezüge zu anderen Textvorlagen überzeugend hergestellt"
+        },
+        {
+          "letter": "D",
+          "text": "überzeugender, sachgemäßer Aufbau mit folgerichtigem Ergebnis"
+        },
+        {
+          "letter": "A",
+          "text": "sachlich angemessenes Vorgehen gemäß der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "korrekte Beschreibung und Auswertung der Informationen"
+        },
+        {
+          "letter": "C",
+          "text": "Bezüge zu anderen Textvorlagen weitgehend hergestellt"
+        },
+        {
+          "letter": "D",
+          "text": "sachlich angemessener Aufbau mit folgerichtigem Ergebnis"
+        },
+        {
+          "letter": "A",
+          "text": "im Allgemeinen sachlich angemessenes Vorgehen gemäß der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "meist zutreffende Beschreibung und Auswertung der Informationen"
+        },
+        {
+          "letter": "C",
+          "text": "Bezüge zu anderen Textvorlagen im Wesentlichen hergestellt"
+        },
+        {
+          "letter": "D",
+          "text": "meist klar gegliedert mit im Wesentlichen zutreffendem und nachvollziehbarem Ergebnis"
+        },
+        {
+          "letter": "A",
+          "text": "in Ansätzen noch sachlich angemessenes Vorgehen gemäß der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "nur in Teilen zutreffende Beschreibung und Auswertung der Informationen"
+        },
+        {
+          "letter": "C",
+          "text": "Bezüge zu anderen Textvorlagen in Ansätzen hergestellt"
+        },
+        {
+          "letter": "D",
+          "text": "Ansätze für eine sachgemäße Gliederung; noch nachvollziehbares Ergebnis"
+        },
+        {
+          "letter": "A",
+          "text": "kaum sachlich angemessenes Vorgehen gemäß der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "kaum zutreffende Beschreibung und Auswertung der Informationen"
+        },
+        {
+          "letter": "C",
+          "text": "Bezüge zu anderen Textvorlagen kaum hergestellt"
+        },
+        {
+          "letter": "D",
+          "text": "ungeordnete Darstellung; Ergebnis nur ansatzweise vorhanden / kaum nachvollziehbar"
+        },
+        {
+          "letter": "A",
+          "text": "kein sachlich angemessenes Vorgehen gemäß der Aufgabenstellung"
+        },
+        {
+          "letter": "B",
+          "text": "keine Beschreibung und Auswertung der Informationen im Sinne der Aufgabenstellung"
+        },
+        {
+          "letter": "C",
+          "text": "Bezüge zu anderen Textvorlagen nicht hergestellt"
+        },
+        {
+          "letter": "D",
+          "text": "ungeordnete Darstellung; kein / nicht nachvollziehbares Ergebnis"
+        },
+        {
+          "letter": "E",
+          "text": "Die Aufgabe wurde nicht bearbeitet. Die sprachliche Bewertung für diese Aufgabe beträgt ebenfalls 0 Punkte."
+        }
+      ]
+    },
+    {
+      "name": "Diskutieren / Kommentieren",
+      "criteria": [
+        {
+          "letter": "A",
+          "text": "Aufgabenstellung präzise erfasst und umgesetzt"
+        },
+        {
+          "letter": "B",
+          "text": "präzise und überzeugende Bezugnahme auf das vorgelegte Material"
+        },
+        {
+          "letter": "C",
+          "text": "stringente, sehr gut nachvollziehbare, widerspruchsfreie Argumentation, in die Tiefe gehend oder breit gefächert"
+        },
+        {
+          "letter": "D",
+          "text": "anschauliche / sehr präzise Belege / Beispiele"
+        },
+        {
+          "letter": "E",
+          "text": "Schlussfolgerung(en) / eigene Meinung sehr überzeugend dargelegt"
+        },
+        {
+          "letter": "F",
+          "text": "präzise, detailreiche Herstellung von Bezügen zwischen dem vorgelegten Material und anderen Texten / Kenntnissen / Erfahrungen"
+        },
+        {
+          "letter": "A",
+          "text": "Aufgabenstellung nahezu vollständig erfasst und umgesetzt"
+        },
+        {
+          "letter": "B",
+          "text": "treffende und sinnvolle Bezugnahme auf das vorgelegte Material"
+        },
+        {
+          "letter": "C",
+          "text": "nachvollziehbare, insgesamt widerspruchsfreie Argumentation"
+        },
+        {
+          "letter": "D",
+          "text": "treffende Belege / Beispiele"
+        },
+        {
+          "letter": "E",
+          "text": "Schlussfolgerung(en) / eigene Meinung überzeugend dargelegt"
+        },
+        {
+          "letter": "F",
+          "text": "treffende Bezüge zwischen dem vorgelegten Material und anderen Texten / Kenntnissen / Erfahrungen"
+        },
+        {
+          "letter": "A",
+          "text": "Aufgabenstellung im Wesentlichen erfasst und umgesetzt"
+        },
+        {
+          "letter": "B",
+          "text": "im Wesentlichen sinnvolle Bezugnahme auf einzelne Aspekte des vorgelegten Materials"
+        },
+        {
+          "letter": "C",
+          "text": "im Wesentlichen nachvollziehbare Argumentation"
+        },
+        {
+          "letter": "D",
+          "text": "im Wesentlichen angemessene Belege / Beispiele"
+        },
+        {
+          "letter": "E",
+          "text": "Schlussfolgerung(en) / eigene Meinung im Wesentlichen nachvollziehbar"
+        },
+        {
+          "letter": "F",
+          "text": "im Wesentlichen treffende Bezugnahme auf andere Texte / Kenntnisse / Erfahrungen"
+        },
+        {
+          "letter": "A",
+          "text": "Aufgabenstellung in Teilen erfasst und umgesetzt"
+        },
+        {
+          "letter": "B",
+          "text": "oberflächliche Bezugnahme auf das vorgelegte Material"
+        },
+        {
+          "letter": "C",
+          "text": "Ausführungen in Teilen nachvollziehbar, wenig argumentierend"
+        },
+        {
+          "letter": "D",
+          "text": "Belege / Beispiele ansatzweise vorhanden"
+        },
+        {
+          "letter": "E",
+          "text": "Schlussfolgerung(en) / eigene Meinung teilweise nachvollziehbar, wenig überzeugend begründet"
+        },
+        {
+          "letter": "F",
+          "text": "oberflächliche / wenig treffende Bezugnahme auf andere Texte / Kenntnisse / Erfahrungen"
+        },
+        {
+          "letter": "A",
+          "text": "Aufgabenstellung größtenteils nicht erfasst und umgesetzt"
+        },
+        {
+          "letter": "B",
+          "text": "stark reproduzierend / kaum oder keine Bezugnahme auf das vorgelegte Material"
+        },
+        {
+          "letter": "C",
+          "text": "fehlerhafte / kaum nachvollziehbare Argumentation"
+        },
+        {
+          "letter": "D",
+          "text": "Belege / Beispiele kaum / nicht vorhanden"
+        },
+        {
+          "letter": "E",
+          "text": "Schlussfolgerung(en) / eigene Meinung nicht überzeugend und unzureichend begründet"
+        },
+        {
+          "letter": "F",
+          "text": "kaum Bezugnahme auf andere Texte / Kenntnisse Erfahrungen"
+        },
+        {
+          "letter": "A",
+          "text": "Aufgabenstellung nicht erfasst und umgesetzt"
+        },
+        {
+          "letter": "B",
+          "text": "keine Bezugnahme auf das vorgelegte Material"
+        },
+        {
+          "letter": "C",
+          "text": "keine Argumentation"
+        },
+        {
+          "letter": "D",
+          "text": "keine Belege / Beispiele"
+        },
+        {
+          "letter": "E",
+          "text": "keine Schlussfolgerung(en)"
+        },
+        {
+          "letter": "F",
+          "text": "keine Kenntnisse / Bezugnahme auf andere Texte und Erfahrungen"
+        },
+        {
+          "letter": "G",
+          "text": "Die Aufgabe wurde nicht bearbeitet. Die sprachliche Bewertung für diese Aufgabe beträgt ebenfalls 0 Punkte."
+        }
+      ]
+    },
+    {
+      "name": "gestaltendes Schreiben",
+      "criteria": [
+        {
+          "letter": "A",
+          "text": "Aufgabenstellung präzise erfasst und umgesetzt"
+        },
+        {
+          "letter": "B",
+          "text": "eigenständige Gestaltung / sehr kreative Verarbeitung; Gestaltungsmittel adressaten- und situationsgerecht ausgewählt und kreativ verwendet"
+        },
+        {
+          "letter": "C",
+          "text": "in allen Details schlüssige Gestaltung / Darstellung/ Weiterentwicklung ohne Redundanzen"
+        },
+        {
+          "letter": "D",
+          "text": "schlüssiger Textaufbau, ggf. überzeugende und differenzierte Argumente und Beispiele / Belege"
+        },
+        {
+          "letter": "E",
+          "text": "sehr überzeugende Verknüpfung mit bearbeitetem Material / Ausgangstext(en) und eigenen Erfahrungen / Kenntnissen"
+        },
+        {
+          "letter": "A",
+          "text": "Aufgabenstellung nahezu vollständig erfasst und umgesetzt"
+        },
+        {
+          "letter": "B",
+          "text": "weitgehend eigenständige Gestaltung / kreative Verarbeitung, Gestaltungsmittel adressaten- und situationsgerecht ausgewählt"
+        },
+        {
+          "letter": "C",
+          "text": "weitgehend schlüssige Gestaltung / Darstellung / Weiterentwicklung"
+        },
+        {
+          "letter": "D",
+          "text": "Textaufbau weitgehend schlüssig, ggf. treffende und weitgehend differenzierte Argumente und Beispiele / Belege"
+        },
+        {
+          "letter": "E",
+          "text": "insgesamt gelungene Verknüpfung mit bearbeitetem Material / Ausgangstext(en) oder eigenen Erfahrungen / Kenntnissen"
+        },
+        {
+          "letter": "A",
+          "text": "Aufgabenstellung im Wesentlichen erfasst und umgesetzt"
+        },
+        {
+          "letter": "B",
+          "text": "im Wesentlichen eigenständige Gestaltung / kreative Verarbeitung, Gestaltungsmittel meist adressaten- und situationsgerecht ausgewählt"
+        },
+        {
+          "letter": "C",
+          "text": "im Wesentlichen schlüssige Gestaltung / Darstellung / Weiterentwicklung"
+        },
+        {
+          "letter": "D",
+          "text": "Textaufbau im Wesentlichen stimmig, ggf. im Wesentlichen treffende und differenzierte Argumente und Beispiele / Belege"
+        },
+        {
+          "letter": "E",
+          "text": "im Wesentlichen gelungene Verknüpfung mit bearbeitetem Material / Ausgangstext(en) oder eigenen Erfahrungen / Kenntnissen"
+        },
+        {
+          "letter": "A",
+          "text": "Aufgabenstellung in Teilen erfasst und umgesetzt"
+        },
+        {
+          "letter": "B",
+          "text": "ansatzweise eigenständige Gestaltung / wenig kreative Verarbeitung, Gestaltungsmittel teilweise adressaten- und situationsgerecht ausgewählt"
+        },
+        {
+          "letter": "C",
+          "text": "ansatzweise schlüssige Gestaltung / Darstellung / Weiterentwicklung; Redundanzen vorhanden"
+        },
+        {
+          "letter": "D",
+          "text": "Textaufbau zum Teil stimmig, ggf. ansatzweise treffende und differenzierte Argumente und Beispiele / Belege"
+        },
+        {
+          "letter": "E",
+          "text": "ansatzweise Verknüpfung mit bearbeitetem Material / Ausgangstext(en) oder eigenen Erfahrungen / Kenntnissen"
+        },
+        {
+          "letter": "A",
+          "text": "Aufgabenstellung größtenteils nicht erfasst und umgesetzt"
+        },
+        {
+          "letter": "B",
+          "text": "kaum eigenständige Gestaltung / kreative Verarbeitung, Gestaltungsmittel nicht adressaten- und situationsgerecht ausgewählt / kaum Gestaltungsmittel verwendet"
+        },
+        {
+          "letter": "C",
+          "text": "kaum schlüssige Gestaltung / Darstellung/ Weiterentwicklung; starke Redundanzen"
+        },
+        {
+          "letter": "D",
+          "text": "Textaufbau kaum erkennbar, ggf. kaum treffende und differenzierte Argumente und Beispiele / Belege"
+        },
+        {
+          "letter": "E",
+          "text": "kaum verknüpft mit bearbeitetem Material / Ausgangstext(en) oder eigenen Erfahrungen / Kenntnissen"
+        },
+        {
+          "letter": "A",
+          "text": "Aufgabenstellung nicht erfasst und umgesetzt"
+        },
+        {
+          "letter": "B",
+          "text": "keine eigenständige Gestaltung / kreative Verarbeitung, keine Gestaltungsmittel"
+        },
+        {
+          "letter": "C",
+          "text": "keine oder durchgehend redundante Gestaltung / Darstellung / Weiterentwicklung"
+        },
+        {
+          "letter": "D",
+          "text": "Textaufbau unangemessen oder nicht erkennbar, ggf. keine treffenden und differenzierten Argumente und Beispiele / Belege"
+        },
+        {
+          "letter": "E",
+          "text": "ohne Verknüpfung mit bearbeitetem Material / Ausgangstext(en) oder eigenen Erfahrungen / Kenntnissen"
+        },
+        {
+          "letter": "F",
+          "text": "Die Aufgabe wurde nicht bearbeitet. Die sprachliche Bewertung für diese Aufgabe beträgt ebenfalls 0 Punkte."
+        }
+      ]
+    }
+  ]
+}
