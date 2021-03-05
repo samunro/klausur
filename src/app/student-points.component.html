@@ -1,19 +1,17 @@
 <h1 style="display: inline">Klausur Ergebnis - {{getTotalGrade()}}</h1>&nbsp;
 
-<span [hidden]="getTotalAreaWeights() === 100" class="alert alert-danger">The weights add up to {{getTotalAreaWeights()}}% but should add up to 100%</span>
-
 <div class="container-fluid">
 	<ng-container *ngFor="let area of criteria.areas">
 		<div class="row">
 			<div class="col-12 alert alert-primary">
-				<h4>{{area.name}} - {{getGradeForArea(area.id)}}</h4>
-        Gewicht <input type="number" style="width: 50px" [ngModel]="getAreaWeight(area.id)" (ngModelChange)="setAreaWeight($event, area.id)" max="100" min="0" />%
+				<h4>{{area.name}} - {{getGradeForArea(area.id) | number: '1.2-2'}}</h4>
 			</div>
 		</div>
 		<ng-container *ngFor="let skill of area.skills">
 			<div class="row">
 				<div class="col-2">
-					<h5>{{skill.name}} - {{getGrade(skill.id)}}</h5>
+					<h5>{{skill.name}}</h5>
+          <h5>{{getGrade(skill.id)}} Punkte</h5>
 				</div>
 				<div class="col">
 					<input

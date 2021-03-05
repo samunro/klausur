@@ -7,13 +7,7 @@ import criteria from "./criteria.json";
 })
 export class StudentPointsComponent {
   ngOnInit() {
-    const skills = criteria.areas.map(x => x.skills);
-
-    console.dir(skills[1].length);
-
     for (const area of criteria.areas) {
-      this.areaWeights.push({areaId: area.id, weight: 100/criteria.areas.length})
-
       for(const skill of area.skills){
         this.skillGrades.push({ grade: 0, skillId: skill.id, pointRangeIds: [] });
       }
@@ -22,7 +16,6 @@ export class StudentPointsComponent {
 
   criteria = criteria;
   skillGrades: SkillGrade[] = [];
-  areaWeights: AreaWeight[] = [];
 
   getGrade(skillId: number){
     return this.getSkillGrade(skillId).grade;
@@ -82,28 +75,11 @@ export class StudentPointsComponent {
   getGradeForArea(areaId: number){
     const area = this.criteria.areas.find(x => x.id === areaId);
 
-    return this.sum(area.skills.map(x => this.getGrade(x.id)));
-  }
-
-  getTotalAreaWeights(){
-    return this.sum(this.areaWeights.map(x => x.weight));
-  }
-  getAreaWeight(areaId: number) {
-    return this.getAreaWeightObject(areaId).weight;
-  }
-
-  setAreaWeight(weight: number, areaId: number){
-    const areaWeight = this.getAreaWeightObject(areaId);
-
-    areaWeight.weight = weight;
-  }
-
-  private getAreaWeightObject(areaId: number){
-    return this.areaWeights.find(x => x.areaId === areaId);
+    return this.average(area.skills.map(x => this.getGrade(x.id)));
   }
 
   getTotalGrade(){
-    return this.sum(this.criteria.areas.map(x => this.getGradeForArea(x.id) * this.getAreaWeight(x.id)/100));
+    return Math.round(this.average(this.criteria.areas.map(x => this.getGradeForArea(x.id))));
   }
 }
 
@@ -111,9 +87,4 @@ class SkillGrade {
   skillId: number;
   grade: number;
   pointRangeIds: number[];
-}
-
-class AreaWeight {
-  areaId: number;
-  weight: number;
 }
