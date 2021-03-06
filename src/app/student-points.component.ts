@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import criteria from "./criteria.json";
+import master from "./master.json";
 import pointRanges from "./pointRanges.json";
 
 @Component({
@@ -8,67 +8,84 @@ import pointRanges from "./pointRanges.json";
 })
 export class StudentPointsComponent {
   ngOnInit() {
-    for (const part of criteria.parts) {
+    for (const part of master.parts) {
       for (const area of part.areas) {
         for (const skill of area.skills) {
-          this.skillGrades.push({
-            grade: 0,
-            skillId: skill.id,
-            pointRangeIds: []
-          });
+          this.skillPoints.push({skillId: skill.id, points: 0});
+
+          for (const criteria of skill.criteria){
+            this.checkCriteria.push({
+              criteriaId: criteria.id,
+              isChecked: false
+            });
+          }
         }
       }
     }
   }
 
-  criteria = criteria;
+  master = master;
   pointRanges = pointRanges.items;
 
-  skillGrades: SkillGrade[] = [];
+  checkedCriteria: CheckedCriteria[] = [];
+  skillPoints: SkillPoints[] = [];
 
-  getGrade(skillId: number) {
-    return this.getSkillGrade(skillId).grade;
+  getPointsForSkill(skillId: number) {
+    retrun this.getSkillPoints(skillId).points;
   }
 
-  setGrade(grade: number, skillId: number) {
-    console.dir("setting grade");
-    this.getSkillGrade(skillId).grade = grade;
+  setPointsForSkill(points: number, skillId: number) {
+    this.getSkillPoints(skillId).points = points;
   }
 
-  private getSkillGrade(skillId: number) {
-    return this.skillGrades.find(x => x.skillId === skillId);
+  private getSkillPoints(skillId: number) {
+    return this.skillPoints.find(x => x.skillId === skillId);
   }
 
-  isCriteriaChecked(pointRangeId: number, skillId: number) {
-    const skill = this.getSkillGrade(skillId);
-
-    return skill.pointRangeIds.includes(pointRangeId);
+  isCriteriaChecked(criteriaId: number) {
+    return this.getCheckedCriteria(criteriaId).isChecked;
   }
 
-  checkCriteria(isChecked: boolean, pointRangeId: number, skillId: number) {
-    const skill = this.getSkillGrade(skillId);
+  checkCriteria(isChecked: boolean, criteriaId: number, skillId: number) {
+    this.getCheckedCriteria(criteriaId).isChecked = isChecked;
 
-    if (!isChecked) {
-      skill.pointRangeIds = skill.pointRangeIds.filter(x => x !== pointRangeId);
-    } else {
-      if (!skill.pointRangeIds.includes(pointRangeId)) {
-        skill.pointRangeIds.push(pointRangeId);
+    const skillPoints = this.getSkillPoints(skillId);
+
+    skillPoints.points = this.calculatePointsForSkill(skillId);
+  }
+
+  private getCheckedCriteria(criteriaId: number){
+    return this.checkedCriteria.find(x => x.criteriaId === criteriaId);
+  }
+
+  private getSkill(skillId: number) {
+    for(const part of this.master.parts){
+      for(const area of part.areas){
+        const skill = area.skills.find(x => x.id === skillId);
+
+        if(skill) return skill;
       }
     }
 
-    this.setGrade(this.calculatedGrade(skillId), skillId);
+    throw Error(`Skill with id ${skillId} was not found.`);
   }
 
-  calculatedGrade(skillId: number) {
-    const skill = this.getSkillGrade(skillId);
+  calculatePointsForSkill(skillId: number) {
+    const criteria = this.getSkill(skillId).criteria;
 
-    if (!skill.pointRangeIds.length) return 0;
+    let result = 0;
 
-    const averagePointGrades = this.pointRanges
-      .filter(x => skill.pointRangeIds.includes(x.id))
-      .map(x => (x.minimum + x.maximum) / 2);
+    for(const criterion of criteria){
+      const checkedCriteria = this.getCheckedCriteria(criterion.id);
 
-    return Math.round(this.average(averagePointGrades));
+      if(!checkedCriteria.isChecked) continue;
+
+      const pointRange = this.pointRanges.find(x => x.id === criterion.pointRangeId);
+
+      result += (pointRange.minimum + pointRange.maximum) / 2;
+    }
+
+    return Math.round(result);
   }
 
   private average(elements: number[]) {
@@ -124,8 +141,12 @@ export class StudentPointsComponent {
   }
 }
 
-class SkillGrade {
+class CheckedCriteria {
+  criteriaId: number;
+  isChecked: boolean;
+}
+
+class SkillPoints {
   skillId: number;
-  grade: number;
-  pointRangeIds: number[];
+  points: number;
 }
