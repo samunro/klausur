@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "Inhalt",
-      "weighting": 0.4,
+      "weighting": 40,
       "areSkillWeightingsFixed": false,
       "areas": [
         {
@@ -702,7 +702,7 @@
     {
       "id": 2,
       "name": "Sprachverwendung",
-      "weighting": 0.6,
+      "weighting": 60,
       "areSkillWeightingsFixed": true,
       "areas": [
         {

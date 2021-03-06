@@ -11,12 +11,27 @@
         </div>
       </div>
       <ng-container *ngFor="let skill of area.skills">
+        <div class="row" *ngIf="!isSkillIncluded(skill.id)">
+          <div class="col">
+            <h5>
+              <label>
+                <input type="checkbox" [ngModel]="isSkillIncluded(skill.id)" (ngModelChange)="setSkillIncluded($event, skill.id)" />
+                {{skill.name}}
+                </label>
+              </h5>
+          </div>
+          </div>
+        <ng-container *ngIf="isSkillIncluded(skill.id)">
         <div class="row">
           <div class="col-2">
-            <h5>{{skill.name}}</h5>
+            <h5>
+              <label>
+                <input type="checkbox" [ngModel]="isSkillIncluded(skill.id)" (ngModelChange)="setSkillIncluded($event, skill.id)" />
+                {{skill.name}}
+                </label>
+              </h5>
+            <h5 *ngIf="!part.areSkillWeightingsFixed"><label>Gewicht: <input type="text" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" /></label></h5>
             <h5>{{getPointsForSkill(skill.id)}} Punkte</h5>
-            <h5 *ngIf="part.areSkillWeightingsFixed">Gewicht: {{getSkillPoints(skill.id).weighting}}</h5>
-            <h5 *ngIf="!part.areSkillWeightingsFixed">Gewicht: <input type="text" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" /></h5>
           </div>
           <div class="col">
             <input
@@ -51,6 +66,7 @@
             </div>
           </div>
         </div>
+        </ng-container>
       </ng-container>
     </ng-container>
   </ng-container>

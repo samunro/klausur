@@ -10,10 +10,10 @@ export class StudentPointsComponent {
   ngOnInit() {
     for (const part of master.parts) {
       for (const area of part.areas) {
-        const skillWeighting = part.areSkillWeightingsFixed ? 1/area.skills.length : 0;
+        const skillWeighting = part.areSkillWeightingsFixed ? 100/area.skills.length : 0;
 
         for (const skill of area.skills) {
-          this.skillPoints.push({skillId: skill.id, points: 0, weighting: skillWeighting, isWeightingFixed: part.areSkillWeightingsFixed});
+          this.skillPoints.push({skillId: skill.id, points: 0, weighting: skillWeighting, isWeightingFixed: part.areSkillWeightingsFixed, isIncluded: part.areSkillWeightingsFixed});
 
           for (const criteria of skill.criteria){
             this.checkedCriteria.push({
@@ -113,7 +113,7 @@ export class StudentPointsComponent {
   getPointsForArea(areaId: number) {
     const area = this.getArea(areaId);
 
-    return this.average(area.skills.map(x => this.getPointsForSkill(x.id)));
+    return this.sum(area.skills.map(x => this.getPointsForSkill(x.id) * this.getSkillPoints(x.id).weighting/100));
   }
 
   getPointsForPart(partId: number) {
@@ -160,6 +160,14 @@ export class StudentPointsComponent {
   setSkillWeighting(value: number, skillId: number){
     this.getSkillPoints(skillId).weighting = value;
   }
+
+  isSkillIncluded(skillId: number){
+    return this.getSkillPoints(skillId).isIncluded;
+  }
+
+  setSkillIncluded(value: boolean, skillId: number){
+    this.getSkillPoints(skillId).isIncluded = value;
+  }
 }
 
 class CheckedCriteria {
@@ -172,4 +180,5 @@ class SkillPoints {
   points: number;
   weighting: number;
   isWeightingFixed: boolean;
+  isIncluded: boolean;
 }
