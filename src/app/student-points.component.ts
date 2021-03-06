@@ -10,8 +10,10 @@ export class StudentPointsComponent {
   ngOnInit() {
     for (const part of master.parts) {
       for (const area of part.areas) {
+        const skillWeighting = part.areSkillWeightingsFixed ? 1/area.skills.length : 0;
+
         for (const skill of area.skills) {
-          this.skillPoints.push({skillId: skill.id, points: 0});
+          this.skillPoints.push({skillId: skill.id, points: 0, weighting: skillWeighting, isWeightingFixed: part.areSkillWeightingsFixed});
 
           for (const criteria of skill.criteria){
             this.checkedCriteria.push({
@@ -25,7 +27,7 @@ export class StudentPointsComponent {
   }
 
   master = master;
-  pointRanges = pointRanges.items;
+  pointRanges = pointRanges.items.sort((a, b) => a.minimum-b.minimum);
 
   checkedCriteria: CheckedCriteria[] = [];
   skillPoints: SkillPoints[] = [];
@@ -38,7 +40,7 @@ export class StudentPointsComponent {
     this.getSkillPoints(skillId).points = points;
   }
 
-  private getSkillPoints(skillId: number) {
+  getSkillPoints(skillId: number) {
     return this.skillPoints.find(x => x.skillId === skillId);
   }
 
@@ -139,6 +141,25 @@ export class StudentPointsComponent {
 
       throw Error(`Could not find the skill with id ${skillId}.`);
   }
+
+  getTotalPoints(){
+    let result = 0;
+
+    for(const part of master.parts){
+      result += part.weighting/100 * this.getPointsForPart(part.id);
+    }
+
+    return Math.round(result);
+  }
+
+  getSkillWeighting(skillId: number)
+  {
+    return this.getSkillPoints(skillId).weighting;
+  }
+
+  setSkillWeighting(value: number, skillId: number){
+    this.getSkillPoints(skillId).weighting = value;
+  }
 }
 
 class CheckedCriteria {
@@ -149,4 +170,6 @@ class CheckedCriteria {
 class SkillPoints {
   skillId: number;
   points: number;
+  weighting: number;
+  isWeightingFixed: boolean;
 }

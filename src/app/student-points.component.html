@@ -1,39 +1,5 @@
-<h1 style="display: inline">Klausur - 0 Punkte</h1>
+<h1 style="display: inline">Klausur - {{getTotalPoints()}} Punkte</h1>
 <div class="container-fluid">
-  <!-- <ng-container *ngFor="let skill of content.skills">
-		<div class="row">
-			<div class="col-2">
-				<h5>{{skill.name}}</h5>
-				<h5>{{getGrade(skill.id)}} Punkte</h5>
-			</div>
-			<div class="col">
-				<input
-        type="range"
-        style="width: 100%;"
-        disabled="true"
-        min="0"
-        max="15"
-        step="1"
-      />
-				<input
-        type="range"
-        style="width: 100%;"
-        disabled="true"
-        min="0"
-        max="15"
-        step="1"
-      />
-    </div>
-			</div>
-			<div class="row">
-				<div class="col-2"></div>
-				<div class="col" *ngFor="let pointRange of pointRanges.reverse()">
-					<div *ngFor="let criteria of getContentCriteria(skill.id, pointRange.id)">
-						<label><input type="checkbox" /> {{criteria.text}}</label>
-					</div>
-				</div>
-			</div>
-	</ng-container> -->
   <ng-container *ngFor="let part of master.parts">
     <div class="col-12 alert alert-danger">
       <h3>{{part.name}} Ergebnis - {{getPointsForPart(part.id)}} Punkte</h3>
@@ -49,6 +15,8 @@
           <div class="col-2">
             <h5>{{skill.name}}</h5>
             <h5>{{getPointsForSkill(skill.id)}} Punkte</h5>
+            <h5 *ngIf="part.areSkillWeightingsFixed">Gewicht: {{getSkillPoints(skill.id).weighting}}</h5>
+            <h5 *ngIf="!part.areSkillWeightingsFixed">Gewicht: <input type="text" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" /></h5>
           </div>
           <div class="col">
             <input
@@ -73,7 +41,7 @@
         </div>
         <div class="row">
           <div class="col-2"></div>
-          <div class="col" *ngFor="let pointRange of pointRanges.reverse()">
+          <div class="col" *ngFor="let pointRange of pointRanges">
 
             <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)">
               <label>
