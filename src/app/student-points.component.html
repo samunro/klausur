@@ -1,39 +1,59 @@
 <h1 style="display: inline">Klausur - 0 Punkte</h1>
-
 <div class="container-fluid">
 	<div class="col-12 alert alert-danger">
 		<h3>Inhalt Ergebnis - 0 Punkte</h3>
 	</div>
-	<div *ngFor="let area of content.areas">
-		<div class="col-12 alert alert-primary">
-			<h4>{{area.name}}</h4>
-		</div>
+	<ng-container *ngFor="let skill of content.skills">
 		<div class="row">
-			<div class="col" *ngFor="let pointRange of pointRanges.reverse()">
-				{{pointRange.name}}
-				<div *ngFor="let criteria of getContentCriteria(area.id, pointRange.id)">
-					<input type="checkbox" /> {{criteria.letter}} - {{criteria.text}}
-      </div>
-				</div>
+			<div class="col-2">
+				<h5>{{skill.name}}</h5>
+				<h5>{{getGrade(skill.id)}} Punkte</h5>
 			</div>
-		</div>
-		<div class="col-12 alert alert-danger">
-			<h3>Sprachverwendung Ergebnis - {{getTotalGrade()}} Punkte</h3>
-		</div>
-		<ng-container *ngFor="let area of criteria.areas">
+			<div class="col">
+				<input
+        type="range"
+        style="width: 100%;"
+        disabled="true"
+        min="0"
+        max="15"
+        step="1"
+      />
+				<input
+        type="range"
+        style="width: 100%;"
+        disabled="true"
+        min="0"
+        max="15"
+        step="1"
+      />
+    </div>
+			</div>
 			<div class="row">
-				<div class="col-12 alert alert-primary">
-					<h4>{{area.name}} - {{getGradeForArea(area.id) | number: '1.2-2'}} Punkte</h4>
+				<div class="col-2"></div>
+				<div class="col" *ngFor="let pointRange of pointRanges.reverse()">
+					<div *ngFor="let criteria of getContentCriteria(skill.id, pointRange.id)">
+						<label><input type="checkbox" /> {{criteria.text}}</label>
+					</div>
 				</div>
 			</div>
-			<ng-container *ngFor="let skill of area.skills">
-				<div class="row">
-					<div class="col-2">
-						<h5>{{skill.name}}</h5>
-						<h5>{{getGrade(skill.id)}} Punkte</h5>
-					</div>
-					<div class="col">
-						<input
+	</ng-container>
+	<div class="col-12 alert alert-danger">
+		<h3>Sprachverwendung Ergebnis - {{getTotalGrade()}} Punkte</h3>
+	</div>
+	<ng-container *ngFor="let area of criteria.areas">
+		<div class="row">
+			<div class="col-12 alert alert-primary">
+				<h4>{{area.name}} - {{getGradeForArea(area.id) | number: '1.2-2'}} Punkte</h4>
+			</div>
+		</div>
+		<ng-container *ngFor="let skill of area.skills">
+			<div class="row">
+				<div class="col-2">
+					<h5>{{skill.name}}</h5>
+					<h5>{{getGrade(skill.id)}} Punkte</h5>
+				</div>
+				<div class="col">
+					<input
         type="range"
         style="width: 100%;"
         [ngModel]="getGrade(skill.id)"
@@ -42,7 +62,7 @@
         max="15"
         step="1"
       />
-						<input
+					<input
         type="range"
         style="width: 100%;"
         disabled="true"
@@ -52,14 +72,16 @@
         step="1"
       />
     </div>
-					</div>
-					<div class="row">
-						<div class="col-2"></div>
-						<div class="col" *ngFor="let criteria of skill.criteria">
-							<input type="checkbox" [ngModel]="isCriteriaChecked(criteria.pointRangeId, skill.id)" (ngModelChange)="checkCriteria($event, criteria.pointRangeId, skill.id)" />
+				</div>
+				<div class="row">
+					<div class="col-2"></div>
+					<div class="col" *ngFor="let criteria of skill.criteria">
+						<label>
+						<input type="checkbox" [ngModel]="isCriteriaChecked(criteria.pointRangeId, skill.id)" (ngModelChange)="checkCriteria($event, criteria.pointRangeId, skill.id)" />
       {{criteria.text}}
-    </div>
-						</div>
-			</ng-container>
+      </label>
+					</div>
+				</div>
 		</ng-container>
-	</div>
+	</ng-container>
+</div>

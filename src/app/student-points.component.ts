@@ -87,8 +87,8 @@ export class StudentPointsComponent {
     return Math.round(this.average(this.criteria.areas.map(x => this.getGradeForArea(x.id))));
   }
 
-  getContentCriteria(areaId: number, pointRangeId: number){
-    return this.content.areas.find(x => x.id === areaId).criteria.filter(x => x.pointRangeId === pointRangeId);
+  getContentCriteria(skillId: number, pointRangeId: number){
+    return this.content.skills.find(x => x.id === skillId).criteria.filter(x => x.pointRangeId === pointRangeId);
   }
 }
 
