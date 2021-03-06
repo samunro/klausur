@@ -14,7 +14,7 @@ export class StudentPointsComponent {
           this.skillPoints.push({skillId: skill.id, points: 0});
 
           for (const criteria of skill.criteria){
-            this.checkCriteria.push({
+            this.checkedCriteria.push({
               criteriaId: criteria.id,
               isChecked: false
             });
@@ -31,7 +31,7 @@ export class StudentPointsComponent {
   skillPoints: SkillPoints[] = [];
 
   getPointsForSkill(skillId: number) {
-    retrun this.getSkillPoints(skillId).points;
+    return this.getSkillPoints(skillId).points;
   }
 
   setPointsForSkill(points: number, skillId: number) {
@@ -73,7 +73,7 @@ export class StudentPointsComponent {
   calculatePointsForSkill(skillId: number) {
     const criteria = this.getSkill(skillId).criteria;
 
-    let result = 0;
+    let criteriaPoints: number[] = [];
 
     for(const criterion of criteria){
       const checkedCriteria = this.getCheckedCriteria(criterion.id);
@@ -82,10 +82,10 @@ export class StudentPointsComponent {
 
       const pointRange = this.pointRanges.find(x => x.id === criterion.pointRangeId);
 
-      result += (pointRange.minimum + pointRange.maximum) / 2;
+      criteriaPoints.push((pointRange.minimum + pointRange.maximum) / 2);
     }
 
-    return Math.round(result);
+    return Math.round(this.average(criteriaPoints));
   }
 
   private average(elements: number[]) {
@@ -99,7 +99,7 @@ export class StudentPointsComponent {
   }
 
   private getArea(areaId: number){
-    for(const part of criteria.parts){
+    for(const part of this.master.parts){
       const area = part.areas.find(x => x.id === areaId);
 
       if(area) return area;
@@ -108,28 +108,28 @@ export class StudentPointsComponent {
     throw Error(`Could not find the ares with id ${areaId}.`)
   }
 
-  getGradeForArea(areaId: number) {
+  getPointsForArea(areaId: number) {
     const area = this.getArea(areaId);
 
-    return this.average(area.skills.map(x => this.getGrade(x.id)));
+    return this.average(area.skills.map(x => this.getPointsForSkill(x.id)));
   }
 
-  getTotalGrade() {
-    const grades: number[] = [];
+  getPointsForPart(partId: number) {
+    const part = this.master.parts.find(x => x.id === partId);
 
-    for(const part of this.criteria.parts){
-      for(const area of part.areas){
-        grades.push(this.getGradeForArea(area.id));
-      }
+    const points: number[] = [];
+
+    for(const area of part.areas){
+      points.push(this.getPointsForArea(area.id));
     }
 
     return Math.round(
-      this.average(grades)
+      this.average(points)
     );
   }
 
   getCriteria(skillId: number, pointRangeId: number) {
-    for(const part of this.criteria.parts){
+    for(const part of this.master.parts){
       for(const area of part.areas){
         const skill = area.skills.find(x => x.id === skillId);
 

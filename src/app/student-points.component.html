@@ -34,28 +34,28 @@
 				</div>
 			</div>
 	</ng-container> -->
-  <ng-container *ngFor="let part of criteria.parts">
+  <ng-container *ngFor="let part of master.parts">
     <div class="col-12 alert alert-danger">
-      <h3>{{part.name}} Ergebnis - {{getTotalGrade()}} Punkte</h3>
+      <h3>{{part.name}} Ergebnis - {{getPointsForPart(part.id)}} Punkte</h3>
     </div>
     <ng-container *ngFor="let area of part.areas">
       <div class="row">
         <div class="col-12 alert alert-primary">
-          <h4>{{area.name}} - {{getGradeForArea(area.id) | number: '1.2-2'}} Punkte</h4>
+          <h4>{{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</h4>
         </div>
       </div>
       <ng-container *ngFor="let skill of area.skills">
         <div class="row">
           <div class="col-2">
             <h5>{{skill.name}}</h5>
-            <h5>{{getGrade(skill.id)}} Punkte</h5>
+            <h5>{{getPointsForSkill(skill.id)}} Punkte</h5>
           </div>
           <div class="col">
             <input
         type="range"
         style="width: 100%;"
-        [ngModel]="getGrade(skill.id)"
-        (ngModelChange)="setGrade($event, skill.id)"
+        [ngModel]="getPointsForSkill(skill.id)"
+        (ngModelChange)="setPointsForSkill($event, skill.id)"
         min="0"
         max="15"
         step="1"
@@ -64,7 +64,7 @@
         type="range"
         style="width: 100%;"
         disabled="true"
-        [ngModel]="calculatedGrade(skill.id)"
+        [ngModel]="calculatePointsForSkill(skill.id)"
         min="0"
         max="15"
         step="1"
@@ -77,7 +77,7 @@
 
             <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)">
               <label>
-						<input type="checkbox" [ngModel]="isCriteriaChecked(criteria.id)" (ngModelChange)="checkCriteria($event, criteria.id)" />
+						<input type="checkbox" [ngModel]="isCriteriaChecked(criteria.id)" (ngModelChange)="checkCriteria($event, criteria.id, skill.id)" />
       {{criteria.text}}
       </label>
             </div>

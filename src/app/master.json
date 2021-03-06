@@ -1,6 +1,7 @@
 {
   "parts": [
     {
+      "id": 1,
       "name": "Inhalt",
       "areas": [
         {
@@ -697,6 +698,7 @@
       ]
     },
     {
+      "id": 2,
       "name": "Sprachverwendung",
       "areas": [
         {
