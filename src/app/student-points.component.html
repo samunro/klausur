@@ -5,7 +5,7 @@
       <h3>{{part.name}} Ergebnis - {{getPointsForPart(part.id)}} Punkte</h3>
     </div>
     <ng-container *ngFor="let area of part.areas">
-      <div class="row">
+      <div class="row" *ngIf="area.name">
         <div class="col-12 alert alert-primary">
           <h4>{{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</h4>
         </div>
@@ -30,7 +30,7 @@
                 {{skill.name}}
                 </label>
               </h5>
-            <h5 *ngIf="!part.areSkillWeightingsFixed"><label>Gewicht: <input type="text" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" /></label></h5>
+            <h5 *ngIf="!part.areSkillWeightingsFixed"><label>Gewicht: <input type="number" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" style="width: 60px" min="0" max="100"/></label></h5>
             <h5>{{getPointsForSkill(skill.id)}} Punkte</h5>
           </div>
           <div class="col">

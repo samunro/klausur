@@ -10,12 +10,20 @@ export class StudentPointsComponent {
   ngOnInit() {
     for (const part of master.parts) {
       for (const area of part.areas) {
-        const skillWeighting = part.areSkillWeightingsFixed ? 100/area.skills.length : 0;
+        const skillWeighting = part.areSkillWeightingsFixed
+          ? 100 / area.skills.length
+          : 0;
 
         for (const skill of area.skills) {
-          this.skillPoints.push({skillId: skill.id, points: 0, weighting: skillWeighting, isWeightingFixed: part.areSkillWeightingsFixed, isIncluded: part.areSkillWeightingsFixed});
+          this.skillPoints.push({
+            skillId: skill.id,
+            points: 0,
+            weighting: skillWeighting,
+            isWeightingFixed: part.areSkillWeightingsFixed,
+            isIncluded: part.areSkillWeightingsFixed
+          });
 
-          for (const criteria of skill.criteria){
+          for (const criteria of skill.criteria) {
             this.checkedCriteria.push({
               criteriaId: criteria.id,
               isChecked: false
@@ -27,7 +35,7 @@ export class StudentPointsComponent {
   }
 
   master = master;
-  pointRanges = pointRanges.items.sort((a, b) => a.minimum-b.minimum);
+  pointRanges = pointRanges.items.sort((a, b) => a.minimum - b.minimum);
 
   checkedCriteria: CheckedCriteria[] = [];
   skillPoints: SkillPoints[] = [];
@@ -56,16 +64,16 @@ export class StudentPointsComponent {
     skillPoints.points = this.calculatePointsForSkill(skillId);
   }
 
-  private getCheckedCriteria(criteriaId: number){
+  private getCheckedCriteria(criteriaId: number) {
     return this.checkedCriteria.find(x => x.criteriaId === criteriaId);
   }
 
   private getSkill(skillId: number) {
-    for(const part of this.master.parts){
-      for(const area of part.areas){
+    for (const part of this.master.parts) {
+      for (const area of part.areas) {
         const skill = area.skills.find(x => x.id === skillId);
 
-        if(skill) return skill;
+        if (skill) return skill;
       }
     }
 
@@ -77,12 +85,14 @@ export class StudentPointsComponent {
 
     let criteriaPoints: number[] = [];
 
-    for(const criterion of criteria){
+    for (const criterion of criteria) {
       const checkedCriteria = this.getCheckedCriteria(criterion.id);
 
-      if(!checkedCriteria.isChecked) continue;
+      if (!checkedCriteria.isChecked) continue;
 
-      const pointRange = this.pointRanges.find(x => x.id === criterion.pointRangeId);
+      const pointRange = this.pointRanges.find(
+        x => x.id === criterion.pointRangeId
+      );
 
       criteriaPoints.push((pointRange.minimum + pointRange.maximum) / 2);
     }
@@ -100,20 +110,26 @@ export class StudentPointsComponent {
     return elements.reduce((a, b) => a + b, 0);
   }
 
-  private getArea(areaId: number){
-    for(const part of this.master.parts){
+  private getArea(areaId: number) {
+    for (const part of this.master.parts) {
       const area = part.areas.find(x => x.id === areaId);
 
-      if(area) return area;
+      if (area) return area;
     }
 
-    throw Error(`Could not find the ares with id ${areaId}.`)
+    throw Error(`Could not find the ares with id ${areaId}.`);
   }
 
   getPointsForArea(areaId: number) {
     const area = this.getArea(areaId);
 
-    return this.sum(area.skills.map(x => this.getPointsForSkill(x.id) * this.getSkillPoints(x.id).weighting/100));
+    return this.sum(
+      area.skills.map(
+        x =>
+          (this.getPointsForSkill(x.id) * this.getSkillPoints(x.id).weighting) /
+          100
+      )
+    );
   }
 
   getPointsForPart(partId: number) {
@@ -121,51 +137,55 @@ export class StudentPointsComponent {
 
     const points: number[] = [];
 
-    for(const area of part.areas){
+    for (const area of part.areas) {
       points.push(this.getPointsForArea(area.id));
     }
 
-    return Math.round(
-      this.average(points)
-    );
+    return Math.round(this.average(points));
   }
 
   getCriteria(skillId: number, pointRangeId: number) {
-    for(const part of this.master.parts){
-      for(const area of part.areas){
+    for (const part of this.master.parts) {
+      for (const area of part.areas) {
         const skill = area.skills.find(x => x.id === skillId);
 
-        if(skill) return skill.criteria.filter(x => x.pointRangeId === pointRangeId);
+        if (skill)
+          return skill.criteria.filter(x => x.pointRangeId === pointRangeId);
       }
     }
 
-      throw Error(`Could not find the skill with id ${skillId}.`);
+    throw Error(`Could not find the skill with id ${skillId}.`);
   }
 
-  getTotalPoints(){
+  getTotalPoints() {
     let result = 0;
 
-    for(const part of master.parts){
-      result += part.weighting/100 * this.getPointsForPart(part.id);
+    for (const part of master.parts) {
+      result += (part.weighting / 100) * this.getPointsForPart(part.id);
     }
 
     return Math.round(result);
   }
 
-  getSkillWeighting(skillId: number)
-  {
+  getSkillWeighting(skillId: number) {
     return this.getSkillPoints(skillId).weighting;
   }
 
-  setSkillWeighting(value: number, skillId: number){
+  setSkillWeighting(value: number, skillId: number) {
+    if (value > 100) {
+      value = 100;
+    } else if (value < 0) {
+      value = 0;
+    }
+
     this.getSkillPoints(skillId).weighting = value;
   }
 
-  isSkillIncluded(skillId: number){
+  isSkillIncluded(skillId: number) {
     return this.getSkillPoints(skillId).isIncluded;
   }
 
-  setSkillIncluded(value: boolean, skillId: number){
+  setSkillIncluded(value: boolean, skillId: number) {
     this.getSkillPoints(skillId).isIncluded = value;
   }
 }
