@@ -188,6 +188,22 @@ export class StudentPointsComponent {
   setSkillIncluded(value: boolean, skillId: number) {
     this.getSkillPoints(skillId).isIncluded = value;
   }
+
+  getTotalAreaWeightings(areaId: number){
+    const weightings = this.getAreaSkillPoints(areaId).map(x => x.weighting);
+
+    return this.sum(weightings);
+  }
+
+  getAreaSkillsCount(areaId: number){
+    return this.getAreaSkillPoints(areaId).filter(x => x.isIncluded).length;
+  }
+
+  private getAreaSkillPoints(areaId: number){
+    const skillIds = this.getArea(areaId).skills.map(x => x.id);
+
+    return this.skillPoints.filter(x => skillIds.includes(x.skillId));
+  }
 }
 
 class CheckedCriteria {

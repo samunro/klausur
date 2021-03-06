@@ -10,6 +10,12 @@
           <h4>{{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</h4>
         </div>
       </div>
+      <div class="row alert alert-danger" *ngIf="getTotalAreaWeightings(area.id) !== 100"> 
+        <h3>The weightings should total 100%.</h3>
+        </div>
+      <div class="row alert alert-danger" *ngIf="!part.areSkillWeightingsFixed && getAreaSkillsCount(area.id) !== 3"> 
+        <h3>Three skills should be selected.</h3>
+        </div>
       <ng-container *ngFor="let skill of area.skills">
         <div class="row" *ngIf="!isSkillIncluded(skill.id)">
           <div class="col">
