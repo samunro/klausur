@@ -14,7 +14,7 @@ import { DOCUMENT } from "@angular/common";
 })
 export class AppModule { 
   constructor(meta: Meta, title: Title, @Inject(DOCUMENT) document: Document){
-    meta.updateTag({charset: "utf-8"});
+    meta.updateTag({charset: "utf-8"}, "name=undefined");
     title.setTitle("Klausur");
     document.documentElement.lang = "de";
   }
