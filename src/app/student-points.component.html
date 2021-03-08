@@ -32,7 +32,7 @@
           <div class="col-2">
             <h5>
               <label>
-                <input type="checkbox" [ngModel]="isSkillIncluded(skill.id)" (ngModelChange)="setSkillIncluded($event, skill.id)" />
+                <input type="checkbox" [ngModel]="isSkillIncluded(skill.id)" (ngModelChange)="setSkillIncluded($event, skill.id)" *ngIf="!part.areSkillWeightingsFixed" />
                 {{skill.name}}
                 </label>
               </h5>
@@ -63,7 +63,7 @@
         <div class="row">
           <div class="col-2"></div>
           <div class="col" *ngFor="let pointRange of pointRanges">
-
+            <h5 class="text-center">{{pointRange.name}}</h5>
             <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)" class="alert" [ngClass]="{'alert-primary': isCriteriaChecked(criteria.id), 'alert-secondary': !isCriteriaChecked(criteria.id)}" (click)="toggleCriteria(criteria.id, skill.id)">
               {{criteria.text}}
             </div>
