@@ -10,12 +10,12 @@
           <h4>{{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</h4>
         </div>
       </div>
-      <div class="row alert alert-danger" *ngIf="getTotalAreaWeightings(area.id) !== 100"> 
+      <div class="row alert alert-danger" *ngIf="getTotalAreaWeightings(area.id) !== 100">
         <h3>The weightings should total 100%.</h3>
-        </div>
-      <div class="row alert alert-danger" *ngIf="!part.areSkillWeightingsFixed && getAreaSkillsCount(area.id) !== 3"> 
+      </div>
+      <div class="row alert alert-danger" *ngIf="!part.areSkillWeightingsFixed && getAreaSkillsCount(area.id) !== 3">
         <h3>Three skills should be selected.</h3>
-        </div>
+      </div>
       <ng-container *ngFor="let skill of area.skills">
         <div class="row" *ngIf="!isSkillIncluded(skill.id)">
           <div class="col">
@@ -24,23 +24,25 @@
                 <input type="checkbox" [ngModel]="isSkillIncluded(skill.id)" (ngModelChange)="setSkillIncluded($event, skill.id)" />
                 {{skill.name}}
                 </label>
-              </h5>
+            </h5>
           </div>
-          </div>
+        </div>
         <ng-container *ngIf="isSkillIncluded(skill.id)">
-        <div class="row">
-          <div class="col-2">
-            <h5>
-              <label>
+          <div class="row">
+            <div class="col-2 alert alert-primary">
+              <h5>
+                <label>
                 <input type="checkbox" [ngModel]="isSkillIncluded(skill.id)" (ngModelChange)="setSkillIncluded($event, skill.id)" *ngIf="!part.areSkillWeightingsFixed" />
                 {{skill.name}}
                 </label>
               </h5>
-            <h5 *ngIf="!part.areSkillWeightingsFixed"><label>Gewicht: <input type="number" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" style="width: 60px" min="0" max="100"/></label></h5>
-            <h5>{{getPointsForSkill(skill.id)}} Punkte</h5>
-          </div>
-          <div class="col">
-            <input
+              <h5 *ngIf="!part.areSkillWeightingsFixed">
+                <label>Gewicht: <input type="number" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" style="width: 60px" min="0" max="100"/></label>
+              </h5>
+              <h5>{{getPointsForSkill(skill.id)}} Punkte</h5>
+            </div>
+            <div class="col">
+              <input
         type="range"
         style="width: 100%;"
         [ngModel]="getPointsForSkill(skill.id)"
@@ -49,7 +51,7 @@
         max="15"
         step="1"
       />
-            <input
+              <input
         type="range"
         style="width: 100%;"
         disabled="true"
@@ -58,17 +60,19 @@
         max="15"
         step="1"
       />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-2"></div>
-          <div class="col" *ngFor="let pointRange of pointRanges">
-            <h5 class="text-center">{{pointRange.name}}</h5>
-            <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)" class="alert" [ngClass]="{'alert-primary': isCriteriaChecked(criteria.id), 'alert-secondary': !isCriteriaChecked(criteria.id)}" (click)="toggleCriteria(criteria.id, skill.id)">
-              {{criteria.text}}
             </div>
           </div>
-        </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col" *ngFor="let pointRange of pointRanges">
+              <h5 class="text-center">{{pointRange.name}}</h5>
+              <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)" class="alert"
+                [ngClass]="{'alert-primary': isCriteriaChecked(criteria.id), 'alert-secondary': !isCriteriaChecked(criteria.id)}"
+                (click)="toggleCriteria(criteria.id, skill.id)">
+                {{criteria.text}}
+              </div>
+            </div>
+          </div>
         </ng-container>
       </ng-container>
     </ng-container>
