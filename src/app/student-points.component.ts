@@ -56,8 +56,10 @@ export class StudentPointsComponent {
     return this.getCheckedCriteria(criteriaId).isChecked;
   }
 
-  checkCriteria(isChecked: boolean, criteriaId: number, skillId: number) {
-    this.getCheckedCriteria(criteriaId).isChecked = isChecked;
+  toggleCriteria(criteriaId: number, skillId: number) {
+    const checkedCriteria = this.getCheckedCriteria(criteriaId);
+
+    checkedCriteria.isChecked = !checkedCriteria.isChecked;
 
     const skillPoints = this.getSkillPoints(skillId);
 

@@ -64,11 +64,8 @@
           <div class="col-2"></div>
           <div class="col" *ngFor="let pointRange of pointRanges">
 
-            <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)">
-              <label>
-						<input type="checkbox" [ngModel]="isCriteriaChecked(criteria.id)" (ngModelChange)="checkCriteria($event, criteria.id, skill.id)" />
-      {{criteria.text}}
-      </label>
+            <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)" class="alert" [ngClass]="{'alert-primary': isCriteriaChecked(criteria.id), 'alert-secondary': !isCriteriaChecked(criteria.id)}" (click)="toggleCriteria(criteria.id, skill.id)">
+              {{criteria.text}}
             </div>
           </div>
         </div>
