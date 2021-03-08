@@ -1,12 +1,13 @@
-<h1 style="display: inline">Klausur - {{getTotalPoints()}} Punkte</h1>
 <div class="container-fluid">
   <ng-container *ngFor="let part of master.parts">
-    <div class="col-12 alert alert-danger">
-      <h3>{{part.name}} Ergebnis - {{getPointsForPart(part.id)}} Punkte</h3>
+    <div class="row">
+      <div class="col-12">
+        <h3>{{part.name}} Ergebnis - {{getPointsForPart(part.id)}} Punkte</h3>
+      </div>
     </div>
     <ng-container *ngFor="let area of part.areas">
-      <div class="row" *ngIf="area.name">
-        <div class="col-12 alert alert-primary">
+      <div class="row mx-5" *ngIf="area.name">
+        <div class="col alert alert-primary">
           <h4>{{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</h4>
         </div>
       </div>
@@ -17,8 +18,8 @@
         <h3>Three skills should be selected.</h3>
       </div>
       <ng-container *ngFor="let skill of area.skills">
-        <div class="row" *ngIf="!isSkillIncluded(skill.id)">
-          <div class="col">
+        <div class="row mx-5" *ngIf="!isSkillIncluded(skill.id)">
+          <div class="col alert alert-primary">
             <h5>
               <label>
                 <input type="checkbox" [ngModel]="isSkillIncluded(skill.id)" (ngModelChange)="setSkillIncluded($event, skill.id)" />
@@ -28,7 +29,7 @@
           </div>
         </div>
         <ng-container *ngIf="isSkillIncluded(skill.id)">
-          <div class="row">
+          <div class="row mx-5">
             <div class="col-2 alert alert-primary">
               <h5>
                 <label>
@@ -41,8 +42,9 @@
               </h5>
               <h5>{{getPointsForSkill(skill.id)}} Punkte</h5>
             </div>
-            <div class="col px-5">
+            <div class="col">
               <div class="row">
+                <div class="col">
                 <input
         type="range"
         style="width: 100%;"
@@ -61,21 +63,27 @@
         max="15"
         step="1"
       />
+      </div>
               </div>
               <div class="row">
-            <div class="col" *ngFor="let pointRange of pointRanges">
-              <h5 class="text-center">{{pointRange.name}}</h5>
-              <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)" class="alert"
-                [ngClass]="{'alert-primary': isCriteriaChecked(criteria.id), 'alert-secondary': !isCriteriaChecked(criteria.id)}"
-                (click)="toggleCriteria(criteria.id, skill.id)">
-                {{criteria.text}}
-              </div>
-            </div>
+                <div class="col" *ngFor="let pointRange of pointRanges">
+                  <h5 class="text-center">{{pointRange.name}}</h5>
+                  <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)" class="alert"
+                    [ngClass]="{'alert-primary': isCriteriaChecked(criteria.id), 'alert-secondary': !isCriteriaChecked(criteria.id)}"
+                    (click)="toggleCriteria(criteria.id, skill.id)">
+                    {{criteria.text}}
+                  </div>
                 </div>
+              </div>
             </div>
           </div>
         </ng-container>
       </ng-container>
     </ng-container>
   </ng-container>
+  <div class="row">
+    <div class="col text-right mx-5">
+      <h1 style="display: inline" class="text-right">Ergebnis - {{getTotalPoints()}} Punkte</h1>
+    </div>
+  </div>
 </div>
