@@ -1,3 +1,6 @@
+<div class="display-1 mb-5">
+  Klausur Gutachten
+</div>
 <div class="container-fluid">
   <ng-container *ngFor="let part of master.parts">
     <div class="row">
@@ -45,7 +48,7 @@
             <div class="col">
               <div class="row">
                 <div class="col">
-                <input
+                  <input
         type="range"
         style="width: 100%;"
         [ngModel]="getPointsForSkill(skill.id)"
@@ -54,7 +57,7 @@
         max="15"
         step="1"
       />
-                <input
+                  <input
         type="range"
         style="width: 100%;"
         disabled="true"
@@ -63,7 +66,7 @@
         max="15"
         step="1"
       />
-      </div>
+                </div>
               </div>
               <div class="row">
                 <div class="col" *ngFor="let pointRange of pointRanges">
@@ -81,9 +84,8 @@
       </ng-container>
     </ng-container>
   </ng-container>
-  <div class="row">
-    <div class="col text-right mx-5">
-      <h1 style="display: inline" class="text-right">Ergebnis - {{getTotalPoints()}} Punkte</h1>
-    </div>
-  </div>
+</div>
+<div class="py-5"></div>
+<div class="display-1 fixed-bottom text-right">
+  Ergebnis - {{getTotalPoints()}} Punkte
 </div>
