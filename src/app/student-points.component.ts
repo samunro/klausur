@@ -62,6 +62,7 @@ export class StudentPointsComponent {
   student: string;
   teacher: string;
   school: string;
+  examType: string
 
   getPointsForSkill(skillId: number) {
     return this.getSkillPoints(skillId).points;
