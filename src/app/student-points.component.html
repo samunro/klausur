@@ -1,7 +1,48 @@
-<div class="display-1">
+<div class="display-1 mb-5">
   Klausur Gutachten
 </div>
 <div class="container-fluid">
+  <div class="row mx-5">
+    <div class="col-2 alert alert-primary">
+      <h5>Student:</h5>
+    </div>
+    <div class="col">
+      <input type="text" class="col form-control-lg" [(ngModel)]="student" />
+    </div>
+  </div>
+  <div class="row mx-5">
+    <div class="col-2 alert alert-primary">
+      <h5>Lehrer(in):</h5>
+    </div>
+    <div class="col">
+      <input type="text" class="col form-control-lg" [(ngModel)]="teacher" />
+    </div>
+  </div>
+  <div class="row mx-5">
+    <div class="col-2 alert alert-primary">
+      <h5>Schule:</h5>
+    </div>
+    <div class="col">
+      <input type="text" class="col form-control-lg" [(ngModel)]="school" />
+    </div>
+  </div>
+  <div class="row mx-5">
+    <div class="col-2 alert alert-primary">
+      <h5>Art:</h5>
+    </div>
+    <div class="col">
+      <select class="col form-control-lg" [(ngModel)]="school">
+        <option>Abitur</option>
+        <option>Einführungsphase</option>
+        <option>1. Kurs-/ Schulhalbjahr</option>
+        <option>2. Kurs-/ Schulhalbjahr</option>
+        <option>3. Kurs-/ Schulhalbjahr</option>
+        <option>4. Kurs-/ Schulhalbjahr</option>
+        <option>5. Schulhalbjahr</option>
+        <option>6. Schulhalbjahr</option>
+        </select>
+    </div>
+  </div>
   <ng-container *ngFor="let part of master.parts">
     <div class="row my-5">
       <div class="col">
@@ -39,8 +80,6 @@
           <div class="row mx-5">
             <div class="col-2 alert alert-primary">
               <h5 style="position: relative">
-                                  <div class="invalid-tooltip">Testing</div>
-
                 <label style="position: relative">
                 <input type="checkbox" [ngClass]="{'is-invalid': !part.areSkillWeightingsFixed && getAreaSkillsCount(area.id) > 3}" [ngModel]="isSkillIncluded(skill.id)" (ngModelChange)="setSkillIncluded($event, skill.id)" *ngIf="!part.areSkillWeightingsFixed" />
                   <div class="invalid-tooltip">höchstens drei</div>

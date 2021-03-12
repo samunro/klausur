@@ -59,6 +59,10 @@ export class StudentPointsComponent {
   skillPoints: SkillPoints[] = [];
   areaComments: AreaComment[] = [];
 
+  student: string;
+  teacher: string;
+  school: string;
+
   getPointsForSkill(skillId: number) {
     return this.getSkillPoints(skillId).points;
   }
