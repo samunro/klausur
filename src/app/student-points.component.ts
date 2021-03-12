@@ -12,18 +12,30 @@ export class StudentPointsComponent {
       for (const area of part.areas) {
         this.areaComments.push({areaId: area.id, comment: null});
 
-        const skillWeighting = part.areSkillWeightingsFixed
-          ? 100 / area.skills.length
-          : 0;
+        const skillCount = part.areSkillWeightingsFixed ? area.skills.length : 3;
+
+        let skillWeighting = 100 / skillCount;
+
+        if(!part.areSkillWeightingsFixed){
+          skillWeighting = Math.round(skillWeighting);
+        }
+
+        let count = 0;
+
+        const areaSkillPoints: SkillPoints[] = [];
 
         for (const skill of area.skills) {
-          this.skillPoints.push({
+          const isIncluded = part.areSkillWeightingsFixed || count < 3;
+
+          areaSkillPoints.push({
             skillId: skill.id,
             points: 0,
-            weighting: skillWeighting,
+            weighting: count < 3 || part.areSkillWeightingsFixed ? skillWeighting : 0,
             isWeightingFixed: part.areSkillWeightingsFixed,
-            isIncluded: part.areSkillWeightingsFixed
+            isIncluded: isIncluded
           });
+
+          count ++;
 
           for (const criteria of skill.criteria) {
             this.checkedCriteria.push({
@@ -32,6 +44,10 @@ export class StudentPointsComponent {
             });
           }
         }
+
+        areaSkillPoints[0].weighting += 100 - this.sum(areaSkillPoints.map(x => x.weighting));
+
+        this.skillPoints.push(...areaSkillPoints);
       }
     }
   }
