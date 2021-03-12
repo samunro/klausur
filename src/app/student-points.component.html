@@ -1,7 +1,36 @@
-<div class="display-1 mb-5">
-  Klausur Gutachten
-</div>
 <div class="container-fluid">
+  <div class="row">
+    <div class="display-1 mb-5 col">
+      Klausur Gutachten
+    </div>
+    <div class="col-1 pt-2 pr-5">
+      <button (click)="togglePrintView()">{{isPrintView ? 'bearbeiten' : 'Druckansicht'}}</button>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" *ngIf="isPrintView">
+  <div>Student: {{student}}</div>
+  <div>Lehrer(in): {{teacher}}</div>
+  <div>Schule: {{school}}</div>
+  <div>Art: {{examType}}</div>
+  <div>gesamt Ergebnis - {{getTotalPoints()}} Punkte
+    <div *ngFor="let part of master.parts">
+      <div class="display-2">Part: {{part.name}} - {{getPointsForPart(part.id)}} Punkte</div>
+      <div *ngFor="let area of part.areas">
+        <div class="display-3">Area: {{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</div>
+        <div *ngIf="getComment(area.id)">Kommentar: {{getComment(area.id)}}</div>
+        <div *ngFor="let skill of area.skills">
+          <div class="display-4">{{skill.name}}<span *ngIf="!part.areSkillWeightingsFixed"> - {{getPointsForSkill(skill.id)}} Punkte</span>
+</div>
+          <div *ngFor="let criteria of getCheckCriteriaForSkill(skill.id)">
+            {{criteria}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" *ngIf="!isPrintView">
   <div class="row mx-5">
     <div class="col-2 alert alert-primary">
       <h5>Student:</h5>
@@ -133,8 +162,8 @@
       </ng-container>
     </ng-container>
   </ng-container>
-</div>
-<div class="py-5"></div>
-<div class="display-1 fixed-bottom text-right">
-  gesamt Ergebnis - {{getTotalPoints()}} Punkte
+  <div class="py-5"></div>
+  <div class="display-1 fixed-bottom text-right">
+    gesamt Ergebnis - {{getTotalPoints()}} Punkte
+  </div>
 </div>

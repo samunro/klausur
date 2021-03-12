@@ -63,6 +63,11 @@ export class StudentPointsComponent {
   teacher: string;
   school: string;
   examType: string
+  isPrintView: boolean = false;
+
+  togglePrintView() {
+    this.isPrintView = !this.isPrintView;
+  }
 
   getPointsForSkill(skillId: number) {
     return this.getSkillPoints(skillId).points;
@@ -241,6 +246,10 @@ export class StudentPointsComponent {
 
   private getAreaComment(areaId: number) {
     return this.areaComments.find(x => x.areaId === areaId);
+  }
+
+  getCheckCriteriaForSkill(skillId: number) {
+    return this.getSkill(skillId).criteria.filter(x => this.isCriteriaChecked(x.id)).map(x => x.text);
   }
 }
 
