@@ -1,17 +1,26 @@
-<div class="display-1 mb-5">
+<div class="display-1">
   Klausur Gutachten
 </div>
 <div class="container-fluid">
   <ng-container *ngFor="let part of master.parts">
-    <div class="row">
-      <div class="col-12">
-        <h3>{{part.name}} Ergebnis - {{getPointsForPart(part.id)}} Punkte</h3>
+    <div class="row my-5">
+      <div class="col">
+        <div class="display-3">{{part.name}} Ergebnis - {{getPointsForPart(part.id)}} Punkte</div>
       </div>
     </div>
     <ng-container *ngFor="let area of part.areas">
-      <div class="row mx-5" *ngIf="area.name">
+      <div class="row mx-5 mt-5" *ngIf="area.name">
         <div class="col alert alert-primary">
           <h4>{{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</h4>
+        </div>
+      </div>
+      <div class="row mx-5">
+        <div class="col-2 alert alert-primary">
+          <h5>Kommentar</h5>
+        </div>
+
+        <div class="col">
+          <textarea [ngModel]="getComment(area.id)" (ngModelChange)="setComment($event, area.id)" class="col"></textarea>
         </div>
       </div>
       <div class="row alert alert-danger" *ngIf="getTotalAreaWeightings(area.id) !== 100">
@@ -87,5 +96,5 @@
 </div>
 <div class="py-5"></div>
 <div class="display-1 fixed-bottom text-right">
-  Ergebnis - {{getTotalPoints()}} Punkte
+  gesamt Ergebnis - {{getTotalPoints()}} Punkte
 </div>

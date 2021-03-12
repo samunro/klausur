@@ -10,6 +10,8 @@ export class StudentPointsComponent {
   ngOnInit() {
     for (const part of master.parts) {
       for (const area of part.areas) {
+        this.areaComments.push({areaId: area.id, comment: null});
+
         const skillWeighting = part.areSkillWeightingsFixed
           ? 100 / area.skills.length
           : 0;
@@ -39,6 +41,7 @@ export class StudentPointsComponent {
 
   checkedCriteria: CheckedCriteria[] = [];
   skillPoints: SkillPoints[] = [];
+  areaComments: AreaComment[] = [];
 
   getPointsForSkill(skillId: number) {
     return this.getSkillPoints(skillId).points;
@@ -206,6 +209,18 @@ export class StudentPointsComponent {
 
     return this.skillPoints.filter(x => skillIds.includes(x.skillId));
   }
+
+  getComment(areaId: number) {
+    return this.getAreaComment(areaId).comment;
+  }
+
+  setComment(value: string, areaId: number){
+    this.getAreaComment(areaId).comment = value;
+  }
+
+  private getAreaComment(areaId: number) {
+    return this.areaComments.find(x => x.areaId === areaId);
+  }
 }
 
 class CheckedCriteria {
@@ -219,4 +234,9 @@ class SkillPoints {
   weighting: number;
   isWeightingFixed: boolean;
   isIncluded: boolean;
+}
+
+class AreaComment {
+  areaId: number;
+  comment: string;
 }
