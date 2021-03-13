@@ -6,6 +6,7 @@ import { AppComponent } from "./app.component";
 import { StudentPointsComponent } from "./student-points.component";
 import { HelloComponent } from "./hello.component";
 import { DOCUMENT } from "@angular/common";
+import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
 
 @NgModule({
   imports: [BrowserModule, FormsModule],
