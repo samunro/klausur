@@ -1,91 +1,92 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="display-1 mb-5 col">
-      Klausur Gutachten
-    </div>
-    <div class="col-4 pt-2 pr-5 text-right">
-      <div class="row">
-        <div class="col">
-          <button (click)="togglePrintView()">{{isPrintView ? 'bearbeiten' : 'Druckansicht'}}</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <button (click)="saveExamDefinition()">Klausur Definition speichern</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          Klausur Definition hochladen <input type="file" (change)="loadExamDefinition($event)" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <button (click)="saveExam()">Klausur speichern</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          Klausur hochladen <input type="file" (change)="loadExam($event)" />
-        </div>
-      </div>
+  <div class="row text-right d-print-none pr-5">
+    <div class="col mt-2">
+      <button (click)="togglePrintView()" class="btn btn-secondary">{{isPrintView ? 'bearbeiten' : 'Druckansicht'}}</button>
     </div>
   </div>
-</div>
-<div class="container-fluid" *ngIf="isPrintView">
-  <div>Student: {{student}}</div>
-  <div>Lehrer(in): {{teacher}}</div>
-  <div>Schule: {{school}}</div>
-  <div>Art: {{examType}}</div>
-  <div>gesamt Ergebnis - {{getTotalPoints()}} Punkte
-    <div *ngFor="let part of master.parts">
-      <div class="display-2">Part: {{part.name}} - {{getPointsForPart(part.id)}} Punkte</div>
-      <div *ngFor="let area of part.areas">
-        <div class="display-3">Area: {{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</div>
-        <div *ngIf="getComment(area.id)">Kommentar: {{getComment(area.id)}}</div>
-        <div *ngFor="let skill of area.skills">
-          <div class="display-4">
-            {{skill.name}}<span *ngIf="!part.areSkillWeightingsFixed"> - {{getPointsForSkill(skill.id)}} Punkte</span>
-          </div>
-          <div *ngFor="let criteria of getCheckCriteriaForSkill(skill.id)">
-            {{criteria}}
+  <div class="container-fluid" *ngIf="isPrintView" id="print-section">
+    <div>Student: {{student}}</div>
+    <div>Lehrer(in): {{teacher}}</div>
+    <div>Schule: {{school}}</div>
+    <div>Art: {{examType}}</div>
+    <div>gesamt Ergebnis - {{getTotalPoints()}} Punkte
+      <div *ngFor="let part of master.parts">
+        <div class="display-2">Part: {{part.name}} - {{getPointsForPart(part.id)}} Punkte</div>
+        <div *ngFor="let area of part.areas">
+          <div class="display-3">Area: {{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</div>
+          <div *ngIf="getComment(area.id)">Kommentar: {{getComment(area.id)}}</div>
+          <div *ngFor="let skill of area.skills">
+            <div class="display-4">
+              {{skill.name}}<span *ngIf="!part.areSkillWeightingsFixed"> - {{getPointsForSkill(skill.id)}} Punkte</span>
+            </div>
+            <div *ngFor="let criteria of getCheckCriteriaForSkill(skill.id)">
+              {{criteria}}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div class="container-fluid" *ngIf="!isPrintView">
-  <div class="row mx-5">
-    <div class="col-2 alert alert-primary">
-      <h5>Student:</h5>
+  <div class="container-fluid" *ngIf="!isPrintView">
+    <div class="row">
+      <div class="display-1 mb-5 col">
+        Klausur Gutachten
+      </div>
+      <div class="col-4 pr-5 text-right">
+        <div class="row pt-2">
+          <div class="col">
+            <button (click)="saveExamDefinition()" class="btn btn-secondary">Klausur Definition speichern</button>
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col">
+            <label for="uploadExamDefinition" class="btn btn-secondary">Klausur Definition hochladen</label>
+            <input id="uploadExamDefinition" type="file" accept="application/json" (change)="loadExamDefinition($event)" style="opacity: 0; width: 0;" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button (click)="saveExam()" class="btn btn-secondary">Klausur speichern</button>
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col">
+            <label for="uploadExamDefinition" class="btn btn-secondary">Klausur hochladen</label>
+            <input type="file" accept="application/json" (change)="loadExam($event)" style="opacity: 0; width: 0" />
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col">
-      <input type="text" class="col form-control-lg" [(ngModel)]="student" />
+    <div class="row mx-5">
+      <div class="col-2 alert alert-primary">
+        <h5>Student:</h5>
+      </div>
+      <div class="col">
+        <input type="text" class="col form-control-lg" [(ngModel)]="student" />
+      </div>
     </div>
-  </div>
-  <div class="row mx-5">
-    <div class="col-2 alert alert-primary">
-      <h5>Lehrer(in):</h5>
+    <div class="row mx-5">
+      <div class="col-2 alert alert-primary">
+        <h5>Lehrer(in):</h5>
+      </div>
+      <div class="col">
+        <input type="text" class="col form-control-lg" [(ngModel)]="teacher" />
+      </div>
     </div>
-    <div class="col">
-      <input type="text" class="col form-control-lg" [(ngModel)]="teacher" />
+    <div class="row mx-5">
+      <div class="col-2 alert alert-primary">
+        <h5>Schule:</h5>
+      </div>
+      <div class="col">
+        <input type="text" class="col form-control-lg" [(ngModel)]="school" />
+      </div>
     </div>
-  </div>
-  <div class="row mx-5">
-    <div class="col-2 alert alert-primary">
-      <h5>Schule:</h5>
-    </div>
-    <div class="col">
-      <input type="text" class="col form-control-lg" [(ngModel)]="school" />
-    </div>
-  </div>
-  <div class="row mx-5">
-    <div class="col-2 alert alert-primary">
-      <h5>Art:</h5>
-    </div>
-    <div class="col">
-      <select class="col form-control-lg" [(ngModel)]="examType">
+    <div class="row mx-5">
+      <div class="col-2 alert alert-primary">
+        <h5>Art:</h5>
+      </div>
+      <div class="col">
+        <select class="col form-control-lg" [(ngModel)]="examType">
         <option>Abitur</option>
         <option>Einführungsphase</option>
         <option>1. Kurs-/ Schulhalbjahr</option>
@@ -95,63 +96,63 @@
         <option>5. Schulhalbjahr</option>
         <option>6. Schulhalbjahr</option>
         </select>
-    </div>
-  </div>
-  <ng-container *ngFor="let part of master.parts">
-    <div class="row my-5">
-      <div class="col">
-        <div class="display-3">{{part.name}} Ergebnis - {{getPointsForPart(part.id)}} Punkte</div>
       </div>
     </div>
-    <ng-container *ngFor="let area of part.areas">
-      <div class="row mx-5 mt-5" *ngIf="area.name">
-        <div class="col alert alert-primary">
-          <h4>{{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</h4>
-        </div>
-      </div>
-      <div class="row mx-5">
-        <div class="col-2 alert alert-primary">
-          <h5>Kommentar</h5>
-        </div>
-
+    <ng-container *ngFor="let part of master.parts">
+      <div class="row my-5">
         <div class="col">
-          <textarea [ngModel]="getComment(area.id)" (ngModelChange)="setComment($event, area.id)" class="col"></textarea>
+          <div class="display-3">{{part.name}} Ergebnis - {{getPointsForPart(part.id)}} Punkte</div>
         </div>
       </div>
-      <ng-container *ngFor="let skill of area.skills">
-        <div class="row mx-5" *ngIf="!isSkillIncluded(skill.id)">
+      <ng-container *ngFor="let area of part.areas">
+        <div class="row mx-5 mt-5" *ngIf="area.name">
           <div class="col alert alert-primary">
-            <h5>
-              <label style="position: relative">
+            <h4>{{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</h4>
+          </div>
+        </div>
+        <div class="row mx-5">
+          <div class="col-2 alert alert-primary">
+            <h5>Kommentar</h5>
+          </div>
+
+          <div class="col">
+            <textarea [ngModel]="getComment(area.id)" (ngModelChange)="setComment($event, area.id)" class="col"></textarea>
+          </div>
+        </div>
+        <ng-container *ngFor="let skill of area.skills">
+          <div class="row mx-5" *ngIf="!isSkillIncluded(skill.id)">
+            <div class="col alert alert-primary">
+              <h5>
+                <label style="position: relative">
                 <input type="checkbox" [ngClass]="{'is-invalid': !part.areSkillWeightingsFixed && getAreaSkillsCount(area.id) < 3}" [ngModel]="isSkillIncluded(skill.id)" (ngModelChange)="setSkillIncluded($event, skill.id)" />
                 <span class="invalid-tooltip">mindestens drei</span>
                 {{skill.name}}
               </label>
-            </h5>
+              </h5>
+            </div>
           </div>
-        </div>
-        <ng-container *ngIf="isSkillIncluded(skill.id)">
-          <div class="row mx-5">
-            <div class="col-2 alert alert-primary">
-              <h5 style="position: relative">
-                <label style="position: relative">
+          <ng-container *ngIf="isSkillIncluded(skill.id)">
+            <div class="row mx-5">
+              <div class="col-2 alert alert-primary">
+                <h5 style="position: relative">
+                  <label style="position: relative">
                 <input type="checkbox" [ngClass]="{'is-invalid': !part.areSkillWeightingsFixed && getAreaSkillsCount(area.id) > 3}" [ngModel]="isSkillIncluded(skill.id)" (ngModelChange)="setSkillIncluded($event, skill.id)" *ngIf="!part.areSkillWeightingsFixed" />
                   <div class="invalid-tooltip">höchstens drei</div>
                 {{skill.name}}
                 </label>
-              </h5>
-              <h5>{{getPointsForSkill(skill.id)}} Punkte</h5>
-              <h5 *ngIf="!part.areSkillWeightingsFixed">
-                <label style="position: relative">
+                </h5>
+                <h5>{{getPointsForSkill(skill.id)}} Punkte</h5>
+                <h5 *ngIf="!part.areSkillWeightingsFixed">
+                  <label style="position: relative">
                   Gewicht: <input type="number" [ngClass]="{'is-invalid': getTotalAreaWeightings(area.id) !== 100}" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" style="width: 60px" min="0" max="100"/>
                   <div class="invalid-tooltip">nicht 100% ins gesamt</div>
                 </label>
-              </h5>
-            </div>
-            <div class="col">
-              <div class="row">
-                <div class="col">
-                  <input
+                </h5>
+              </div>
+              <div class="col">
+                <div class="row">
+                  <div class="col">
+                    <input
         type="range"
         style="width: 100%;"
         [ngModel]="getPointsForSkill(skill.id)"
@@ -160,7 +161,7 @@
         max="15"
         step="1"
       />
-                  <input
+                    <input
         type="range"
         style="width: 100%;"
         disabled="true"
@@ -169,26 +170,26 @@
         max="15"
         step="1"
       />
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col" *ngFor="let pointRange of pointRanges">
-                  <h5 class="text-center">{{pointRange.name}}</h5>
-                  <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)" class="alert"
-                    [ngClass]="{'alert-primary': isCriteriaChecked(criteria.id), 'alert-secondary': !isCriteriaChecked(criteria.id)}"
-                    (click)="toggleCriteria(criteria.id, skill.id)">
-                    {{criteria.text}}
+                <div class="row">
+                  <div class="col" *ngFor="let pointRange of pointRanges">
+                    <h5 class="text-center">{{pointRange.name}}</h5>
+                    <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)" class="alert"
+                      [ngClass]="{'alert-primary': isCriteriaChecked(criteria.id), 'alert-secondary': !isCriteriaChecked(criteria.id)}"
+                      (click)="toggleCriteria(criteria.id, skill.id)">
+                      {{criteria.text}}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </ng-container>
         </ng-container>
       </ng-container>
     </ng-container>
-  </ng-container>
-  <div class="py-5"></div>
-  <div class="display-1 fixed-bottom text-right">
-    gesamt Ergebnis - {{getTotalPoints()}} Punkte
+    <div class="py-5"></div>
+    <div class="display-1 fixed-bottom text-right">
+      gesamt Ergebnis - {{getTotalPoints()}} Punkte
+    </div>
   </div>
-</div>
