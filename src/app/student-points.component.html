@@ -1,7 +1,8 @@
 <div class="container-fluid">
   <div class="row text-right d-print-none pr-5">
     <div class="col mt-2">
-      <button (click)="togglePrintView()" class="btn btn-secondary"><i class="bi-printer"></i>{{isPrintView ? 'bearbeiten' : 'Druckansicht'}}</button>
+<i class="bi bi-star-fill"></i>
+      <button (click)="togglePrintView()" class="btn btn-secondary">{{isPrintView ? 'bearbeiten' : 'Druckansicht'}}</button>
     </div>
   </div>
   <div class="container-fluid" *ngIf="isPrintView" id="print-section">
