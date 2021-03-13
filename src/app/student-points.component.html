@@ -11,12 +11,22 @@
       </div>
       <div class="row">
         <div class="col">
-          <button (click)="saveExam()">Klausur Definition speichern</button>
+          <button (click)="saveExamDefinition()">Klausur Definition speichern</button>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          Klausur Definition hochladen <input type="file" (change)="loadExam($event)" />
+          Klausur Definition hochladen <input type="file" (change)="loadExamDefinition($event)" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button (click)="saveExam()">Klausur speichern</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Klausur hochladen <input type="file" (change)="loadExam($event)" />
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ export class StudentPointsComponent {
   ngOnInit() {
     for (const part of master.parts) {
       for (const area of part.areas) {
-        this.areaComments.push({ areaId: area.id, comment: null });
+        this.exam.areaComments.push({ areaId: area.id, comment: null });
 
         const skillCount = part.areSkillWeightingsFixed
           ? area.skills.length
@@ -27,7 +27,7 @@ export class StudentPointsComponent {
         const areaSkillPoints: SkillWeighting[] = [];
 
         for (const skill of area.skills) {
-          this.skillPoints.push({ skillId: skill.id, points: 0 });
+          this.exam.skillPoints.push({ skillId: skill.id, points: 0 });
 
           const isIncluded = part.areSkillWeightingsFixed || count < 3;
 
@@ -42,7 +42,7 @@ export class StudentPointsComponent {
           count++;
 
           for (const criteria of skill.criteria) {
-            this.checkedCriteria.push({
+            this.exam.checkedCriteria.push({
               criteriaId: criteria.id,
               isChecked: false
             });
@@ -52,7 +52,7 @@ export class StudentPointsComponent {
         areaSkillPoints[0].weighting +=
           100 - this.sum(areaSkillPoints.map(x => x.weighting));
 
-        this.exam.skillWeightings.push(...areaSkillPoints);
+        this.examDefinition.skillWeightings.push(...areaSkillPoints);
       }
     }
   }
@@ -60,35 +60,39 @@ export class StudentPointsComponent {
   master = master;
   pointRanges = pointRanges.items.sort((a, b) => a.minimum - b.minimum);
 
-  private exam: Exam = new Exam();
-  private checkedCriteria: CheckedCriteria[] = [];
-  private skillPoints: SkillPoints[] = [];
-  private areaComments: AreaComment[] = [];
+  private examDefinition = new ExamDefinition();
+  private exam = new Exam();
 
-  student: string;
+  get student() {
+    return this.exam.student;
+  }
+
+  set student(value: string){
+    this.exam.student = value;
+  }
 
   get teacher() {
-    return this.exam.teacher;
+    return this.examDefinition.teacher;
   }
 
   set teacher(value: string) {
-    this.exam.teacher = value;
+    this.examDefinition.teacher = value;
   }
 
   get school() {
-    return this.exam.school;
+    return this.examDefinition.school;
   }
 
   set school(value: string) {
-    this.exam.school = value;
+    this.examDefinition.school = value;
   }
 
   get examType() {
-    return this.exam.type;
+    return this.examDefinition.type;
   }
 
   set examType(value: string) {
-    this.exam.type = value;
+    this.examDefinition.type = value;
   }
 
   isPrintView: boolean = false;
@@ -106,7 +110,7 @@ export class StudentPointsComponent {
   }
 
   getSkillPoints(skillId: number) {
-    return this.skillPoints.find(x => x.skillId === skillId);
+    return this.exam.skillPoints.find(x => x.skillId === skillId);
   }
 
   isCriteriaChecked(criteriaId: number) {
@@ -124,7 +128,7 @@ export class StudentPointsComponent {
   }
 
   private getCheckedCriteria(criteriaId: number) {
-    return this.checkedCriteria.find(x => x.criteriaId === criteriaId);
+    return this.exam.checkedCriteria.find(x => x.criteriaId === criteriaId);
   }
 
   private getSkill(skillId: number) {
@@ -241,7 +245,7 @@ export class StudentPointsComponent {
   }
 
   private getSkillWeightingObject(skillId: number){
-    return this.exam.skillWeightings.find(x => x.skillId === skillId);
+    return this.examDefinition.skillWeightings.find(x => x.skillId === skillId);
   }
 
   isSkillIncluded(skillId: number) {
@@ -269,7 +273,7 @@ export class StudentPointsComponent {
   private getAreaSkillWeightings(areaId: number){
     const skillIds = this.getArea(areaId).skills.map(x => x.id);
 
-    return this.exam.skillWeightings.filter(x => skillIds.includes(x.skillId));
+    return this.examDefinition.skillWeightings.filter(x => skillIds.includes(x.skillId));
   }
 
   getComment(areaId: number) {
@@ -281,7 +285,7 @@ export class StudentPointsComponent {
   }
 
   private getAreaComment(areaId: number) {
-    return this.areaComments.find(x => x.areaId === areaId);
+    return this.exam.areaComments.find(x => x.areaId === areaId);
   }
 
   getCheckCriteriaForSkill(skillId: number) {
@@ -290,8 +294,24 @@ export class StudentPointsComponent {
       .map(x => x.text);
   }
 
+  saveExamDefinition() {
+    this.download(this.examDefinition, "Klausur Definition.json");
+  }
+
+  async loadExamDefinition(event: Event) {
+    const content = await (event.target as HTMLInputElement).files[0].text();
+
+    this.examDefinition = JSON.parse(content);
+  }
+
   saveExam() {
-    this.download(this.exam, "Klausur Definition.json");
+    this.download(this.exam, "Klausur.json");
+  }
+
+  async loadExam(event: Event) {
+    const content = await (event.target as HTMLInputElement).files[0].text();
+
+    this.exam = JSON.parse(content);
   }
 
   private download(data: object, filename, type = "application/json") {
@@ -313,12 +333,6 @@ export class StudentPointsComponent {
       }, 0);
     }
   }
-
-  async loadExam(event: Event) {
-    const content = await (event.target as HTMLInputElement).files[0].text();
-
-    this.exam = JSON.parse(content);
-  }
 }
 
 class CheckedCriteria {
@@ -336,7 +350,7 @@ class AreaComment {
   comment: string;
 }
 
-class Exam {
+class ExamDefinition {
   teacher: string;
   school: string;
   "type": string;
@@ -348,4 +362,11 @@ class SkillWeighting {
   weighting: number;
   isWeightingFixed: boolean;
   isIncluded: boolean;
+}
+
+class Exam{
+  student: string;
+  checkedCriteria: CheckedCriteria[] = [];
+  skillPoints: SkillPoints[] = [];
+  areaComments: AreaComment[] = [];
 }
