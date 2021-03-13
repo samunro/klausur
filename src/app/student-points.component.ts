@@ -24,14 +24,15 @@ export class StudentPointsComponent {
 
         let count = 0;
 
-        const areaSkillPoints: SkillPoints[] = [];
+        const areaSkillPoints: SkillWeighting[] = [];
 
         for (const skill of area.skills) {
+          this.skillPoints.push({ skillId: skill.id, points: 0 });
+
           const isIncluded = part.areSkillWeightingsFixed || count < 3;
 
           areaSkillPoints.push({
             skillId: skill.id,
-            points: 0,
             weighting:
               count < 3 || part.areSkillWeightingsFixed ? skillWeighting : 0,
             isWeightingFixed: part.areSkillWeightingsFixed,
@@ -51,7 +52,7 @@ export class StudentPointsComponent {
         areaSkillPoints[0].weighting +=
           100 - this.sum(areaSkillPoints.map(x => x.weighting));
 
-        this.skillPoints.push(...areaSkillPoints);
+        this.exam.skillWeightings.push(...areaSkillPoints);
       }
     }
   }
@@ -184,7 +185,7 @@ export class StudentPointsComponent {
     return this.sum(
       area.skills.map(
         x =>
-          (this.getPointsForSkill(x.id) * this.getSkillPoints(x.id).weighting) /
+          (this.getPointsForSkill(x.id) * this.getSkillWeighting(x.id)) /
           100
       )
     );
@@ -226,7 +227,7 @@ export class StudentPointsComponent {
   }
 
   getSkillWeighting(skillId: number) {
-    return this.getSkillPoints(skillId).weighting;
+    return this.getSkillWeightingObject(skillId).weighting;
   }
 
   setSkillWeighting(value: number, skillId: number) {
@@ -236,31 +237,39 @@ export class StudentPointsComponent {
       value = 0;
     }
 
-    this.getSkillPoints(skillId).weighting = value;
+    this.getSkillWeightingObject(skillId).weighting = value;
+  }
+
+  private getSkillWeightingObject(skillId: number){
+    return this.exam.skillWeightings.find(x => x.skillId === skillId);
   }
 
   isSkillIncluded(skillId: number) {
-    return this.getSkillPoints(skillId).isIncluded;
+    return this.getSkillWeightingObject(skillId).isIncluded;
   }
 
   setSkillIncluded(value: boolean, skillId: number) {
-    this.getSkillPoints(skillId).isIncluded = value;
+    this.getSkillWeightingObject(skillId).isIncluded = value;
   }
 
   getTotalAreaWeightings(areaId: number) {
-    const weightings = this.getAreaSkillPoints(areaId).map(x => x.weighting);
+    const weightings = this.getIncludedAreaSkillWeightings(areaId).map(x => x.weighting);
 
     return this.sum(weightings);
   }
 
   getAreaSkillsCount(areaId: number) {
-    return this.getAreaSkillPoints(areaId).filter(x => x.isIncluded).length;
+    return this.getIncludedAreaSkillWeightings(areaId).length;
   }
 
-  private getAreaSkillPoints(areaId: number) {
+  getIncludedAreaSkillWeightings(areaId: number){
+    return this.getAreaSkillWeightings(areaId).filter(x => x.isIncluded);
+  }
+
+  private getAreaSkillWeightings(areaId: number){
     const skillIds = this.getArea(areaId).skills.map(x => x.id);
 
-    return this.skillPoints.filter(x => skillIds.includes(x.skillId));
+    return this.exam.skillWeightings.filter(x => skillIds.includes(x.skillId));
   }
 
   getComment(areaId: number) {
@@ -305,7 +314,7 @@ export class StudentPointsComponent {
     }
   }
 
-  async loadExam(event: Event){
+  async loadExam(event: Event) {
     const content = await (event.target as HTMLInputElement).files[0].text();
 
     this.exam = JSON.parse(content);
@@ -320,16 +329,6 @@ class CheckedCriteria {
 class SkillPoints {
   skillId: number;
   points: number;
-  weighting: number;
-  isWeightingFixed: boolean;
-  isIncluded: boolean;
-}
-
-class SkillWeighting {
-  skillId: number;
-  weighting: number;
-  isWeightingFixed: boolean;
-  isIncluded: boolean;
 }
 
 class AreaComment {
@@ -341,4 +340,12 @@ class Exam {
   teacher: string;
   school: string;
   "type": string;
+  skillWeightings: SkillWeighting[] = [];
+}
+
+class SkillWeighting {
+  skillId: number;
+  weighting: number;
+  isWeightingFixed: boolean;
+  isIncluded: boolean;
 }
