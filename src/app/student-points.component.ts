@@ -10,13 +10,15 @@ export class StudentPointsComponent {
   ngOnInit() {
     for (const part of master.parts) {
       for (const area of part.areas) {
-        this.areaComments.push({areaId: area.id, comment: null});
+        this.areaComments.push({ areaId: area.id, comment: null });
 
-        const skillCount = part.areSkillWeightingsFixed ? area.skills.length : 3;
+        const skillCount = part.areSkillWeightingsFixed
+          ? area.skills.length
+          : 3;
 
         let skillWeighting = 100 / skillCount;
 
-        if(!part.areSkillWeightingsFixed){
+        if (!part.areSkillWeightingsFixed) {
           skillWeighting = Math.round(skillWeighting);
         }
 
@@ -30,12 +32,13 @@ export class StudentPointsComponent {
           areaSkillPoints.push({
             skillId: skill.id,
             points: 0,
-            weighting: count < 3 || part.areSkillWeightingsFixed ? skillWeighting : 0,
+            weighting:
+              count < 3 || part.areSkillWeightingsFixed ? skillWeighting : 0,
             isWeightingFixed: part.areSkillWeightingsFixed,
             isIncluded: isIncluded
           });
 
-          count ++;
+          count++;
 
           for (const criteria of skill.criteria) {
             this.checkedCriteria.push({
@@ -45,7 +48,8 @@ export class StudentPointsComponent {
           }
         }
 
-        areaSkillPoints[0].weighting += 100 - this.sum(areaSkillPoints.map(x => x.weighting));
+        areaSkillPoints[0].weighting +=
+          100 - this.sum(areaSkillPoints.map(x => x.weighting));
 
         this.skillPoints.push(...areaSkillPoints);
       }
@@ -55,14 +59,37 @@ export class StudentPointsComponent {
   master = master;
   pointRanges = pointRanges.items.sort((a, b) => a.minimum - b.minimum);
 
-  checkedCriteria: CheckedCriteria[] = [];
-  skillPoints: SkillPoints[] = [];
-  areaComments: AreaComment[] = [];
+  private exam: Exam = new Exam();
+  private checkedCriteria: CheckedCriteria[] = [];
+  private skillPoints: SkillPoints[] = [];
+  private areaComments: AreaComment[] = [];
 
   student: string;
-  teacher: string;
-  school: string;
-  examType: string
+
+  get teacher() {
+    return this.exam.teacher;
+  }
+
+  set teacher(value: string) {
+    this.exam.teacher = value;
+  }
+
+  get school() {
+    return this.exam.school;
+  }
+
+  set school(value: string) {
+    this.exam.school = value;
+  }
+
+  get examType() {
+    return this.exam.type;
+  }
+
+  set examType(value: string) {
+    this.exam.type = value;
+  }
+
   isPrintView: boolean = false;
 
   togglePrintView() {
@@ -220,17 +247,17 @@ export class StudentPointsComponent {
     this.getSkillPoints(skillId).isIncluded = value;
   }
 
-  getTotalAreaWeightings(areaId: number){
+  getTotalAreaWeightings(areaId: number) {
     const weightings = this.getAreaSkillPoints(areaId).map(x => x.weighting);
 
     return this.sum(weightings);
   }
 
-  getAreaSkillsCount(areaId: number){
+  getAreaSkillsCount(areaId: number) {
     return this.getAreaSkillPoints(areaId).filter(x => x.isIncluded).length;
   }
 
-  private getAreaSkillPoints(areaId: number){
+  private getAreaSkillPoints(areaId: number) {
     const skillIds = this.getArea(areaId).skills.map(x => x.id);
 
     return this.skillPoints.filter(x => skillIds.includes(x.skillId));
@@ -240,7 +267,7 @@ export class StudentPointsComponent {
     return this.getAreaComment(areaId).comment;
   }
 
-  setComment(value: string, areaId: number){
+  setComment(value: string, areaId: number) {
     this.getAreaComment(areaId).comment = value;
   }
 
@@ -249,7 +276,39 @@ export class StudentPointsComponent {
   }
 
   getCheckCriteriaForSkill(skillId: number) {
-    return this.getSkill(skillId).criteria.filter(x => this.isCriteriaChecked(x.id)).map(x => x.text);
+    return this.getSkill(skillId)
+      .criteria.filter(x => this.isCriteriaChecked(x.id))
+      .map(x => x.text);
+  }
+
+  saveExam() {
+    this.download(this.exam, "Klausur Definition.json");
+  }
+
+  private download(data: object, filename, type = "application/json") {
+    var file = new Blob([JSON.stringify(data)], { type: type });
+    if (window.navigator.msSaveOrOpenBlob)
+      // IE10+
+      window.navigator.msSaveOrOpenBlob(file, filename);
+    else {
+      // Others
+      var a = document.createElement("a"),
+        url = URL.createObjectURL(file);
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function() {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 0);
+    }
+  }
+
+  async loadExam(event: Event){
+    const content = await (event.target as HTMLInputElement).files[0].text();
+
+    this.exam = JSON.parse(content);
   }
 }
 
@@ -266,7 +325,20 @@ class SkillPoints {
   isIncluded: boolean;
 }
 
+class SkillWeighting {
+  skillId: number;
+  weighting: number;
+  isWeightingFixed: boolean;
+  isIncluded: boolean;
+}
+
 class AreaComment {
   areaId: number;
   comment: string;
+}
+
+class Exam {
+  teacher: string;
+  school: string;
+  "type": string;
 }

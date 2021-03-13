@@ -3,8 +3,22 @@
     <div class="display-1 mb-5 col">
       Klausur Gutachten
     </div>
-    <div class="col-1 pt-2 pr-5">
-      <button (click)="togglePrintView()">{{isPrintView ? 'bearbeiten' : 'Druckansicht'}}</button>
+    <div class="col-4 pt-2 pr-5 text-right">
+      <div class="row">
+        <div class="col">
+          <button (click)="togglePrintView()">{{isPrintView ? 'bearbeiten' : 'Druckansicht'}}</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button (click)="saveExam()">Klausur Definition speichern</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Klausur Definition hochladen <input type="file" (change)="loadExam($event)" />
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -20,8 +34,9 @@
         <div class="display-3">Area: {{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</div>
         <div *ngIf="getComment(area.id)">Kommentar: {{getComment(area.id)}}</div>
         <div *ngFor="let skill of area.skills">
-          <div class="display-4">{{skill.name}}<span *ngIf="!part.areSkillWeightingsFixed"> - {{getPointsForSkill(skill.id)}} Punkte</span>
-</div>
+          <div class="display-4">
+            {{skill.name}}<span *ngIf="!part.areSkillWeightingsFixed"> - {{getPointsForSkill(skill.id)}} Punkte</span>
+          </div>
           <div *ngFor="let criteria of getCheckCriteriaForSkill(skill.id)">
             {{criteria}}
           </div>
