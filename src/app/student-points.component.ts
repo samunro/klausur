@@ -79,6 +79,14 @@ export class StudentPointsComponent {
     this.examDefinition.teacher = value;
   }
 
+  get city() {
+    return this.examDefinition.city;
+  }
+
+  set city(value: string) {
+    this.examDefinition.city = value;
+  }
+
   get school() {
     return this.examDefinition.school;
   }
@@ -139,7 +147,7 @@ export class StudentPointsComponent {
     return this.exam.checkedCriteria.find(x => x.criteriaId === criteriaId);
   }
 
-  private getSkill(skillId: number) {
+  getSkill(skillId: number) {
     for (const part of this.master.parts) {
       for (const area of part.areas) {
         const skill = area.skills.find(x => x.id === skillId);
@@ -341,6 +349,14 @@ export class StudentPointsComponent {
       }, 0);
     }
   }
+
+  get year() {
+    return new Date().getUTCFullYear();
+  }
+
+  get date() {
+    return new Date().toLocaleDateString('de-DE', {month: "long", year: "numeric", day: "numeric"});
+  }
 }
 
 class CheckedCriteria {
@@ -360,6 +376,7 @@ class AreaComment {
 
 class ExamDefinition {
   teacher: string;
+  city: string;
   school: string;
   course: string;
   "type": string;

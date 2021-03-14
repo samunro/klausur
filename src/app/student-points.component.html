@@ -20,174 +20,230 @@
       </div>
     </div>
   </div>
-  </div>
-  <div class="container-fluid" *ngIf="isPrintView" id="print-section">
-    <div>Gutachten für {{student}}</div>
-    <div>Kursleitung: {{teacher}}</div>
-    <div>Schule: {{school}}</div>
-    <div>Fach: {{course}}</div>
-    <div>Art: {{examType}}</div>
-    <div>gesamt Ergebnis - {{getTotalPoints()}} Punkte
-      <div *ngFor="let part of master.parts">
-        <div class="display-2">Part: {{part.name}} - {{getPointsForPart(part.id)}} Punkte</div>
-        <div *ngFor="let area of part.areas">
-          <div class="display-3">Area: {{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</div>
-          <div *ngIf="getComment(area.id)">Kommentar: {{getComment(area.id)}}</div>
-          <div *ngFor="let skill of area.skills">
-            <div class="display-4">
-              {{skill.name}}<span *ngIf="!part.areSkillWeightingsFixed"> - {{getPointsForSkill(skill.id)}} Punkte</span>
-            </div>
-            <div *ngFor="let criteria of getCheckCriteriaForSkill(skill.id)">
-              {{criteria}}
-            </div>
+</div>
+<div class="container-fluid px-5" *ngIf="isPrintView" id="print-section">
+  <h1>Gutachten für {{student}}</h1>
+  <h2>Klausur {{year}}, {{course}}</h2>
+  <table>
+    <col />
+    <col style="width: 10px" />
+    <col />
+    <tr>
+      <td class="text-right">Kurs-/Schulhalbjahr:</td>
+      <td></td>
+      <td>{{examType}}</td>
+    </tr>
+    <tr>
+      <td class="text-right">Kursleitung:</td>
+      <td></td>
+      <td>{{teacher}}</td>
+    </tr>
+    <tr>
+      <td class="text-right">Schule:</td>
+      <td></td>
+      <td>{{school}}</td>
+    </tr>
+  </table>
+  <table class="table my-5" *ngFor="let part of master.parts">
+    <thead>
+      <th style="width: 300px">
+        {{part.name}} ({{part.weighting}}%)
+      </th>
+      <th>
+        Bewertung
+      </th>
+      <th style="width: 100px">
+        Punkte
+      </th>
+    </thead>
+    <tr>
+      <td>
+        Kommentar
+      </td>
+      <td colspan="2">
+        <div *ngFor="let area of part.areas">{{getComment(area.id)}}</div>
+      </td>
+    </tr>
+    <ng-container *ngFor="let area of part.areas">
+      <tr *ngFor="let skillWeighting of getIncludedAreaSkillWeightings(area.id)">
+        <td>
+          {{getSkill(skillWeighting.skillId).name}}
+          <span *ngIf="part.areSkillWeightingsFixed"> ({{skillWeighting.weighting / 2 | number: "1.0-2"}}%)</span>
+        </td>
+        <td>
+          <div *ngFor="let criteria of getCheckCriteriaForSkill(skillWeighting.skillId)">
+            {{criteria}}
           </div>
-        </div>
-      </div>
+        </td>
+        <td>
+          {{getPointsForSkill(skillWeighting.skillId)}}
+        </td>
+      </tr>
+    </ng-container>
+    <tr>
+      <th colspan="2">
+        Ergebnis
+      </th>
+      <th>
+        {{getPointsForPart(part.id)}} Punkte
+      </th>
+    </tr>
+  </table>
+  <h1>Gesamtpunkte - {{getTotalPoints()}}</h1>
+  <h1 class="mb-5">Gesamtenote - ???</h1>
+  {{city}}, den {{date}} ____________________________________________________________________ ({{teacher}})
+</div>
+<div class="container-fluid" *ngIf="!isPrintView">
+  <div class="row pr-5 pt-3 mb-5">
+    <div class="display-1 col">
+      Klausur Gutachten
     </div>
-  </div>
-  <div class="container-fluid" *ngIf="!isPrintView">
-    <div class="row pr-5 pt-3 mb-5">
-      <div class="display-1 col">
-        Klausur Gutachten
-      </div>
-      <div class="col-4">
-        <div class="row mx-0">
-          <div class="col alert alert-primary">
-            <h5>Definition:</h5>
-          </div>
-          <div class="col">
-            <button (click)="saveExamDefinition()" class="btn btn-secondary w-100">
+    <div class="col-4">
+      <div class="row mx-0">
+        <div class="col alert alert-primary">
+          <h5>Definition:</h5>
+        </div>
+        <div class="col">
+          <button (click)="saveExamDefinition()" class="btn btn-secondary w-100">
               <i-bs name="fileEarmarkArrowDown"></i-bs>
               speichern
               </button>
-          </div>
-          <div class="col">
-            <label for="uploadExamDefinition" class="btn btn-secondary w-100">
+        </div>
+        <div class="col">
+          <label for="uploadExamDefinition" class="btn btn-secondary w-100">
               <i-bs name="fileEarmarkArrowUp"></i-bs>
               laden
               </label>
-            <input id="uploadExamDefinition" type="file" accept="application/json" (change)="loadExamDefinition($event)" style="display: none; height: 0; width: 0;" />
-          </div>
+          <input id="uploadExamDefinition" type="file" accept="application/json" (change)="loadExamDefinition($event)" style="display: none; height: 0; width: 0;" />
         </div>
-        <div class="row mx-0">
-          <div class="col alert alert-primary">
-            <h5>Klausur:</h5>
-          </div>
-          <div class="col">
-            <button (click)="saveExam()" class="btn btn-secondary w-100">
+      </div>
+      <div class="row mx-0">
+        <div class="col alert alert-primary">
+          <h5>Klausur:</h5>
+        </div>
+        <div class="col">
+          <button (click)="saveExam()" class="btn btn-secondary w-100">
               <i-bs name="fileEarmarkArrowDown"></i-bs>
                speichern
             </button>
-          </div>
-          <div class="col">
-            <label for="uploadExam" class="btn btn-secondary w-100">
+        </div>
+        <div class="col">
+          <label for="uploadExam" class="btn btn-secondary w-100">
               <i-bs name="fileEarmarkArrowUp"></i-bs>
               laden
               </label>
-            <input id="uploadExam" type="file" accept="application/json" (change)="loadExam($event)" style="opacity: 0; width: 0" />
-          </div>
+          <input id="uploadExam" type="file" accept="application/json" (change)="loadExam($event)" style="opacity: 0; width: 0" />
         </div>
       </div>
     </div>
-    <div class="row mx-5">
-      <div class="col-2 alert alert-primary">
-        <h5>Student:</h5>
-      </div>
-      <div class="col">
-        <input type="text" class="col form-control-lg" [(ngModel)]="student" />
-      </div>
+  </div>
+  <div class="row mx-5">
+    <div class="col-2 alert alert-primary">
+      <h5>Student:</h5>
     </div>
-    <div class="row mx-5">
-      <div class="col-2 alert alert-primary">
-        <h5>Lehrer(in):</h5>
-      </div>
-      <div class="col">
-        <input type="text" class="col form-control-lg" [(ngModel)]="teacher" />
-      </div>
+    <div class="col">
+      <input type="text" class="col form-control-lg" [(ngModel)]="student" />
     </div>
-    <div class="row mx-5">
-      <div class="col-2 alert alert-primary">
-        <h5>Schule:</h5>
-      </div>
-      <div class="col">
-        <input type="text" class="col form-control-lg" [(ngModel)]="school" />
-      </div>
+  </div>
+  <div class="row mx-5">
+    <div class="col-2 alert alert-primary">
+      <h5>Lehrer(in):</h5>
     </div>
-    <div class="row mx-5">
-      <div class="col-2 alert alert-primary">
-        <h5>Fach:</h5>
-      </div>
-      <div class="col">
-        <select class="col form-control-lg" [(ngModel)]="course">
+    <div class="col">
+      <input type="text" class="col form-control-lg" [(ngModel)]="teacher" />
+    </div>
+  </div>
+  <div class="row mx-5">
+    <div class="col-2 alert alert-primary">
+      <h5>Stadt:</h5>
+    </div>
+    <div class="col">
+      <input type="text" class="col form-control-lg" [(ngModel)]="city" />
+    </div>
+  </div>
+  <div class="row mx-5">
+    <div class="col-2 alert alert-primary">
+      <h5>Schule:</h5>
+    </div>
+    <div class="col">
+      <input type="text" class="col form-control-lg" [(ngModel)]="school" />
+    </div>
+  </div>
+  <div class="row mx-5">
+    <div class="col-2 alert alert-primary">
+      <h5>Fach:</h5>
+    </div>
+    <div class="col">
+      <select class="col form-control-lg" [(ngModel)]="course">
           <option *ngFor="let course of master.courses">{{course}}</option>
         </select>
-      </div>
     </div>
-    <div class="row mx-5">
-      <div class="col-2 alert alert-primary">
-        <h5>Art:</h5>
-      </div>
-      <div class="col">
-        <select class="col form-control-lg" [(ngModel)]="examType">
+  </div>
+  <div class="row mx-5">
+    <div class="col-2 alert alert-primary">
+      <h5>Art:</h5>
+    </div>
+    <div class="col">
+      <select class="col form-control-lg" [(ngModel)]="examType">
           <option *ngFor="let examType of master.examTypes">{{examType}}</option>
         </select>
+    </div>
+  </div>
+  <ng-container *ngFor="let part of master.parts">
+    <div class="row my-5">
+      <div class="col">
+        <div class="display-3">{{part.name}} Ergebnis - {{getPointsForPart(part.id)}} Punkte</div>
       </div>
     </div>
-    <ng-container *ngFor="let part of master.parts">
-      <div class="row my-5">
-        <div class="col">
-          <div class="display-3">{{part.name}} Ergebnis - {{getPointsForPart(part.id)}} Punkte</div>
+    <ng-container *ngFor="let area of part.areas">
+      <div class="row mx-5 mt-5" *ngIf="area.name">
+        <div class="col alert alert-primary">
+          <h4>{{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</h4>
         </div>
       </div>
-      <ng-container *ngFor="let area of part.areas">
-        <div class="row mx-5 mt-5" *ngIf="area.name">
-          <div class="col alert alert-primary">
-            <h4>{{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</h4>
-          </div>
+      <div class="row mx-5">
+        <div class="col-2 alert alert-primary">
+          <h5>Kommentar</h5>
         </div>
-        <div class="row mx-5">
-          <div class="col-2 alert alert-primary">
-            <h5>Kommentar</h5>
-          </div>
 
-          <div class="col">
-            <textarea [ngModel]="getComment(area.id)" (ngModelChange)="setComment($event, area.id)" class="col"></textarea>
-          </div>
+        <div class="col">
+          <textarea [ngModel]="getComment(area.id)" (ngModelChange)="setComment($event, area.id)" class="col"></textarea>
         </div>
-        <ng-container *ngFor="let skill of area.skills">
-          <div class="row mx-5" *ngIf="!isSkillIncluded(skill.id)">
-            <div class="col alert alert-primary">
-              <h5>
-                <label style="position: relative">
+      </div>
+      <ng-container *ngFor="let skill of area.skills">
+        <div class="row mx-5" *ngIf="!isSkillIncluded(skill.id)">
+          <div class="col alert alert-primary">
+            <h5>
+              <label style="position: relative">
                 <input type="checkbox" [ngClass]="{'is-invalid': !part.areSkillWeightingsFixed && getAreaSkillsCount(area.id) < 3}" [ngModel]="isSkillIncluded(skill.id)" (ngModelChange)="setSkillIncluded($event, skill.id)" />
                 <span class="invalid-tooltip">mindestens drei</span>
                 {{skill.name}}
               </label>
-              </h5>
-            </div>
+            </h5>
           </div>
-          <ng-container *ngIf="isSkillIncluded(skill.id)">
-            <div class="row mx-5">
-              <div class="col-2 alert alert-primary">
-                <h5 style="position: relative">
-                  <label style="position: relative">
+        </div>
+        <ng-container *ngIf="isSkillIncluded(skill.id)">
+          <div class="row mx-5">
+            <div class="col-2 alert alert-primary">
+              <h5 style="position: relative">
+                <label style="position: relative">
                 <input type="checkbox" [ngClass]="{'is-invalid': !part.areSkillWeightingsFixed && getAreaSkillsCount(area.id) > 3}" [ngModel]="isSkillIncluded(skill.id)" (ngModelChange)="setSkillIncluded($event, skill.id)" *ngIf="!part.areSkillWeightingsFixed" />
                   <div class="invalid-tooltip">höchstens drei</div>
                 {{skill.name}}
                 </label>
-                </h5>
-                <h5>{{getPointsForSkill(skill.id)}} Punkte</h5>
-                <h5 *ngIf="!part.areSkillWeightingsFixed">
-                  <label style="position: relative">
+              </h5>
+              <h5>{{getPointsForSkill(skill.id)}} Punkte</h5>
+              <h5 *ngIf="!part.areSkillWeightingsFixed">
+                <label style="position: relative">
                   Gewicht: <input type="number" [ngClass]="{'is-invalid': getTotalAreaWeightings(area.id) !== 100}" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" style="width: 60px" min="0" max="100"/>
                   <div class="invalid-tooltip">nicht 100% ins gesamt</div>
                 </label>
-                </h5>
-              </div>
-              <div class="col">
-                <div class="row">
-                  <div class="col">
-                    <input
+              </h5>
+            </div>
+            <div class="col">
+              <div class="row">
+                <div class="col">
+                  <input
         type="range"
         style="width: 100%;"
         [ngModel]="getPointsForSkill(skill.id)"
@@ -196,7 +252,7 @@
         max="15"
         step="1"
       />
-                    <input
+                  <input
         type="range"
         style="width: 100%;"
         disabled="true"
@@ -205,26 +261,26 @@
         max="15"
         step="1"
       />
-                  </div>
                 </div>
-                <div class="row">
-                  <div class="col" *ngFor="let pointRange of pointRanges">
-                    <h5 class="text-center">{{pointRange.name}}</h5>
-                    <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)" class="alert"
-                      [ngClass]="{'alert-primary': isCriteriaChecked(criteria.id), 'alert-secondary': !isCriteriaChecked(criteria.id)}"
-                      (click)="toggleCriteria(criteria.id, skill.id)">
-                      {{criteria.text}}
-                    </div>
+              </div>
+              <div class="row">
+                <div class="col" *ngFor="let pointRange of pointRanges">
+                  <h5 class="text-center">{{pointRange.name}}</h5>
+                  <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)" class="alert"
+                    [ngClass]="{'alert-primary': isCriteriaChecked(criteria.id), 'alert-secondary': !isCriteriaChecked(criteria.id)}"
+                    (click)="toggleCriteria(criteria.id, skill.id)">
+                    {{criteria.text}}
                   </div>
                 </div>
               </div>
             </div>
-          </ng-container>
+          </div>
         </ng-container>
       </ng-container>
     </ng-container>
-    <div class="py-5"></div>
-    <div class="display-1 fixed-bottom text-right">
-      gesamt Ergebnis - {{getTotalPoints()}} Punkte
-    </div>
+  </ng-container>
+  <div class="py-5"></div>
+  <div class="display-1 fixed-bottom text-right">
+    gesamt Ergebnis - {{getTotalPoints()}} Punkte
   </div>
+</div>
