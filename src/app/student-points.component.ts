@@ -87,6 +87,14 @@ export class StudentPointsComponent {
     this.examDefinition.school = value;
   }
 
+  get course() {
+    return this.examDefinition.course;
+  }
+
+  set course(value: string){
+    this.examDefinition.course = value;
+  }
+
   get examType() {
     return this.examDefinition.type;
   }
@@ -353,6 +361,7 @@ class AreaComment {
 class ExamDefinition {
   teacher: string;
   school: string;
+  course: string;
   "type": string;
   skillWeightings: SkillWeighting[] = [];
 }

@@ -1,4 +1,19 @@
 {
+  "courses": [
+    "English",
+    "Deutsch",
+    "Spanisch"
+  ],
+  "examTypes": [
+    "Abitur",
+    "Einführungsphase",
+    "1. Kurs-/ Schulhalbjahr",
+    "2. Kurs-/ Schulhalbjahr",
+    "3. Kurs-/ Schulhalbjahr",
+    "4. Kurs-/ Schulhalbjahr",
+    "5. Schulhalbjahr",
+    "6. Schulhalbjahr"
+  ],
   "parts": [
     {
       "id": 1,
