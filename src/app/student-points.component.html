@@ -178,7 +178,7 @@
         </select>
     </div>
   </div>
-  <div class="row mx-5">
+  <div class="row mx-5 mb-5">
     <div class="col-2 alert alert-primary">
       <h5>Kurs:</h5>
     </div>
@@ -189,14 +189,13 @@
     </div>
   </div>
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
-  <label class="btn btn-secondary active">
-    <input type="radio" name="mode" id="schreiben" autocomplete="off" checked> Schreiben
+  <label class="btn btn-secondary" [ngClass]="{active: !isSprachmittlung}">
+    <input type="radio" name="mode" id="schreiben" autocomplete="off" checked="false" (click)="setIsSprachmittlung(false)"> Schreiben
   </label>
-  <label class="btn btn-secondary">
-    <input type="radio" name="mode" id="sprachmittlung" autocomplete="off"> Sprachmittlung
+  <label class="btn btn-secondary" [ngClass]="{active: isSprachmittlung}">
+    <input type="radio" name="mode" id="sprachmittlung" autocomplete="off" (click)="setIsSprachmittlung(true)"> Sprachmittlung
   </label>
 </div>
-  <input type="radio" 
   <ng-container *ngFor="let part of master.parts">
     <div class="row my-5">
       <div class="col">

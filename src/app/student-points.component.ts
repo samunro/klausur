@@ -62,7 +62,12 @@ export class StudentPointsComponent {
 
   private examDefinition = new ExamDefinition();
   private exam = new Exam();
+
   isSprachmittlung = false;
+
+  setIsSprachmittlung(value: boolean){
+    this.isSprachmittlung = value;
+  }
 
   get student() {
     return this.exam.student;
