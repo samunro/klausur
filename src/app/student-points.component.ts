@@ -65,10 +65,6 @@ export class StudentPointsComponent {
 
   isSprachmittlung = false;
 
-  setIsSprachmittlung(value: boolean){
-    this.isSprachmittlung = value;
-  }
-
   get student() {
     return this.exam.student;
   }
