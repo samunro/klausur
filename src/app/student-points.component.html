@@ -21,7 +21,7 @@
     </div>
   </div>
 </div>
-<div class="container-fluid px-5" *ngIf="isPrintView" id="print-section">
+<div class="container-fluid px-5" *ngIf="isPrintView">
   <h1>Gutachten für {{student}}</h1>
   <h2>Klausur {{year}}, {{course}}</h2>
   <table>
@@ -68,7 +68,7 @@
       <tr *ngFor="let skillWeighting of getIncludedAreaSkillWeightings(area.id)">
         <td>
           {{getSkill(skillWeighting.skillId).name}}
-          <span *ngIf="part.areSkillWeightingsFixed"> ({{skillWeighting.weighting / 2 | number: "1.0-2"}}%)</span>
+          <span *ngIf="!part.areSkillWeightingsFixed"> ({{skillWeighting.weighting | number: "1.0-2"}} BE)</span>
         </td>
         <td>
           <div *ngFor="let criteria of getCheckCriteriaForSkill(skillWeighting.skillId)">
@@ -89,8 +89,7 @@
       </th>
     </tr>
   </table>
-  <h1>Gesamtpunkte - {{getTotalPoints()}}</h1>
-  <h1 class="mb-5">Gesamtnote - ???</h1>
+  <h1 class="mb-5">Gesamtpunkte - {{getTotalPoints()}}</h1>
   {{city}}, den {{date}} ____________________________________________________________________ ({{teacher}})
 </div>
 <div class="container-fluid" *ngIf="!isPrintView">
@@ -181,7 +180,7 @@
   </div>
   <div class="row mx-5">
     <div class="col-2 alert alert-primary">
-      <h5>Art:</h5>
+      <h5>Kurs:</h5>
     </div>
     <div class="col">
       <select class="col form-control-lg" [(ngModel)]="examType">
@@ -235,7 +234,7 @@
               <h5>{{getPointsForSkill(skill.id)}} Punkte</h5>
               <h5 *ngIf="!part.areSkillWeightingsFixed">
                 <label style="position: relative">
-                  Gewicht: <input type="number" [ngClass]="{'is-invalid': getTotalAreaWeightings(area.id) !== 100}" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" style="width: 60px" min="0" max="100"/>
+                  Gewicht: <input type="number" [ngClass]="{'is-invalid': getTotalAreaWeightings(area.id) !== 100}" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" style="width: 60px" min="0" max="100"/> BE
                   <div class="invalid-tooltip">nicht 100% ins gesamt</div>
                 </label>
               </h5>
