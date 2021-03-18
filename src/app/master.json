@@ -28,6 +28,7 @@
             {
               "id": 1,
               "name": "Leseverstehen / Reproduktion",
+              "shouldIncludeInSprachmittlung": false,
               "criteria": [
                 {
                   "id": 1,
@@ -129,6 +130,7 @@
             {
               "id": 2,
               "name": "Textanalyse",
+              "shouldIncludeInSprachmittlung": false,
               "criteria": [
                 {
                   "id": 20,
@@ -230,6 +232,7 @@
             {
               "id": 3,
               "name": "Analyse diskontinuierlicher Texte",
+              "shouldIncludeInSprachmittlung": false,
               "criteria": [
                 {
                   "id": 39,
@@ -361,6 +364,7 @@
             {
               "id": 4,
               "name": "Diskutieren / Kommentieren",
+              "shouldIncludeInSprachmittlung": false,
               "criteria": [
                 {
                   "id": 64,
@@ -552,6 +556,7 @@
             {
               "id": 5,
               "name": "gestaltendes Schreiben",
+              "shouldIncludeInSprachmittlung": false,
               "criteria": [
                 {
                   "id": 101,
@@ -705,6 +710,138 @@
                 },
                 {
                   "id": 131,
+                  "pointRangeId": 1,
+                  "text": "Die Aufgabe wurde nicht bearbeitet. Die sprachliche Bewertung für diese Aufgabe beträgt ebenfalls 0 Punkte."
+                }
+              ]
+            },
+            {
+              "id": 14,
+              "name": "Sprachmittlung",
+              "shouldIncludeInSprachmittlung": true,
+              "criteria": [
+                {
+                  "id": 180,
+                  "pointRangeId": 6,
+                  "text": "alle durch die Aufgabe geforderten Informationen des Ausgangstextes präzise wiedergegeben"
+                },
+                {
+                  "id": 181,
+                  "pointRangeId": 6,
+                  "text": "Darstellung berücksichtigt in besonderem Maße die in der Aufgabe vorgegebene Situation / den Adressaten / die Textsorte"
+                },
+                {
+                  "id": 182,
+                  "pointRangeId": 6,
+                  "text": "relevante kulturspezifische Aspekte treffend berücksichtigt"
+                },
+                {
+                  "id": 183,
+                  "pointRangeId": 6,
+                  "text": "schlüssiger Textaufbau"
+                },
+                {
+                  "id": 184,
+                  "pointRangeId": 5,
+                  "text": "durch die Aufgabe geforderte Informationen des Ausgangstextes weitgehend treffend und nahezu vollständig wiedergegeben"
+                },
+                {
+                  "id": 185,
+                  "pointRangeId": 5,
+                  "text": "Darstellung berücksichtigt weitgehend die in der Aufgabe vorgegebene Situation / den Adressaten / die Textsorte"
+                },
+                {
+                  "id": 186,
+                  "pointRangeId": 5,
+                  "text": "relevante kulturspezifische Aspekte nachvollziehbar berücksichtigt"
+                },
+                {
+                  "id": 187,
+                  "pointRangeId": 5,
+                  "text": "Textaufbau weitgehend schlüssig"
+                },
+                {
+                  "id": 188,
+                  "pointRangeId": 4,
+                  "text": "durch die Aufgabe geforderte Informationen des Ausgangstextes im Wesentlichen angemessen wiedergegeben"
+                },
+                {
+                  "id": 189,
+                  "pointRangeId": 4,
+                  "text": "Darstellung berücksichtigt im Wesentlichen die in der Aufgabe vorgegebene Situation / den Adressaten / die Textsorte"
+                },
+                {
+                  "id": 190,
+                  "pointRangeId": 4,
+                  "text": "relevante kulturspezifische Aspekte gelegentlich berücksichtigt"
+                },
+                {
+                  "id": 191,
+                  "pointRangeId": 4,
+                  "text": "Textaufbau im Wesentlichen schlüssig"
+                },
+                {
+                  "id": 192,
+                  "pointRangeId": 3,
+                  "text": "durch die Aufgabe geforderte Informationen teilweise / ungenau wiedergegeben"
+                },
+                {
+                  "id": 193,
+                  "pointRangeId": 3,
+                  "text": "Darstellung berücksichtigt ansatzweise die in der Aufgabe vorgegebene Situation / den Adressaten / die Textsorte"
+                },
+                {
+                  "id": 194,
+                  "pointRangeId": 3,
+                  "text": "relevante kulturspezifische Aspekte wenig angemessen berücksichtigt"
+                },
+                {
+                  "id": 195,
+                  "pointRangeId": 3,
+                  "text": "Textaufbau zum Teil schlüssig"
+                },
+                {
+                  "id": 196,
+                  "pointRangeId": 2,
+                  "text": "Informationen des Ausgangstextes sehr lückenhaft und ungenau oder sinnentstellend wiedergegeben"
+                },
+                {
+                  "id": 197,
+                  "pointRangeId": 2,
+                  "text": "Darstellung berücksichtigt kaum die in der Aufgabe vorgegebene Situation / den Adressaten / die Textsorte"
+                },
+                {
+                  "id": 198,
+                  "pointRangeId": 2,
+                  "text": "relevante kulturspezifische Aspekte kaum berücksichtigt"
+                },
+                {
+                  "id": 199,
+                  "pointRangeId": 2,
+                  "text": "Textaufbau kaum erkennbar"
+                },
+                {
+                  "id": 200,
+                  "pointRangeId": 1,
+                  "text": "Informationen des Ausgangstextes nicht wiedergegeben"
+                },
+                {
+                  "id": 201,
+                  "pointRangeId": 1,
+                  "text": "Darstellung berücksichtigt die in der Aufgabe vorgegebene Situation / den Adressaten / die Textsorte nicht"
+                },
+                {
+                  "id": 202,
+                  "pointRangeId": 1,
+                  "text": "relevante kulturspezifische Aspekte nicht berücksichtigt"
+                },
+                {
+                  "id": 203,
+                  "pointRangeId": 1,
+                  "text": "Textaufbau unangemessen oder nicht erkennbar"
+                },
+                {
+                  "id": 204,
                   "pointRangeId": 1,
                   "text": "Die Aufgabe wurde nicht bearbeitet. Die sprachliche Bewertung für diese Aufgabe beträgt ebenfalls 0 Punkte."
                 }
