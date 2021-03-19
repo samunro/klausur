@@ -44,51 +44,54 @@
       <td>{{school}}</td>
     </tr>
   </table>
-  <table class="table my-5" *ngFor="let part of master.parts">
-    <thead>
-      <th style="width: 300px">
-        {{part.name}} ({{part.weighting}}%)
-      </th>
-      <th>
-        Bewertung
-      </th>
-      <th style="width: 100px">
-        Punkte
-      </th>
-    </thead>
-    <tr>
-      <td>
-        Kommentar
-      </td>
-      <td colspan="2">
-        <div *ngFor="let area of part.areas">{{getComment(area.id)}}</div>
-      </td>
-    </tr>
-    <ng-container *ngFor="let area of part.areas">
-      <tr *ngFor="let skillWeighting of getIncludedAreaSkillWeightings(area.id)">
+  <ng-container *ngFor="let mode of master.modes">
+    <div class="display-2">{{mode.name}} - {{getPointsForMode(mode.id)}} Punkte</div>
+    <table class="table my-5" *ngFor="let part of master.parts">
+      <thead>
+        <th style="width: 300px">
+          {{part.name}} ({{part.weighting}}%)
+        </th>
+        <th>
+          Bewertung
+        </th>
+        <th style="width: 100px">
+          Punkte
+        </th>
+      </thead>
+      <tr>
         <td>
-          {{getSkill(skillWeighting.skillId).name}}
-          <span *ngIf="!areSkillWeightingsFixed(part.id)"> ({{skillWeighting.weighting | number: "1.0-2"}} BE)</span>
+          Kommentar
         </td>
-        <td>
-          <div *ngFor="let criteria of getCheckCriteriaForSkill(skillWeighting.skillId)">
-            {{criteria}}
-          </div>
-        </td>
-        <td>
-          {{getPointsForSkill(skillWeighting.skillId)}}
+        <td colspan="2">
+          <div *ngFor="let area of part.areas">{{getComment(area.id, mode.id)}}</div>
         </td>
       </tr>
-    </ng-container>
-    <tr>
-      <th colspan="2">
-        Ergebnis
-      </th>
-      <th>
-        {{getPointsForPart(part.id)}} Punkte
-      </th>
-    </tr>
-  </table>
+      <ng-container *ngFor="let area of part.areas">
+        <tr *ngFor="let skillWeighting of getIncludedAreaSkillWeightings(area.id)">
+          <td>
+            {{getSkill(skillWeighting.skillId).name}}
+            <span *ngIf="!areSkillWeightingsFixed(part.id)"> ({{skillWeighting.weighting | number: "1.0-2"}} BE)</span>
+          </td>
+          <td>
+            <div *ngFor="let criteria of getCheckCriteriaForSkill(skillWeighting.skillId)">
+              {{criteria}}
+            </div>
+          </td>
+          <td>
+            {{getPointsForSkill(skillWeighting.skillId)}}
+          </td>
+        </tr>
+      </ng-container>
+      <tr>
+        <th colspan="2">
+          Ergebnis
+        </th>
+        <th>
+          {{getPointsForPart(part.id)}} Punkte
+        </th>
+      </tr>
+    </table>
+  </ng-container>
   <h1 class="mb-5">Gesamtpunkte - {{getTotalPoints()}}</h1>
   {{city}}, den {{date}} ____________________________________________________________________ ({{teacher}})
 </div>

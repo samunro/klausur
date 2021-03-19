@@ -135,7 +135,7 @@ export class StudentPointsComponent {
     this.examDefinition.type = value;
   }
 
-  isPrintView: boolean = false;
+  isPrintView: boolean = true;
 
   togglePrintView() {
     this.isPrintView = !this.isPrintView;
@@ -339,16 +339,18 @@ export class StudentPointsComponent {
     );
   }
 
-  getComment(areaId: number) {
-    return this.getAreaComment(areaId).comment;
+  getComment(areaId: number, modeId: number = null) {
+    return this.getAreaComment(areaId, modeId).comment;
   }
 
   setComment(value: string, areaId: number) {
     this.getAreaComment(areaId).comment = value;
   }
 
-  private getAreaComment(areaId: number) {
-    return this.mode.areaComments.find(x => x.areaId === areaId);
+  private getAreaComment(areaId: number, modeId: number = null) {
+    const mode = modeId === null ? this.mode : this.exam.modes.find(x => x.id === modeId);
+
+    return mode.areaComments.find(x => x.areaId === areaId);
   }
 
   getCheckCriteriaForSkill(skillId: number) {
