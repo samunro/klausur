@@ -45,7 +45,7 @@
     </tr>
   </table>
   <ng-container *ngFor="let mode of master.modes">
-    <div class="display-2">{{mode.name}} - {{getPointsForMode(mode.id)}} Punkte</div>
+    <h3 class="mt-5">{{mode.name}} - {{getPointsForMode(mode.id)}} Punkte</h3>
     <table class="table my-5" *ngFor="let part of master.parts">
       <thead>
         <th style="width: 300px">
@@ -67,18 +67,18 @@
         </td>
       </tr>
       <ng-container *ngFor="let area of part.areas">
-        <tr *ngFor="let skillWeighting of getIncludedAreaSkillWeightings(area.id)">
+        <tr *ngFor="let skillWeighting of getIncludedAreaSkillWeightings(area.id, mode.id)">
           <td>
             {{getSkill(skillWeighting.skillId).name}}
             <span *ngIf="!areSkillWeightingsFixed(part.id)"> ({{skillWeighting.weighting | number: "1.0-2"}} BE)</span>
           </td>
           <td>
-            <div *ngFor="let criteria of getCheckCriteriaForSkill(skillWeighting.skillId)">
+            <div *ngFor="let criteria of getCheckCriteriaForSkill(skillWeighting.skillId, mode.id)">
               {{criteria}}
             </div>
           </td>
           <td>
-            {{getPointsForSkill(skillWeighting.skillId)}}
+            {{getPointsForSkill(skillWeighting.skillId, mode.id)}}
           </td>
         </tr>
       </ng-container>
@@ -87,7 +87,7 @@
           Ergebnis
         </th>
         <th>
-          {{getPointsForPart(part.id)}} Punkte
+          {{getPointsForPart(part.id, mode.id)}} Punkte
         </th>
       </tr>
     </table>

@@ -33,7 +33,7 @@ export class StudentPointsComponent {
 
           let count = 0;
 
-          const areaSkillPoints: SkillWeighting[] = [];
+          const areaSkillWeightings: SkillWeighting[] = [];
 
           for (const skill of area.skills) {
             if(skill.shouldIncludeInSprachmittlung !== null && skill.shouldIncludeInSprachmittlung !== isSprachmittlung) continue;
@@ -42,7 +42,7 @@ export class StudentPointsComponent {
 
             const isIncluded = areSkillWeightingsFixed || count < 3;
 
-            areaSkillPoints.push({
+            areaSkillWeightings.push({
               skillId: skill.id,
               weighting:
                 count < 3 || areSkillWeightingsFixed ? skillWeighting : 0,
@@ -60,10 +60,10 @@ export class StudentPointsComponent {
             }
           }
 
-          areaSkillPoints[0].weighting +=
-            100 - this.sum(areaSkillPoints.map(x => x.weighting));
+          areaSkillWeightings[0].weighting +=
+            100 - this.sum(areaSkillWeightings.map(x => x.weighting));
 
-          this.examDefinition.skillWeightings.push(...areaSkillPoints);
+          this.examDefinition.skillWeightings.push(...areaSkillWeightings);
         }
       }
     }
@@ -155,8 +155,8 @@ export class StudentPointsComponent {
     return mode.skillPoints.find(x => x.skillId === skillId);
   }
 
-  isCriteriaChecked(criteriaId: number) {
-    return this.getCheckedCriteria(criteriaId).isChecked;
+  isCriteriaChecked(criteriaId: number, modeId: number = null) {
+    return this.getCheckedCriteria(criteriaId, modeId).isChecked;
   }
 
   toggleCriteria(criteriaId: number, skillId: number) {
@@ -169,8 +169,10 @@ export class StudentPointsComponent {
     skillPoints.points = this.calculatePointsForSkill(skillId);
   }
 
-  private getCheckedCriteria(criteriaId: number) {
-    return this.mode.checkedCriteria.find(x => x.criteriaId === criteriaId);
+  private getCheckedCriteria(criteriaId: number, modeId: number = null) {
+    const mode = modeId === null ? this.mode : this.exam.modes.find(x => x.id === modeId);
+
+    return mode.checkedCriteria.find(x => x.criteriaId === criteriaId);
   }
 
   getSkill(skillId: number) {
@@ -324,14 +326,15 @@ export class StudentPointsComponent {
     return this.getIncludedAreaSkillWeightings(areaId).length;
   }
 
-  getIncludedAreaSkillWeightings(areaId: number) {
-    return this.getAreaSkillWeightings(areaId).filter(x => x.isIncluded);
+  getIncludedAreaSkillWeightings(areaId: number, modeId: number = null) {
+    return this.getAreaSkillWeightings(areaId, modeId).filter(x => x.isIncluded);
   }
 
-  private getAreaSkillWeightings(areaId: number) {
-    const skillIds = this.getArea(areaId)
-    .skills
-    .filter(x => x.shouldIncludeInSprachmittlung === null || x.shouldIncludeInSprachmittlung === this.isSprachmittlung)
+  private getAreaSkillWeightings(areaId: number, modeId: number = null) {
+    const isSprachmittlung = modeId === 2;
+
+    const skillIds = this.getSkillsForArea(areaId, modeId)
+    .filter(x => x.shouldIncludeInSprachmittlung === null || x.shouldIncludeInSprachmittlung === isSprachmittlung)
     .map(x => x.id);
 
     return this.examDefinition.skillWeightings.filter(x =>
@@ -353,9 +356,9 @@ export class StudentPointsComponent {
     return mode.areaComments.find(x => x.areaId === areaId);
   }
 
-  getCheckCriteriaForSkill(skillId: number) {
+  getCheckCriteriaForSkill(skillId: number, modeId: number = null) {
     return this.getSkill(skillId)
-      .criteria.filter(x => this.isCriteriaChecked(x.id))
+      .criteria.filter(x => this.isCriteriaChecked(x.id, modeId))
       .map(x => x.text);
   }
 
