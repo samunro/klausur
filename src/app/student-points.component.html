@@ -46,7 +46,8 @@
   </table>
   <ng-container *ngFor="let mode of master.modes">
     <h3 class="mt-5">{{mode.name}} - {{getPointsForMode(mode.id)}} Punkte</h3>
-    <table class="table my-5" *ngFor="let part of master.parts">
+    <ng-container *ngFor="let part of master.parts">
+    <table class="table my-5">
       <thead>
         <th style="width: 300px">
           {{part.name}} ({{part.weighting}}%)
@@ -91,6 +92,8 @@
         </th>
       </tr>
     </table>
+    <div class="py-1"></div>
+    </ng-container>
   </ng-container>
   <h1 class="mb-5">Gesamtpunkte - {{getTotalPoints()}}</h1>
   <div class="py-5"></div>
