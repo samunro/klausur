@@ -8,7 +8,7 @@ import pointRanges from "./pointRanges.json";
 })
 export class StudentPointsComponent {
   ngOnInit() {
-    const sprachmittlungMode = master.modes.find(x => x.id === 1);
+    const sprachmittlungMode = master.modes.find(x => x.id === 2);
 
     for (const mode of master.modes.map(x => new Mode(x.id))) {
       const isSprachmittlung = mode.id === sprachmittlungMode.id;
@@ -19,13 +19,15 @@ export class StudentPointsComponent {
         for (const area of part.areas) {
           mode.areaComments.push({ areaId: area.id, comment: null });
 
-          const skillCount = part.areSkillWeightingsFixed
+          const areSkillWeightingsFixed = this.areSkillWeightingsFixed(part.id, mode.id);
+
+          const skillCount = areSkillWeightingsFixed
             ? area.skills.length
             : 3;
 
           let skillWeighting = 100 / skillCount;
 
-          if (!part.areSkillWeightingsFixed) {
+          if (!areSkillWeightingsFixed) {
             skillWeighting = Math.round(skillWeighting);
           }
 
@@ -38,13 +40,13 @@ export class StudentPointsComponent {
 
             mode.skillPoints.push({ skillId: skill.id, points: 0 });
 
-            const isIncluded = part.areSkillWeightingsFixed || count < 3;
+            const isIncluded = areSkillWeightingsFixed || count < 3;
 
             areaSkillPoints.push({
               skillId: skill.id,
               weighting:
-                count < 3 || part.areSkillWeightingsFixed ? skillWeighting : 0,
-              isWeightingFixed: part.areSkillWeightingsFixed,
+                count < 3 || areSkillWeightingsFixed ? skillWeighting : 0,
+              isWeightingFixed: areSkillWeightingsFixed,
               isIncluded: isIncluded
             });
 
@@ -74,7 +76,7 @@ export class StudentPointsComponent {
   private exam = new Exam();
 
   private get mode() {
-    const modeId = this.isSprachmittlung ? 1 : 2;
+    const modeId = this.isSprachmittlung ? 2 : 1;
 
     return this.exam.modes.find(x => x.id === modeId);
   }
@@ -227,7 +229,7 @@ export class StudentPointsComponent {
     );
   }
 
-  private getSkillsForArea(areaId: number){
+  getSkillsForArea(areaId: number){
     const skillIds = this.mode.skillPoints.map(x => x.skillId);
 
     const area = this.getArea(areaId);
@@ -313,7 +315,10 @@ export class StudentPointsComponent {
   }
 
   private getAreaSkillWeightings(areaId: number) {
-    const skillIds = this.getArea(areaId).skills.map(x => x.id);
+    const skillIds = this.getArea(areaId)
+    .skills
+    .filter(x => x.shouldIncludeInSprachmittlung === null || x.shouldIncludeInSprachmittlung === this.isSprachmittlung)
+    .map(x => x.id);
 
     return this.examDefinition.skillWeightings.filter(x =>
       skillIds.includes(x.skillId)
@@ -388,6 +393,14 @@ export class StudentPointsComponent {
       year: "numeric",
       day: "numeric"
     });
+  }
+
+  areSkillWeightingsFixed(partId: number, modeId: number = null){
+    const isSprachmittlung = modeId !== null ? modeId === 2 : this.isSprachmittlung;
+
+    if(isSprachmittlung) return true;
+
+    return partId !== 1; //Inhalt;
   }
 }
 
