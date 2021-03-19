@@ -226,7 +226,7 @@ export class StudentPointsComponent {
   }
 
   getPointsForArea(areaId: number, modeId: number = null) {
-    const skills = this.getSkillsForArea(areaId);
+    const skills = this.getSkillsForArea(areaId, modeId);
 
     return this.sum(
       skills.map(
@@ -235,8 +235,10 @@ export class StudentPointsComponent {
     );
   }
 
-  getSkillsForArea(areaId: number){
-    const skillIds = this.mode.skillPoints.map(x => x.skillId);
+  getSkillsForArea(areaId: number, modeId: number = null){
+    const mode = modeId === null ? this.mode : this.exam.modes.find(x => x.id === modeId);
+
+    const skillIds = mode.skillPoints.map(x => x.skillId);
 
     const area = this.getArea(areaId);
 
