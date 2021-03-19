@@ -189,13 +189,14 @@
     </div>
   </div>
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
-  <label class="btn btn-secondary" [ngClass]="{active: !isSprachmittlung}">
+    <label class="btn btn-secondary" [ngClass]="{active: !isSprachmittlung}">
     <input type="radio" name="mode" id="schreiben" autocomplete="off" checked="false" (click)="isSprachmittlung = false"> Schreiben
   </label>
-  <label class="btn btn-secondary" [ngClass]="{active: isSprachmittlung}">
+    <label class="btn btn-secondary" [ngClass]="{active: isSprachmittlung}">
     <input type="radio" name="mode" id="sprachmittlung" autocomplete="off" (click)="isSprachmittlung = true"> Sprachmittlung
   </label>
-</div>
+  </div>
+  <div class="display-2">{{modeName}} Ergebnis - {{getPointsForMode()}} Punkte</div>
   <ng-container *ngFor="let part of master.parts">
     <div class="row my-5">
       <div class="col">

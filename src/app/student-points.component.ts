@@ -75,6 +75,10 @@ export class StudentPointsComponent {
   private examDefinition = new ExamDefinition();
   private exam = new Exam();
 
+  get modeName() {
+    return this.master.modes.find(x => x.id === this.mode.id).name;
+  }
+
   private get mode() {
     const modeId = this.isSprachmittlung ? 2 : 1;
 
@@ -137,16 +141,18 @@ export class StudentPointsComponent {
     this.isPrintView = !this.isPrintView;
   }
 
-  getPointsForSkill(skillId: number) {
-    return this.getSkillPoints(skillId).points;
+  getPointsForSkill(skillId: number, modeId: number = null) {
+    return this.getSkillPoints(skillId, modeId).points;
   }
 
   setPointsForSkill(points: number, skillId: number) {
     this.getSkillPoints(skillId).points = points;
   }
 
-  getSkillPoints(skillId: number) {
-    return this.mode.skillPoints.find(x => x.skillId === skillId);
+  getSkillPoints(skillId: number, modeId: number = null) {
+    const mode = modeId === null ? this.mode : this.exam.modes.find(x => x.id === modeId);
+
+    return mode.skillPoints.find(x => x.skillId === skillId);
   }
 
   isCriteriaChecked(criteriaId: number) {
@@ -219,12 +225,12 @@ export class StudentPointsComponent {
     throw Error(`Could not find the ares with id ${areaId}.`);
   }
 
-  getPointsForArea(areaId: number) {
+  getPointsForArea(areaId: number, modeId: number = null) {
     const skills = this.getSkillsForArea(areaId);
 
     return this.sum(
       skills.map(
-        x => (this.getPointsForSkill(x.id) * this.getSkillWeighting(x.id)) / 100
+        x => (this.getPointsForSkill(x.id, modeId) * this.getSkillWeighting(x.id)) / 100
       )
     );
   }
@@ -237,13 +243,13 @@ export class StudentPointsComponent {
     return area.skills.filter(x => skillIds.includes(x.id));
   }
 
-  getPointsForPart(partId: number) {
+  getPointsForPart(partId: number, modeId: number = null) {
     const part = this.master.parts.find(x => x.id === partId);
 
     const points: number[] = [];
 
     for (const area of part.areas) {
-      points.push(this.getPointsForArea(area.id));
+      points.push(this.getPointsForArea(area.id, modeId));
     }
 
     return Math.round(this.average(points));
@@ -262,11 +268,17 @@ export class StudentPointsComponent {
     throw Error(`Could not find the skill with id ${skillId}.`);
   }
 
-  getTotalPoints() {
+  getTotalPoints(){
+    var totalWeightings = this.sum(this.master.modes.map(x => x.weighting));
+
+    return this.sum(this.master.modes.map(x => x.weighting * this.getPointsForMode(x.id))) / totalWeightings;
+  }
+
+  getPointsForMode(modeId: number = null) {
     let result = 0;
 
     for (const part of master.parts) {
-      result += (part.weighting / 100) * this.getPointsForPart(part.id);
+      result += (part.weighting / 100) * this.getPointsForPart(part.id, modeId);
     }
 
     return Math.round(result);

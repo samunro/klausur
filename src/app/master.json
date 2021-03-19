@@ -17,11 +17,13 @@
   "modes": [
     {
       "id": 1,
-      "name": "Schreiben"
+      "name": "Schreiben",
+      "weighting": 2
     },
     {
       "id": 2,
-      "name": "Sprachmittlung"
+      "name": "Sprachmittlung",
+      "weighting": 1
     }
   ],
   "parts": [
