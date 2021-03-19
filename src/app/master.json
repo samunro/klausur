@@ -14,6 +14,16 @@
     "5. Schulhalbjahr",
     "6. Schulhalbjahr"
   ],
+  "modes": [
+    {
+      "id": 1,
+      "name": "Schreiben"
+    },
+    {
+      "id": 2,
+      "name": "Sprachmittlung"
+    }
+  ],
   "parts": [
     {
       "id": 1,
@@ -864,6 +874,7 @@
             {
               "id": 6,
               "name": "Lexik",
+              "shouldIncludeInSprachmittlung": null,
               "criteria": [
                 {
                   "id": 132,
@@ -900,6 +911,7 @@
             {
               "id": 7,
               "name": "Grammatik/Syntax",
+              "shouldIncludeInSprachmittlung": null,
               "criteria": [
                 {
                   "id": 138,
@@ -936,6 +948,7 @@
             {
               "id": 8,
               "name": "Orthographie",
+              "shouldIncludeInSprachmittlung": null,
               "criteria": [
                 {
                   "id": 144,
@@ -978,6 +991,7 @@
             {
               "id": 9,
               "name": "Textaufbau, ggf. Textsortenspezifik",
+              "shouldIncludeInSprachmittlung": null,
               "criteria": [
                 {
                   "id": 150,
@@ -1014,6 +1028,7 @@
             {
               "id": 10,
               "name": "eigenständige Textgestaltung",
+              "shouldIncludeInSprachmittlung": null,
               "criteria": [
                 {
                   "id": 156,
@@ -1050,6 +1065,7 @@
             {
               "id": 11,
               "name": "Sprachregister",
+              "shouldIncludeInSprachmittlung": null,
               "criteria": [
                 {
                   "id": 162,
@@ -1086,6 +1102,7 @@
             {
               "id": 12,
               "name": "allgemeiner, thematischer, Funktions- und Interpretationswortschatz",
+              "shouldIncludeInSprachmittlung": null,
               "criteria": [
                 {
                   "id": 168,
@@ -1122,6 +1139,7 @@
             {
               "id": 13,
               "name": "Satzbau",
+              "shouldIncludeInSprachmittlung": null,
               "criteria": [
                 {
                   "id": 174,

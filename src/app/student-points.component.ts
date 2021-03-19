@@ -8,51 +8,63 @@ import pointRanges from "./pointRanges.json";
 })
 export class StudentPointsComponent {
   ngOnInit() {
-    for (const part of master.parts) {
-      for (const area of part.areas) {
-        this.exam.areaComments.push({ areaId: area.id, comment: null });
+    const sprachmittlungMode = master.modes.find(x => x.id === 1);
 
-        const skillCount = part.areSkillWeightingsFixed
-          ? area.skills.length
-          : 3;
+    for (const modeId of master.modes.map(x => x.id)) {
+      const mode = {id: modeId} as Mode;
 
-        let skillWeighting = 100 / skillCount;
+      const isSprachmittlung = modeId === sprachmittlungMode.id;
 
-        if (!part.areSkillWeightingsFixed) {
-          skillWeighting = Math.round(skillWeighting);
-        }
+      this.exam.modes.push(mode);
 
-        let count = 0;
+      for (const part of master.parts) {
+        for (const area of part.areas) {
+          mode.areaComments.push({ areaId: area.id, comment: null });
 
-        const areaSkillPoints: SkillWeighting[] = [];
+          const skillCount = part.areSkillWeightingsFixed
+            ? area.skills.length
+            : 3;
 
-        for (const skill of area.skills) {
-          this.exam.skillPoints.push({ skillId: skill.id, points: 0 });
+          let skillWeighting = 100 / skillCount;
 
-          const isIncluded = part.areSkillWeightingsFixed || count < 3;
-
-          areaSkillPoints.push({
-            skillId: skill.id,
-            weighting:
-              count < 3 || part.areSkillWeightingsFixed ? skillWeighting : 0,
-            isWeightingFixed: part.areSkillWeightingsFixed,
-            isIncluded: isIncluded
-          });
-
-          count++;
-
-          for (const criteria of skill.criteria) {
-            this.exam.checkedCriteria.push({
-              criteriaId: criteria.id,
-              isChecked: false
-            });
+          if (!part.areSkillWeightingsFixed) {
+            skillWeighting = Math.round(skillWeighting);
           }
+
+          let count = 0;
+
+          const areaSkillPoints: SkillWeighting[] = [];
+
+          for (const skill of area.skills) {
+            if(skill.shouldIncludeInSprachmittlung !== null && skill.shouldIncludeInSprachmittlung !== isSprachmittlung) continue;
+
+            mode.skillPoints.push({ skillId: skill.id, points: 0 });
+
+            const isIncluded = part.areSkillWeightingsFixed || count < 3;
+
+            areaSkillPoints.push({
+              skillId: skill.id,
+              weighting:
+                count < 3 || part.areSkillWeightingsFixed ? skillWeighting : 0,
+              isWeightingFixed: part.areSkillWeightingsFixed,
+              isIncluded: isIncluded
+            });
+
+            count++;
+
+            for (const criteria of skill.criteria) {
+              mode.checkedCriteria.push({
+                criteriaId: criteria.id,
+                isChecked: false
+              });
+            }
+          }
+
+          areaSkillPoints[0].weighting +=
+            100 - this.sum(areaSkillPoints.map(x => x.weighting));
+
+          this.examDefinition.skillWeightings.push(...areaSkillPoints);
         }
-
-        areaSkillPoints[0].weighting +=
-          100 - this.sum(areaSkillPoints.map(x => x.weighting));
-
-        this.examDefinition.skillWeightings.push(...areaSkillPoints);
       }
     }
   }
@@ -63,13 +75,19 @@ export class StudentPointsComponent {
   private examDefinition = new ExamDefinition();
   private exam = new Exam();
 
+  private get mode() {
+    const modeId = this.isSprachmittlung ? 1 : 2;
+
+    return this.exam.modes.find(x => x.id === modeId);
+  }
+
   isSprachmittlung = false;
 
   get student() {
     return this.exam.student;
   }
 
-  set student(value: string){
+  set student(value: string) {
     this.exam.student = value;
   }
 
@@ -101,7 +119,7 @@ export class StudentPointsComponent {
     return this.examDefinition.course;
   }
 
-  set course(value: string){
+  set course(value: string) {
     this.examDefinition.course = value;
   }
 
@@ -128,7 +146,7 @@ export class StudentPointsComponent {
   }
 
   getSkillPoints(skillId: number) {
-    return this.exam.skillPoints.find(x => x.skillId === skillId);
+    return this.mode.skillPoints.find(x => x.skillId === skillId);
   }
 
   isCriteriaChecked(criteriaId: number) {
@@ -146,7 +164,7 @@ export class StudentPointsComponent {
   }
 
   private getCheckedCriteria(criteriaId: number) {
-    return this.exam.checkedCriteria.find(x => x.criteriaId === criteriaId);
+    return this.mode.checkedCriteria.find(x => x.criteriaId === criteriaId);
   }
 
   getSkill(skillId: number) {
@@ -206,9 +224,7 @@ export class StudentPointsComponent {
 
     return this.sum(
       area.skills.map(
-        x =>
-          (this.getPointsForSkill(x.id) * this.getSkillWeighting(x.id)) /
-          100
+        x => (this.getPointsForSkill(x.id) * this.getSkillWeighting(x.id)) / 100
       )
     );
   }
@@ -262,7 +278,7 @@ export class StudentPointsComponent {
     this.getSkillWeightingObject(skillId).weighting = value;
   }
 
-  private getSkillWeightingObject(skillId: number){
+  private getSkillWeightingObject(skillId: number) {
     return this.examDefinition.skillWeightings.find(x => x.skillId === skillId);
   }
 
@@ -275,7 +291,9 @@ export class StudentPointsComponent {
   }
 
   getTotalAreaWeightings(areaId: number) {
-    const weightings = this.getIncludedAreaSkillWeightings(areaId).map(x => x.weighting);
+    const weightings = this.getIncludedAreaSkillWeightings(areaId).map(
+      x => x.weighting
+    );
 
     return this.sum(weightings);
   }
@@ -284,14 +302,16 @@ export class StudentPointsComponent {
     return this.getIncludedAreaSkillWeightings(areaId).length;
   }
 
-  getIncludedAreaSkillWeightings(areaId: number){
+  getIncludedAreaSkillWeightings(areaId: number) {
     return this.getAreaSkillWeightings(areaId).filter(x => x.isIncluded);
   }
 
-  private getAreaSkillWeightings(areaId: number){
+  private getAreaSkillWeightings(areaId: number) {
     const skillIds = this.getArea(areaId).skills.map(x => x.id);
 
-    return this.examDefinition.skillWeightings.filter(x => skillIds.includes(x.skillId));
+    return this.examDefinition.skillWeightings.filter(x =>
+      skillIds.includes(x.skillId)
+    );
   }
 
   getComment(areaId: number) {
@@ -303,7 +323,7 @@ export class StudentPointsComponent {
   }
 
   private getAreaComment(areaId: number) {
-    return this.exam.areaComments.find(x => x.areaId === areaId);
+    return this.mode.areaComments.find(x => x.areaId === areaId);
   }
 
   getCheckCriteriaForSkill(skillId: number) {
@@ -357,7 +377,11 @@ export class StudentPointsComponent {
   }
 
   get date() {
-    return new Date().toLocaleDateString('de-DE', {month: "long", year: "numeric", day: "numeric"});
+    return new Date().toLocaleDateString("de-DE", {
+      month: "long",
+      year: "numeric",
+      day: "numeric"
+    });
   }
 }
 
@@ -392,9 +416,14 @@ class SkillWeighting {
   isIncluded: boolean;
 }
 
-class Exam{
-  student: string;
+class Mode {
+  id: number;
   checkedCriteria: CheckedCriteria[] = [];
   skillPoints: SkillPoints[] = [];
   areaComments: AreaComment[] = [];
+}
+
+class Exam {
+  student: string;
+  modes: Mode[] = [];
 }
