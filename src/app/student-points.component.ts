@@ -10,10 +10,8 @@ export class StudentPointsComponent {
   ngOnInit() {
     const sprachmittlungMode = master.modes.find(x => x.id === 1);
 
-    for (const modeId of master.modes.map(x => x.id)) {
-      const mode = {id: modeId} as Mode;
-
-      const isSprachmittlung = modeId === sprachmittlungMode.id;
+    for (const mode of master.modes.map(x => new Mode(x.id))) {
+      const isSprachmittlung = mode.id === sprachmittlungMode.id;
 
       this.exam.modes.push(mode);
 
@@ -220,13 +218,21 @@ export class StudentPointsComponent {
   }
 
   getPointsForArea(areaId: number) {
-    const area = this.getArea(areaId);
+    const skills = this.getSkillsForArea(areaId);
 
     return this.sum(
-      area.skills.map(
+      skills.map(
         x => (this.getPointsForSkill(x.id) * this.getSkillWeighting(x.id)) / 100
       )
     );
+  }
+
+  private getSkillsForArea(areaId: number){
+    const skillIds = this.mode.skillPoints.map(x => x.skillId);
+
+    const area = this.getArea(areaId);
+
+    return area.skills.filter(x => skillIds.includes(x.id));
   }
 
   getPointsForPart(partId: number) {
@@ -417,6 +423,10 @@ class SkillWeighting {
 }
 
 class Mode {
+  constructor(modeId: number){
+    this.id = modeId;
+  }
+
   id: number;
   checkedCriteria: CheckedCriteria[] = [];
   skillPoints: SkillPoints[] = [];
