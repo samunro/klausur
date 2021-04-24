@@ -39,7 +39,7 @@
       <td>{{school}}</td>
     </tr>
   </table>
-  <ng-container *ngFor="let mode of master.modes">
+  <ng-container *ngFor="let mode of getModes()">
     <h3 class="mt-5">{{mode.name}} - {{getPointsForMode(mode.id)}} Punkte</h3>
     <ng-container *ngFor="let part of master.parts">
     <table class="table my-5">
@@ -90,7 +90,7 @@
     <div class="py-1"></div>
     </ng-container>
   </ng-container>
-  <h1 class="mb-5">Gesamtpunkte - {{getTotalPoints() | number: '1.2-2'}}</h1>
+  <h1 class="mb-5">Gesamtpunkte - {{getTotalPoints() | number: '1.0-0'}}</h1>
   <div class="py-5"></div>
   <div>{{city}}, den {{date}} ____________________________________________________________________ ({{teacher}})</div>
 </div>
@@ -180,7 +180,7 @@
         </select>
     </div>
   </div>
-  <div class="row mx-5 mb-5">
+  <div class="row mx-5">
     <div class="col-2 alert alert-primary">
       <h5>Kurs:</h5>
     </div>
@@ -190,7 +190,18 @@
         </select>
     </div>
   </div>
-  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <div class="row mx-5 mb-5">
+    <div class="col-2 alert alert-primary">
+      <h5>Sprachmittlung:</h5>
+    </div>
+    <div class="col">
+      <label>
+      <input type="checkbox" [(ngModel)]="isSprachmittlungEnabled" />
+        einbeziehen
+      </label>
+    </div>
+  </div>
+  <div class="btn-group btn-group-toggle" data-toggle="buttons" *ngIf="isSprachmittlungEnabled">
     <label class="btn btn-secondary" [ngClass]="{active: !isSprachmittlung}">
     <input type="radio" name="mode" id="schreiben" autocomplete="off" checked="false" (click)="isSprachmittlung = false"> Schreiben
   </label>
@@ -292,6 +303,6 @@
   </ng-container>
   <div class="py-5"></div>
   <div class="display-1 fixed-bottom text-right">
-    gesamt Ergebnis - {{getTotalPoints() | number: '1.2-2'}} Punkte
+    gesamt Ergebnis - {{getTotalPoints() | number: '1.0-0'}} Punkte
   </div>
 </div>

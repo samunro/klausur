@@ -11,7 +11,10 @@ export class StudentPointsComponent {
     const sprachmittlungMode = master.modes.find(x => x.id === 2);
 
     for (const mode of master.modes.map(x => new Mode(x.id))) {
-      const examDefinitionMode: {id: number, skillWeightings: SkillWeighting[]} = {id: mode.id, skillWeightings: []}
+      const examDefinitionMode: {
+        id: number;
+        skillWeightings: SkillWeighting[];
+      } = { id: mode.id, skillWeightings: [] };
 
       this.examDefinition.modes.push(examDefinitionMode);
 
@@ -23,11 +26,12 @@ export class StudentPointsComponent {
         for (const area of part.areas) {
           mode.areaComments.push({ areaId: area.id, comment: null });
 
-          const areSkillWeightingsFixed = this.areSkillWeightingsFixed(part.id, mode.id);
+          const areSkillWeightingsFixed = this.areSkillWeightingsFixed(
+            part.id,
+            mode.id
+          );
 
-          const skillCount = areSkillWeightingsFixed
-            ? area.skills.length
-            : 3;
+          const skillCount = areSkillWeightingsFixed ? area.skills.length : 3;
 
           let skillWeighting = 100 / skillCount;
 
@@ -40,7 +44,11 @@ export class StudentPointsComponent {
           const areaSkillWeightings: SkillWeighting[] = [];
 
           for (const skill of area.skills) {
-            if(skill.shouldIncludeInSprachmittlung !== null && skill.shouldIncludeInSprachmittlung !== isSprachmittlung) continue;
+            if (
+              skill.shouldIncludeInSprachmittlung !== null &&
+              skill.shouldIncludeInSprachmittlung !== isSprachmittlung
+            )
+              continue;
 
             mode.skillPoints.push({ skillId: skill.id, points: 0 });
 
@@ -89,6 +97,7 @@ export class StudentPointsComponent {
     return this.exam.modes.find(x => x.id === modeId);
   }
 
+  isSprachmittlungEnabled = false;
   isSprachmittlung = false;
 
   get student() {
@@ -154,7 +163,8 @@ export class StudentPointsComponent {
   }
 
   getSkillPoints(skillId: number, modeId: number = null) {
-    const mode = modeId === null ? this.mode : this.exam.modes.find(x => x.id === modeId);
+    const mode =
+      modeId === null ? this.mode : this.exam.modes.find(x => x.id === modeId);
 
     return mode.skillPoints.find(x => x.skillId === skillId);
   }
@@ -174,7 +184,8 @@ export class StudentPointsComponent {
   }
 
   private getCheckedCriteria(criteriaId: number, modeId: number = null) {
-    const mode = modeId === null ? this.mode : this.exam.modes.find(x => x.id === modeId);
+    const mode =
+      modeId === null ? this.mode : this.exam.modes.find(x => x.id === modeId);
 
     return mode.checkedCriteria.find(x => x.criteriaId === criteriaId);
   }
@@ -236,13 +247,17 @@ export class StudentPointsComponent {
 
     return this.sum(
       skills.map(
-        x => (this.getPointsForSkill(x.id, modeId) * this.getSkillWeighting(x.id, modeId)) / 100
+        x =>
+          (this.getPointsForSkill(x.id, modeId) *
+            this.getSkillWeighting(x.id, modeId)) /
+          100
       )
     );
   }
 
-  getSkillsForArea(areaId: number, modeId: number = null){
-    const mode = modeId === null ? this.mode : this.exam.modes.find(x => x.id === modeId);
+  getSkillsForArea(areaId: number, modeId: number = null) {
+    const mode =
+      modeId === null ? this.mode : this.exam.modes.find(x => x.id === modeId);
 
     const skillIds = mode.skillPoints.map(x => x.skillId);
 
@@ -276,10 +291,24 @@ export class StudentPointsComponent {
     throw Error(`Could not find the skill with id ${skillId}.`);
   }
 
-  getTotalPoints(){
-    var totalWeightings = this.sum(this.master.modes.map(x => x.weighting));
+  getModes() {
+    if (!this.isSprachmittlungEnabled) {
+      return this.master.modes.filter(x => x.id === 1);
+    } else {
+      return this.master.modes;
+    }
+  }
 
-    return this.sum(this.master.modes.map(x => x.weighting * this.getPointsForMode(x.id))) / totalWeightings;
+  getTotalPoints() {
+    var modes = this.getModes();
+    
+    var totalWeightings = this.sum(modes.map(x => x.weighting));
+
+    return (
+      this.sum(
+        this.master.modes.map(x => x.weighting * this.getPointsForMode(x.id))
+      ) / totalWeightings
+    );
   }
 
   getPointsForMode(modeId: number = null) {
@@ -306,14 +335,18 @@ export class StudentPointsComponent {
     this.getSkillWeightingObject(skillId, this.mode.id).weighting = value;
   }
 
-  private getSkillWeightingObjects(modeId: number){
+  private getSkillWeightingObjects(modeId: number) {
     modeId = modeId || this.mode.id;
-    
-    return this.examDefinition.modes.find(x => x.id === (modeId || this.mode.id)).skillWeightings;
+
+    return this.examDefinition.modes.find(
+      x => x.id === (modeId || this.mode.id)
+    ).skillWeightings;
   }
 
   private getSkillWeightingObject(skillId: number, modeId: number) {
-    return this.getSkillWeightingObjects(modeId).find(x => x.skillId === skillId);
+    return this.getSkillWeightingObjects(modeId).find(
+      x => x.skillId === skillId
+    );
   }
 
   isSkillIncluded(skillId: number) {
@@ -337,15 +370,21 @@ export class StudentPointsComponent {
   }
 
   getIncludedAreaSkillWeightings(areaId: number, modeId: number = null) {
-    return this.getAreaSkillWeightings(areaId, modeId).filter(x => x.isIncluded);
+    return this.getAreaSkillWeightings(areaId, modeId).filter(
+      x => x.isIncluded
+    );
   }
 
   private getAreaSkillWeightings(areaId: number, modeId: number = null) {
     const isSprachmittlung = modeId === 2;
 
     const skillIds = this.getSkillsForArea(areaId, modeId)
-    .filter(x => x.shouldIncludeInSprachmittlung === null || x.shouldIncludeInSprachmittlung === isSprachmittlung)
-    .map(x => x.id);
+      .filter(
+        x =>
+          x.shouldIncludeInSprachmittlung === null ||
+          x.shouldIncludeInSprachmittlung === isSprachmittlung
+      )
+      .map(x => x.id);
 
     return this.getSkillWeightingObjects(modeId).filter(x =>
       skillIds.includes(x.skillId)
@@ -361,7 +400,8 @@ export class StudentPointsComponent {
   }
 
   private getAreaComment(areaId: number, modeId: number = null) {
-    const mode = modeId === null ? this.mode : this.exam.modes.find(x => x.id === modeId);
+    const mode =
+      modeId === null ? this.mode : this.exam.modes.find(x => x.id === modeId);
 
     return mode.areaComments.find(x => x.areaId === areaId);
   }
@@ -424,10 +464,11 @@ export class StudentPointsComponent {
     });
   }
 
-  areSkillWeightingsFixed(partId: number, modeId: number = null){
-    const isSprachmittlung = modeId !== null ? modeId === 2 : this.isSprachmittlung;
+  areSkillWeightingsFixed(partId: number, modeId: number = null) {
+    const isSprachmittlung =
+      modeId !== null ? modeId === 2 : this.isSprachmittlung;
 
-    if(isSprachmittlung) return true;
+    if (isSprachmittlung) return true;
 
     return partId !== 1; //Inhalt;
   }
@@ -454,7 +495,7 @@ class ExamDefinition {
   school: string;
   course: string;
   "type": string;
-  modes: {id: number, skillWeightings: SkillWeighting[]}[] = [];
+  modes: { id: number; skillWeightings: SkillWeighting[] }[] = [];
 }
 
 class SkillWeighting {
@@ -465,7 +506,7 @@ class SkillWeighting {
 }
 
 class Mode {
-  constructor(modeId: number){
+  constructor(modeId: number) {
     this.id = modeId;
   }
 
