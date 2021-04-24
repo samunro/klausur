@@ -269,7 +269,9 @@
                   <h5 class="text-center">{{pointRange.name}}</h5>
                   <div class="col" *ngFor="let criteria of getCriteria(skill.id, pointRange.id)" class="alert"
                     [ngClass]="{'alert-primary': isCriteriaChecked(criteria.id), 'alert-secondary': !isCriteriaChecked(criteria.id)}"
-                    (click)="toggleCriteria(criteria.id, skill.id)">
+                    (click)="toggleCriteria(criteria.id, skill.id)"
+                    style="cursor: pointer"
+                    >
                     {{criteria.text}}
                   </div>
                 </div>
