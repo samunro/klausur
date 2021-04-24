@@ -236,7 +236,7 @@ export class StudentPointsComponent {
 
     return this.sum(
       skills.map(
-        x => (this.getPointsForSkill(x.id, modeId) * this.getSkillWeighting(x.id)) / 100
+        x => (this.getPointsForSkill(x.id, modeId) * this.getSkillWeighting(x.id, modeId)) / 100
       )
     );
   }
@@ -292,8 +292,8 @@ export class StudentPointsComponent {
     return Math.round(result);
   }
 
-  getSkillWeighting(skillId: number) {
-    return this.getSkillWeightingObject(skillId).weighting;
+  getSkillWeighting(skillId: number, modeId: number = null) {
+    return this.getSkillWeightingObject(skillId, modeId).weighting;
   }
 
   setSkillWeighting(value: number, skillId: number) {
@@ -303,23 +303,25 @@ export class StudentPointsComponent {
       value = 0;
     }
 
-    this.getSkillWeightingObject(skillId).weighting = value;
+    this.getSkillWeightingObject(skillId, this.mode.id).weighting = value;
   }
 
-  private get skillWeightingObjects(){
-    return this.examDefinition.modes.find(x => x.id === this.mode.id).skillWeightings;
+  private getSkillWeightingObjects(modeId: number){
+    modeId = modeId || this.mode.id;
+    
+    return this.examDefinition.modes.find(x => x.id === (modeId || this.mode.id)).skillWeightings;
   }
 
-  private getSkillWeightingObject(skillId: number) {
-    return this.skillWeightingObjects.find(x => x.skillId === skillId);
+  private getSkillWeightingObject(skillId: number, modeId: number) {
+    return this.getSkillWeightingObjects(modeId).find(x => x.skillId === skillId);
   }
 
   isSkillIncluded(skillId: number) {
-    return this.getSkillWeightingObject(skillId).isIncluded;
+    return this.getSkillWeightingObject(skillId, this.mode.id).isIncluded;
   }
 
   setSkillIncluded(value: boolean, skillId: number) {
-    this.getSkillWeightingObject(skillId).isIncluded = value;
+    this.getSkillWeightingObject(skillId, this.mode.id).isIncluded = value;
   }
 
   getTotalAreaWeightings(areaId: number) {
@@ -345,7 +347,7 @@ export class StudentPointsComponent {
     .filter(x => x.shouldIncludeInSprachmittlung === null || x.shouldIncludeInSprachmittlung === isSprachmittlung)
     .map(x => x.id);
 
-    return this.skillWeightingObjects.filter(x =>
+    return this.getSkillWeightingObjects(modeId).filter(x =>
       skillIds.includes(x.skillId)
     );
   }
