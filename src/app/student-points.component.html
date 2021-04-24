@@ -90,7 +90,7 @@
     <div class="py-1"></div>
     </ng-container>
   </ng-container>
-  <h1 class="mb-5">Gesamtpunkte - {{getTotalPoints()}}</h1>
+  <h1 class="mb-5">Gesamtpunkte - {{getTotalPoints() | number: '1.2-2'}}</h1>
   <div class="py-5"></div>
   <div>{{city}}, den {{date}} ____________________________________________________________________ ({{teacher}})</div>
 </div>
@@ -290,6 +290,6 @@
   </ng-container>
   <div class="py-5"></div>
   <div class="display-1 fixed-bottom text-right">
-    gesamt Ergebnis - {{getTotalPoints()}} Punkte
+    gesamt Ergebnis - {{getTotalPoints() | number: '1.2-2'}} Punkte
   </div>
 </div>
