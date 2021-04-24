@@ -31,16 +31,6 @@ export class StudentPointsComponent {
             mode.id
           );
 
-          const skillCount = areSkillWeightingsFixed ? area.skills.length : 3;
-
-          let skillWeighting = 100 / skillCount;
-
-          if (!areSkillWeightingsFixed) {
-            skillWeighting = Math.round(skillWeighting);
-          }
-
-          let count = 0;
-
           const areaSkillWeightings: SkillWeighting[] = [];
 
           for (const skill of area.skills) {
@@ -52,17 +42,12 @@ export class StudentPointsComponent {
 
             mode.skillPoints.push({ skillId: skill.id, points: 0 });
 
-            const isIncluded = areSkillWeightingsFixed || count < 3;
-
             areaSkillWeightings.push({
               skillId: skill.id,
-              weighting:
-                count < 3 || areSkillWeightingsFixed ? skillWeighting : 0,
+              weighting: areSkillWeightingsFixed ? 100 / area.skills.length : 0,
               isWeightingFixed: areSkillWeightingsFixed,
-              isIncluded: isIncluded
+              isIncluded: false
             });
-
-            count++;
 
             for (const criteria of skill.criteria) {
               mode.checkedCriteria.push({
@@ -301,7 +286,7 @@ export class StudentPointsComponent {
 
   getTotalPoints() {
     var modes = this.getModes();
-    
+
     var totalWeightings = this.sum(modes.map(x => x.weighting));
 
     return (
