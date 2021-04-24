@@ -54,14 +54,6 @@
           Punkte
         </th>
       </thead>
-      <tr>
-        <td>
-          Kommentar
-        </td>
-        <td colspan="2">
-          <div *ngFor="let area of part.areas">{{getComment(area.id, mode.id)}}</div>
-        </td>
-      </tr>
       <ng-container *ngFor="let area of part.areas">
         <tr *ngFor="let skillWeighting of getIncludedAreaSkillWeightings(area.id, mode.id)">
           <td>
@@ -78,6 +70,14 @@
           </td>
         </tr>
       </ng-container>
+      <tr>
+        <td>
+          Kommentar
+        </td>
+        <td colspan="2">
+          <div *ngFor="let area of part.areas">{{getComment(area.id, mode.id)}}</div>
+        </td>
+      </tr>
       <tr>
         <th colspan="2">
           Ergebnis
@@ -211,15 +211,6 @@
           <h4>{{area.name}} - {{getPointsForArea(area.id) | number: '1.2-2'}} Punkte</h4>
         </div>
       </div>
-      <div class="row mx-5">
-        <div class="col-2 alert alert-primary">
-          <h5>Kommentar</h5>
-        </div>
-
-        <div class="col">
-          <textarea [ngModel]="getComment(area.id)" (ngModelChange)="setComment($event, area.id)" class="col"></textarea>
-        </div>
-      </div>
       <ng-container *ngFor="let skill of getSkillsForArea(area.id)">
         <div class="row mx-5" *ngIf="!isSkillIncluded(skill.id)">
           <div class="col alert alert-primary">
@@ -287,6 +278,14 @@
           </div>
         </ng-container>
       </ng-container>
+      <div class="row mx-5">
+        <div class="col-2 alert alert-primary">
+          <h5>Kommentar</h5>
+        </div>
+        <div class="col">
+          <textarea [ngModel]="getComment(area.id)" (ngModelChange)="setComment($event, area.id)" class="col"></textarea>
+        </div>
+      </div>
     </ng-container>
   </ng-container>
   <div class="py-5"></div>
