@@ -23,7 +23,7 @@
 </div>
 <div class="container-fluid px-5" *ngIf="isPrintView">
   <h1>Gutachten für {{student}}</h1>
-  <h2>Klausur {{year}}, {{course}}</h2>
+  <h2>{{examType}} {{year}}, {{course}}</h2>
   <table>
     <col />
     <col style="width: 10px" />
@@ -102,7 +102,7 @@
 <div class="container-fluid" *ngIf="!isPrintView">
   <div class="row pr-5 pt-3 mb-5">
     <div class="display-1 col">
-      Klausur Gutachten
+      Gutachten
     </div>
     <div class="col-4">
       <div class="row mx-0">

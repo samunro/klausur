@@ -11,6 +11,10 @@ export class StudentPointsComponent {
     const sprachmittlungMode = master.modes.find(x => x.id === 2);
 
     for (const mode of master.modes.map(x => new Mode(x.id))) {
+      const examDefinitionMode: {id: number, skillWeightings: SkillWeighting[]} = {id: mode.id, skillWeightings: []}
+
+      this.examDefinition.modes.push(examDefinitionMode);
+
       const isSprachmittlung = mode.id === sprachmittlungMode.id;
 
       this.exam.modes.push(mode);
@@ -63,7 +67,7 @@ export class StudentPointsComponent {
           areaSkillWeightings[0].weighting +=
             100 - this.sum(areaSkillWeightings.map(x => x.weighting));
 
-          this.examDefinition.skillWeightings.push(...areaSkillWeightings);
+          examDefinitionMode.skillWeightings.push(...areaSkillWeightings);
         }
       }
     }
@@ -135,7 +139,7 @@ export class StudentPointsComponent {
     this.examDefinition.type = value;
   }
 
-  isPrintView: boolean = true;
+  isPrintView: boolean = false;
 
   togglePrintView() {
     this.isPrintView = !this.isPrintView;
@@ -302,8 +306,12 @@ export class StudentPointsComponent {
     this.getSkillWeightingObject(skillId).weighting = value;
   }
 
+  private get skillWeightingObjects(){
+    return this.examDefinition.modes.find(x => x.id === this.mode.id).skillWeightings;
+  }
+
   private getSkillWeightingObject(skillId: number) {
-    return this.examDefinition.skillWeightings.find(x => x.skillId === skillId);
+    return this.skillWeightingObjects.find(x => x.skillId === skillId);
   }
 
   isSkillIncluded(skillId: number) {
@@ -337,7 +345,7 @@ export class StudentPointsComponent {
     .filter(x => x.shouldIncludeInSprachmittlung === null || x.shouldIncludeInSprachmittlung === isSprachmittlung)
     .map(x => x.id);
 
-    return this.examDefinition.skillWeightings.filter(x =>
+    return this.skillWeightingObjects.filter(x =>
       skillIds.includes(x.skillId)
     );
   }
@@ -444,7 +452,7 @@ class ExamDefinition {
   school: string;
   course: string;
   "type": string;
-  skillWeightings: SkillWeighting[] = [];
+  modes: {id: number, skillWeightings: SkillWeighting[]}[] = [];
 }
 
 class SkillWeighting {
