@@ -6,7 +6,6 @@ import { FormsModule } from "@angular/forms";
 
 import { AppComponent } from "./app.component";
 import { StudentPointsComponent } from "./student-points.component";
-import { HelloComponent } from "./hello.component";
 import { DOCUMENT, registerLocaleData } from "@angular/common";
 import {
   NgxBootstrapIconsModule,
@@ -27,7 +26,7 @@ const icons = {
 
 @NgModule({
   imports: [BrowserModule, FormsModule, NgxBootstrapIconsModule.pick(icons)],
-  declarations: [AppComponent, HelloComponent, StudentPointsComponent],
+  declarations: [AppComponent, StudentPointsComponent],
   bootstrap: [AppComponent]  ,
   providers: [{ provide: LOCALE_ID, useValue: "de-DE" }]
 })
