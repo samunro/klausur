@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { formatNumber } from "@angular/common";
+import { Component, Inject, LOCALE_ID } from "@angular/core";
 import master from "./master.json";
 import pointRanges from "./pointRanges.json";
 
@@ -7,6 +8,8 @@ import pointRanges from "./pointRanges.json";
   templateUrl: "./student-points.component.html"
 })
 export class StudentPointsComponent {
+  constructor(@Inject(LOCALE_ID) private locale: string){  }
+
   ngOnInit() {
     const sprachmittlungMode = master.modes.find(x => x.id === 2);
 
@@ -40,7 +43,7 @@ export class StudentPointsComponent {
             )
               continue;
 
-            mode.skillPoints.push({ skillId: skill.id, points: 0 });
+            mode.skillPoints.push({ skillId: skill.id, points: null });
 
             areaSkillWeightings.push({
               skillId: skill.id,
@@ -139,6 +142,14 @@ export class StudentPointsComponent {
     this.isPrintView = !this.isPrintView;
   }
 
+  getFormattedPointsForSkill(skillId: number, modeId: number = null){
+    const points = this.getPointsForSkill(skillId, modeId);
+
+    if(points === null) return "?";
+
+    return points;
+  }
+
   getPointsForSkill(skillId: number, modeId: number = null) {
     return this.getSkillPoints(skillId, modeId).points;
   }
@@ -204,6 +215,8 @@ export class StudentPointsComponent {
       criteriaPoints.push((pointRange.minimum + pointRange.maximum) / 2);
     }
 
+    if(criteriaPoints.length === 0) return null;
+
     return Math.round(this.average(criteriaPoints));
   }
 
@@ -227,16 +240,23 @@ export class StudentPointsComponent {
     throw Error(`Could not find the ares with id ${areaId}.`);
   }
 
+  getFormattedAreaPoints(areaId: number){
+    const points = this.getPointsForArea(areaId);
+
+    if(points === null) return "?";
+
+    return formatNumber(points, this.locale, "1.2-2")
+  }
+
   getPointsForArea(areaId: number, modeId: number = null) {
     const skills = this.getSkillsForArea(areaId, modeId);
 
+    const pointsAndWeightings = skills.map(x => {return {points: this.getPointsForSkill(x.id, modeId), weighting: this.getSkillWeighting(x.id, modeId)}});
+
+    if(pointsAndWeightings.some(x => x.points === null)) return null;
+
     return this.sum(
-      skills.map(
-        x =>
-          (this.getPointsForSkill(x.id, modeId) *
-            this.getSkillWeighting(x.id, modeId)) /
-          100
-      )
+      pointsAndWeightings.map(x => x.points * x.weighting / 100)
     );
   }
 
@@ -251,6 +271,14 @@ export class StudentPointsComponent {
     return area.skills.filter(x => skillIds.includes(x.id));
   }
 
+  getFormattedPointsForPart(partId: number, modeId: number = null) {
+    const points = this.getPointsForPart(partId, modeId);
+
+    if(points === null) return "?";
+
+    return points;
+  }
+
   getPointsForPart(partId: number, modeId: number = null) {
     const part = this.master.parts.find(x => x.id === partId);
 
@@ -259,6 +287,8 @@ export class StudentPointsComponent {
     for (const area of part.areas) {
       points.push(this.getPointsForArea(area.id, modeId));
     }
+
+    if(points.includes(null)) return null;
 
     return Math.round(this.average(points));
   }
@@ -284,22 +314,46 @@ export class StudentPointsComponent {
     }
   }
 
+  getFormattedTotalPoints(){
+    const points = this.getTotalPoints();
+
+    if(points === null) return "?";
+
+    return formatNumber(points, this.locale, "1.0-0");
+  }
+
   getTotalPoints() {
     var modes = this.getModes();
 
     var totalWeightings = this.sum(modes.map(x => x.weighting));
 
+    const pointsAndWeightings = modes.map(x => {return {points: this.getPointsForMode(x.id), weighting: x.weighting}});
+
+    if(pointsAndWeightings.some(x => x.points === null)) return null;
+
     return (
       this.sum(
-        this.master.modes.map(x => x.weighting * this.getPointsForMode(x.id))
+        pointsAndWeightings.map(x => x.weighting * x.points)
       ) / totalWeightings
     );
+  }
+
+  getFormattedPointsForMode(modeId: number = null){
+    const points = this.getPointsForMode(modeId);
+
+    if(points === null) return "?";
+
+    return points;
   }
 
   getPointsForMode(modeId: number = null) {
     let result = 0;
 
     for (const part of master.parts) {
+      const points = this.getPointsForPart(part.id, modeId);
+
+      if(points === null) return null;
+
       result += (part.weighting / 100) * this.getPointsForPart(part.id, modeId);
     }
 
