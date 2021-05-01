@@ -44,5 +44,5 @@ jobs:
         app-name: klausur
         slot-name: Production
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3CFEEFBFFEA64306A0CE36705101DF7D }}
-        package: ${{env.DOTNET_ROOT}}/myapp
+        package: ./dist
 
