@@ -1,7 +1,7 @@
 import { formatNumber } from "@angular/common";
 import { Component, Inject, LOCALE_ID } from "@angular/core";
-import master from "./master.json";
-import pointRanges from "./pointRanges.json";
+import master from "./master";
+import pointRanges from "./pointRanges";
 
 @Component({
   selector: "student-points",
