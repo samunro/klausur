@@ -25,7 +25,7 @@ jobs:
       run: |
         npm install
         npm run build --if-present
-        npx jasmine --if-present
+        npx jasmine
         
     #- name: Set up .NET Core
     #  uses: actions/setup-dotnet@v1
