@@ -190,24 +190,41 @@
         </select>
     </div>
   </div>
-  <div class="row mx-5 mb-5">
+  <div class="row mx-5">
     <div class="col-2 alert alert-primary">
-      <h5>Sprachmittlung:</h5>
+      <h5><input type="checkbox" [(ngModel)]="isSprachmittlungEnabled" /> Sprachmittlung{{(isSprachmittlungEnabled ? ":" : "")}}</h5>
     </div>
     <div class="col">
-      <label>
-      <input type="checkbox" [(ngModel)]="isSprachmittlungEnabled" />
-        einbeziehen
-      </label>
+      <div *ngIf="isSprachmittlungEnabled">
+        <label>
+          Gewichtung:
+          <input type="number" [(ngModel)]="sprachmittlungWeighting" style="width: 60;" min="0" max="100" />
+        </label>
+        &nbsp;
+        <label>
+          ausgewählt
+          <input type="checkbox" [(ngModel)]="isSprachmittlungSelected" />
+        </label>
+      </div>
     </div>
   </div>
-  <div class="btn-group btn-group-toggle" data-toggle="buttons" *ngIf="isSprachmittlungEnabled">
-    <label class="btn btn-secondary" [ngClass]="{active: !isSprachmittlung}">
-    <input type="radio" name="mode" id="schreiben" autocomplete="off" checked="false" (click)="isSprachmittlung = false"> Schreiben
-  </label>
-    <label class="btn btn-secondary" [ngClass]="{active: isSprachmittlung}">
-    <input type="radio" name="mode" id="sprachmittlung" autocomplete="off" (click)="isSprachmittlung = true"> Sprachmittlung
-  </label>
+  <div class="row mx-5" *ngIf="isSprachmittlungEnabled">
+    <div class="col-2 alert alert-primary">
+      <h5>Schreiben:</h5>
+    </div>
+    <div class="col">
+      <div *ngIf="isSprachmittlungEnabled">
+        <label>
+          Gewichtung:
+          <input type="number" [(ngModel)]="schreibenWeighting" style="width: 60;" min="0" max="100" />
+        </label>
+        &nbsp;
+        <label>
+          ausgewählt
+          <input type="checkbox" [(ngModel)]="isSchreibenSelected" />
+        </label>
+      </div>
+    </div>
   </div>
   <div class="display-2 mt-5">{{modeName}} Ergebnis - {{getFormattedPointsForMode()}} Punkte</div>
   <ng-container *ngFor="let part of master.parts">
@@ -247,7 +264,7 @@
               <h5>{{getFormattedPointsForSkill(skill.id)}} Punkte</h5>
               <h5 *ngIf="!areSkillWeightingsFixed(part.id)">
                 <label style="position: relative">
-                  Gewicht: <input type="number" [ngClass]="{'is-invalid': getTotalAreaWeightings(area.id) !== 100}" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" style="width: 60px" min="0" max="100"/> BE
+                  Gewichtung: <input type="number" [ngClass]="{'is-invalid': getTotalAreaWeightings(area.id) !== 100}" [ngModel]="getSkillWeighting(skill.id)" (ngModelChange)="setSkillWeighting($event, skill.id)" style="width: 60px" min="0" max="100"/> BE
                   <div class="invalid-tooltip">nicht 100% ins gesamt</div>
                 </label>
               </h5>
