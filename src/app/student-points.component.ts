@@ -519,7 +519,7 @@ export class StudentPointsComponent {
 
   private setDefaultModeWeighting(weighting: number, mode: Modes) {
     const modeObject = this.examDefinition.modes.find(x => x.id === mode);
-    
+
     modeObject.weighting = modeObject.weighting || weighting;
   }
 
