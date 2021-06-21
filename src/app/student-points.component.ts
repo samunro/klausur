@@ -183,11 +183,7 @@ export class StudentPointsComponent {
     this.examDefinition.type = value;
   }
 
-  isPrintView: boolean = false;
-
-  togglePrintView() {
-    this.isPrintView = !this.isPrintView;
-  }
+  isPrintView = false;
 
   getFormattedPointsForSkill(skillId: number, modeId: number = null){
     const points = this.getPointsForSkill(skillId, modeId);
