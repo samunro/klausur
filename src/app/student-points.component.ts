@@ -28,13 +28,8 @@ export class StudentPointsComponent {
 
       const isSprachmittlung = mode.id === Modes.Sprachmittlung;
 
-      const examMode = new Mode(examDefinitionMode.id);
-      this.exam.modes.push(examMode);
-
       for (const part of master.parts) {
         for (const area of part.areas) {
-          examMode.areaComments.push({ areaId: area.id, comment: null });
-
           const areSkillWeightingsFixed = this.areSkillWeightingsFixed(
             part.id,
             mode.id
@@ -49,21 +44,12 @@ export class StudentPointsComponent {
             )
               continue;
 
-              examMode.skillPoints.push({ skillId: skill.id, points: null });
-
             areaSkillWeightings.push({
               skillId: skill.id,
               weighting: areSkillWeightingsFixed ? 100 / area.skills.length : 0,
               isWeightingFixed: areSkillWeightingsFixed,
               isIncluded: areSkillWeightingsFixed
             });
-
-            for (const criteria of skill.criteria) {
-              examMode.checkedCriteria.push({
-                criteriaId: criteria.id,
-                isChecked: false
-              });
-            }
           }
 
           areaSkillWeightings[0].weighting +=
@@ -73,6 +59,44 @@ export class StudentPointsComponent {
         }
       }
     }
+
+    this.initializeExam();
+  }
+
+  private initializeExam(){
+    const exam = new Exam();
+
+    for (const mode of master.modes) {
+      const isSprachmittlung = mode.id === Modes.Sprachmittlung;
+
+      const examMode = new Mode(mode.id);
+      exam.modes.push(examMode);
+
+      for (const part of master.parts) {
+        for (const area of part.areas) {
+          examMode.areaComments.push({ areaId: area.id, comment: null });
+
+          for (const skill of area.skills) {
+            if (
+              skill.shouldIncludeInSprachmittlung !== null &&
+              skill.shouldIncludeInSprachmittlung !== isSprachmittlung
+            )
+              continue;
+
+              examMode.skillPoints.push({ skillId: skill.id, points: null });
+
+            for (const criteria of skill.criteria) {
+              examMode.checkedCriteria.push({
+                criteriaId: criteria.id,
+                isChecked: false
+              });
+            }
+          }
+        }
+      }
+    }
+
+    this.exam = exam;
   }
 
   master = master;
@@ -505,12 +529,20 @@ export class StudentPointsComponent {
   }
 
   async loadExamDefinition(event: Event) {
-    const content = await (event.target as HTMLInputElement).files[0].text();
+    var result = confirm("Die Klausur Definition wird über­schrei­ben. Sind Sie sicher, dass Sie vortfahren wollen?");
+
+    if(!result) return;
+
+    const fileElement = event.target as HTMLInputElement;
+
+    const content = await fileElement.files[0].text();
 
     this.examDefinition = JSON.parse(content);
 
     this.setDefaultModeWeighting(2, Modes.Schreiben);
     this.setDefaultModeWeighting(1, Modes.Sprachmittlung);
+
+    fileElement.value = null;
   }
 
   private setDefaultModeWeighting(weighting: number, mode: Modes) {
@@ -524,9 +556,17 @@ export class StudentPointsComponent {
   }
 
   async loadExam(event: Event) {
-    const content = await (event.target as HTMLInputElement).files[0].text();
+    var result = confirm("Die Klausur wird über­schrei­ben. Sind Sie sicher, dass Sie vortfahren wollen?");
+
+    if(!result) return;
+
+    const fileElement = event.target as HTMLInputElement;
+
+    const content = await fileElement.files[0].text();
 
     this.exam = JSON.parse(content);
+
+    fileElement.value = null;
   }
 
   private download(data: object, filename, type = "application/json") {
@@ -568,5 +608,13 @@ export class StudentPointsComponent {
     if (isSprachmittlung) return true;
 
     return partId !== 1; //Inhalt;
+  }
+
+  clearExam() {
+    var result = confirm("Die Klausur wird geleert. Sind Sie sicher, dass Sie vortfahren wollen?");
+
+    if(!result) return;
+
+    this.initializeExam();
   }
 }

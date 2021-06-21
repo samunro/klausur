@@ -97,7 +97,7 @@
     <div class="display-1 col">
       Gutachten
     </div>
-    <div class="col-5">
+    <div class="col-6">
       <div class="row mx-0 alert alert-primary">
         <div class="col">
           <h5>Definition:</h5>
@@ -116,6 +116,7 @@
           <input id="uploadExamDefinition" type="file" accept="application/json" (change)="loadExamDefinition($event)"
             style="display: none; height: 0; width: 0;" />
         </div>
+        <div class="col"></div>
       </div>
       <div class="row mx-0 alert alert-primary">
         <div class="col">
@@ -135,12 +136,18 @@
           <input id="uploadExam" type="file" accept="application/json" (change)="loadExam($event)"
             style="opacity: 0; width: 0" />
         </div>
+        <div class="col">
+          <button class="btn btn-secondary w-100" (click)="clearExam()">
+            <i-bs name="fileEarmarkArrowUp"></i-bs>
+            leeren
+          </button>
+        </div>
       </div>
     </div>
   </div>
   <div class="row mx-5">
     <div class="col-2 alert alert-primary">
-      <h5>Student:</h5>
+      <h5>SchülerIn:</h5>
     </div>
     <div class="col">
       <input type="text" class="col form-control-lg" [(ngModel)]="student" />
@@ -148,7 +155,7 @@
   </div>
   <div class="row mx-5">
     <div class="col-2 alert alert-primary">
-      <h5>Lehrer(in):</h5>
+      <h5>LehrerIn:</h5>
     </div>
     <div class="col">
       <input type="text" class="col form-control-lg" [(ngModel)]="teacher" />
